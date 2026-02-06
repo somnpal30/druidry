@@ -35,5 +35,4 @@ public class JavaScriptFilter extends DruidFilter {
         this.dimension = dimension;
         this.function = function;
     }
-
 }

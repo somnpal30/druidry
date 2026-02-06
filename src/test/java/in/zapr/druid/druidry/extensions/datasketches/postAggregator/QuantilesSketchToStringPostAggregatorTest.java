@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,8 +24,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import tools.jackson.databind.ObjectMapper;
 
 public class QuantilesSketchToStringPostAggregatorTest {
 
@@ -86,8 +84,6 @@ public class QuantilesSketchToStringPostAggregatorTest {
     public void testNullField() {
 
         QuantilesSketchToStringPostAggregator quantilesSketchToStringPostAggregator =
-                QuantilesSketchToStringPostAggregator.builder()
-                        .name("star_age_info")
-                        .build();
+                QuantilesSketchToStringPostAggregator.builder().name("star_age_info").build();
     }
 }

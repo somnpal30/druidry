@@ -16,8 +16,9 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.extensions.datasketches.aggregator.TargetHllType;
+import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import java.util.Arrays;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,11 +27,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Arrays;
-
-import in.zapr.druid.druidry.extensions.datasketches.aggregator.TargetHllType;
-import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import tools.jackson.databind.ObjectMapper;
 
 public class HllSketchUnionPostAggregatorTest {
 
@@ -74,12 +71,12 @@ public class HllSketchUnionPostAggregatorTest {
                         .build();
 
         JSONObject jsonObject = getHllSketchUnionPostAggregatorJSON();
-        jsonObject.put("fields", new JSONArray(
-                Arrays.asList(
-                        getFieldAccessPostAggregatorJSON("milky_way_stars_hll"),
-                        getFieldAccessPostAggregatorJSON("andromeda_stars_hll")
-                ))
-        );
+        jsonObject.put(
+                "fields",
+                new JSONArray(
+                        Arrays.asList(
+                                getFieldAccessPostAggregatorJSON("milky_way_stars_hll"),
+                                getFieldAccessPostAggregatorJSON("andromeda_stars_hll"))));
         jsonObject.put("lgK", 4);
         jsonObject.put("tgtHllType", "HLL_4");
 
@@ -98,12 +95,12 @@ public class HllSketchUnionPostAggregatorTest {
                         .build();
 
         JSONObject jsonObject = getHllSketchUnionPostAggregatorJSON();
-        jsonObject.put("fields", new JSONArray(
-                Arrays.asList(
-                        getFieldAccessPostAggregatorJSON("milky_way_stars_hll"),
-                        getFieldAccessPostAggregatorJSON("andromeda_stars_hll")
-                ))
-        );
+        jsonObject.put(
+                "fields",
+                new JSONArray(
+                        Arrays.asList(
+                                getFieldAccessPostAggregatorJSON("milky_way_stars_hll"),
+                                getFieldAccessPostAggregatorJSON("andromeda_stars_hll"))));
 
         String actualJSON = objectMapper.writeValueAsString(hllSketchUnionPostAggregator);
         String expectedJSON = jsonObject.toString();
@@ -123,8 +120,6 @@ public class HllSketchUnionPostAggregatorTest {
     public void testNullFields() {
 
         HllSketchUnionPostAggregator hllSketchUnionPostAggregator =
-                HllSketchUnionPostAggregator.builder()
-                        .name("andro_way_hll")
-                        .build();
+                HllSketchUnionPostAggregator.builder().name("andro_way_hll").build();
     }
 }

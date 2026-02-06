@@ -17,9 +17,8 @@
 package in.zapr.druid.druidry.query;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import in.zapr.druid.druidry.query.config.Context;
 import in.zapr.druid.druidry.dataSource.DataSource;
+import in.zapr.druid.druidry.query.config.Context;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -29,12 +28,10 @@ import lombok.NonNull;
 @EqualsAndHashCode
 public abstract class DruidQuery {
 
-    @NonNull
-    protected DataSource dataSource;
+    @NonNull protected DataSource dataSource;
 
     protected Context context;
 
     // Not making it public since this should be set by its children's constructor.
-    @NonNull
-    protected QueryType queryType;
+    @NonNull protected QueryType queryType;
 }

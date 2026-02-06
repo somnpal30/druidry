@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
+import java.util.Arrays;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,8 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Arrays;
+import tools.jackson.databind.ObjectMapper;
 
 public class TupleSketchAggregatorTest {
 
@@ -50,13 +48,14 @@ public class TupleSketchAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        TupleSketchAggregator tupleSketchAggregator = TupleSketchAggregator.builder()
-                .name("galaxy_tuple_sketch")
-                .fieldName("galaxy")
-                .nominalEntries(1024)
-                .numberOfValues(1)
-                .metricColumns(Arrays.asList("no_of_stars"))
-                .build();
+        TupleSketchAggregator tupleSketchAggregator =
+                TupleSketchAggregator.builder()
+                        .name("galaxy_tuple_sketch")
+                        .fieldName("galaxy")
+                        .nominalEntries(1024)
+                        .numberOfValues(1)
+                        .metricColumns(Arrays.asList("no_of_stars"))
+                        .build();
 
         JSONObject jsonObject = getTupleSketchAggregatorJSON();
         jsonObject.put("nominalEntries", 1024);
@@ -71,10 +70,11 @@ public class TupleSketchAggregatorTest {
     @Test
     public void testRequiredFields() throws JacksonException, JSONException {
 
-        TupleSketchAggregator tupleSketchAggregator = TupleSketchAggregator.builder()
-                .name("galaxy_tuple_sketch")
-                .fieldName("galaxy")
-                .build();
+        TupleSketchAggregator tupleSketchAggregator =
+                TupleSketchAggregator.builder()
+                        .name("galaxy_tuple_sketch")
+                        .fieldName("galaxy")
+                        .build();
 
         JSONObject jsonObject = getTupleSketchAggregatorJSON();
 
@@ -86,26 +86,25 @@ public class TupleSketchAggregatorTest {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void preconditionCheck() {
 
-        TupleSketchAggregator tupleSketchAggregator = TupleSketchAggregator.builder()
-                .name("galaxy_tuple_sketch")
-                .fieldName("galaxy")
-                .nominalEntries(3)
-                .build();
+        TupleSketchAggregator tupleSketchAggregator =
+                TupleSketchAggregator.builder()
+                        .name("galaxy_tuple_sketch")
+                        .fieldName("galaxy")
+                        .nominalEntries(3)
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
 
-        TupleSketchAggregator tupleSketchAggregator = TupleSketchAggregator.builder()
-                .fieldName("galaxy")
-                .build();
+        TupleSketchAggregator tupleSketchAggregator =
+                TupleSketchAggregator.builder().fieldName("galaxy").build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() {
 
-        TupleSketchAggregator tupleSketchAggregator = TupleSketchAggregator.builder()
-                .name("galaxy_tuple_sketch")
-                .build();
+        TupleSketchAggregator tupleSketchAggregator =
+                TupleSketchAggregator.builder().name("galaxy_tuple_sketch").build();
     }
 }

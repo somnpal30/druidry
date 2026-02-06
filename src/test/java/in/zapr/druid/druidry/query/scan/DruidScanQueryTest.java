@@ -16,8 +16,15 @@
 
 package in.zapr.druid.druidry.query.scan;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.dataSource.TableDataSource;
+import in.zapr.druid.druidry.dimension.enums.OutputType;
+import in.zapr.druid.druidry.filter.DruidFilter;
+import in.zapr.druid.druidry.filter.SelectorFilter;
+import in.zapr.druid.druidry.query.config.Interval;
+import in.zapr.druid.druidry.virtualColumn.ExpressionVirtualColumn;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -26,17 +33,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import in.zapr.druid.druidry.query.config.Interval;
-import in.zapr.druid.druidry.dataSource.TableDataSource;
-import in.zapr.druid.druidry.dimension.enums.OutputType;
-import in.zapr.druid.druidry.filter.DruidFilter;
-import in.zapr.druid.druidry.filter.SelectorFilter;
-import in.zapr.druid.druidry.virtualColumn.ExpressionVirtualColumn;
+import tools.jackson.databind.ObjectMapper;
 
 public class DruidScanQueryTest {
     private static ObjectMapper objectMapper;
@@ -46,35 +43,35 @@ public class DruidScanQueryTest {
         objectMapper = new ObjectMapper();
     }
 
-
     @Test
     public void testSampleQuery() throws JacksonException, JSONException {
 
+        List<String> searchDimensions = Arrays.asList("dim1", "dim2");
 
-        List<String> searchDimensions
-                = Arrays.asList("dim1", "dim2");
-
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 3, 0,
-                0, 0, DateTimeZone.UTC);
+        DateTime startTime = new DateTime(2013, 1, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 3, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidFilter filter = new SelectorFilter("dim1", "value1");
 
-        DruidScanQuery query = DruidScanQuery.builder()
-                .dataSource(new TableDataSource("sample_datasource"))
-                .columns(searchDimensions)
-                .virtualColumns(Collections.singletonList(new ExpressionVirtualColumn("dim3", "dim1 + dim2", OutputType.FLOAT)))
-                .filter(filter)
-                .resultFormat(ResultFormat.LIST)
-                .intervals(Collections.singletonList(interval))
-                .batchSize(10000)
-                .limit(1000L)
-                .legacy(true)
-                .build();
+        DruidScanQuery query =
+                DruidScanQuery.builder()
+                        .dataSource(new TableDataSource("sample_datasource"))
+                        .columns(searchDimensions)
+                        .virtualColumns(
+                                Collections.singletonList(
+                                        new ExpressionVirtualColumn(
+                                                "dim3", "dim1 + dim2", OutputType.FLOAT)))
+                        .filter(filter)
+                        .resultFormat(ResultFormat.LIST)
+                        .intervals(Collections.singletonList(interval))
+                        .batchSize(10000)
+                        .limit(1000L)
+                        .legacy(true)
+                        .build();
 
-        String expectedJsonAsString = """
+        String expectedJsonAsString =
+                """
                 {
                   "queryType": "scan",
                   "dataSource": {
@@ -108,25 +105,23 @@ public class DruidScanQueryTest {
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(expectedJsonAsString, actualJson, JSONCompareMode.NON_EXTENSIBLE);
-
     }
 
     @Test
     public void testRequiredFields() throws JacksonException, JSONException {
 
-
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 3, 0,
-                0, 0, DateTimeZone.UTC);
+        DateTime startTime = new DateTime(2013, 1, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 3, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
-        DruidScanQuery query = DruidScanQuery.builder()
-                .dataSource(new TableDataSource("sample_datasource"))
-                .intervals(Collections.singletonList(interval))
-                .build();
+        DruidScanQuery query =
+                DruidScanQuery.builder()
+                        .dataSource(new TableDataSource("sample_datasource"))
+                        .intervals(Collections.singletonList(interval))
+                        .build();
 
-        String expectedJsonAsString = """
+        String expectedJsonAsString =
+                """
                 {
                   "queryType": "scan",
                   "dataSource": {
@@ -146,64 +141,58 @@ public class DruidScanQueryTest {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void preconditionLimitCheck() {
 
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 3, 0,
-                0, 0, DateTimeZone.UTC);
+        DateTime startTime = new DateTime(2013, 1, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 3, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
-        DruidScanQuery query = DruidScanQuery.builder()
-                .dataSource(new TableDataSource("sample_datasource"))
-                .intervals(Collections.singletonList(interval))
-                .limit(-1L)
-                .build();
-
+        DruidScanQuery query =
+                DruidScanQuery.builder()
+                        .dataSource(new TableDataSource("sample_datasource"))
+                        .intervals(Collections.singletonList(interval))
+                        .limit(-1L)
+                        .build();
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void preconditionBatchSizeCheck() {
 
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 3, 0,
-                0, 0, DateTimeZone.UTC);
+        DateTime startTime = new DateTime(2013, 1, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 3, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
-        DruidScanQuery query = DruidScanQuery.builder()
-                .dataSource(new TableDataSource("sample_datasource"))
-                .intervals(Collections.singletonList(interval))
-                .batchSize(-1)
-                .build();
-
+        DruidScanQuery query =
+                DruidScanQuery.builder()
+                        .dataSource(new TableDataSource("sample_datasource"))
+                        .intervals(Collections.singletonList(interval))
+                        .batchSize(-1)
+                        .build();
     }
 
     @Test
     public void testSampleQueryWithEmptyLines() throws JacksonException, JSONException {
 
+        List<String> searchDimensions = Arrays.asList();
 
-        List<String> searchDimensions
-                = Arrays.asList();
-
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 3, 0,
-                0, 0, DateTimeZone.UTC);
+        DateTime startTime = new DateTime(2013, 1, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 3, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         DruidFilter filter = new SelectorFilter("dim1", "value1");
 
-        DruidScanQuery query = DruidScanQuery.builder()
-                .dataSource(new TableDataSource("sample_datasource"))
-                .columns(searchDimensions)
-                .filter(filter)
-                .resultFormat(ResultFormat.LIST)
-                .intervals(Collections.singletonList(interval))
-                .batchSize(10000)
-                .limit(1000L)
-                .legacy(true)
-                .build();
+        DruidScanQuery query =
+                DruidScanQuery.builder()
+                        .dataSource(new TableDataSource("sample_datasource"))
+                        .columns(searchDimensions)
+                        .filter(filter)
+                        .resultFormat(ResultFormat.LIST)
+                        .intervals(Collections.singletonList(interval))
+                        .batchSize(10000)
+                        .limit(1000L)
+                        .legacy(true)
+                        .build();
 
-        String expectedJsonAsString = """
+        String expectedJsonAsString =
+                """
                 {
                   "queryType": "scan",
                   "dataSource": {
@@ -229,6 +218,5 @@ public class DruidScanQueryTest {
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
-
     }
 }

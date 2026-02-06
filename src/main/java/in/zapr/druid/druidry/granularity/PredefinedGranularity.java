@@ -19,7 +19,6 @@ package in.zapr.druid.druidry.granularity;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum PredefinedGranularity {
-
     NONE("none"),
     ALL("all"),
     SECOND("second"),

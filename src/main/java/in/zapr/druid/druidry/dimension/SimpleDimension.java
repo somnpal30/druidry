@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.dimension;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)

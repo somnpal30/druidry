@@ -16,8 +16,8 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import java.util.Collections;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,10 +26,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Collections;
-
-import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import tools.jackson.databind.ObjectMapper;
 
 public class ThetaSketchEstimatePostAggregatorTest {
 
@@ -57,7 +54,6 @@ public class ThetaSketchEstimatePostAggregatorTest {
         ThetaSketchEstimatePostAggregator thetaSketchEstimatePostAggregator =
                 new ThetaSketchEstimatePostAggregator("estimate_stars", fieldAccessPostAggregator);
 
-
         JSONObject fieldAccess = getFieldAccessJSON();
 
         JSONObject jsonObject = new JSONObject();
@@ -68,7 +64,6 @@ public class ThetaSketchEstimatePostAggregatorTest {
         String actualJSON = objectMapper.writeValueAsString(thetaSketchEstimatePostAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
-
     }
 
     @Test
@@ -78,8 +73,8 @@ public class ThetaSketchEstimatePostAggregatorTest {
                 new FieldAccessPostAggregator("stars");
 
         ThetaSketchEstimatePostAggregator thetaSketchEstimatePostAggregator =
-                new ThetaSketchEstimatePostAggregator("estimate_stars", fieldAccessPostAggregator, 2);
-
+                new ThetaSketchEstimatePostAggregator(
+                        "estimate_stars", fieldAccessPostAggregator, 2);
 
         JSONObject fieldAccess = getFieldAccessJSON();
 
@@ -92,7 +87,6 @@ public class ThetaSketchEstimatePostAggregatorTest {
         String actualJSON = objectMapper.writeValueAsString(thetaSketchEstimatePostAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
-
     }
 
     @Test
@@ -101,15 +95,16 @@ public class ThetaSketchEstimatePostAggregatorTest {
         FieldAccessPostAggregator fieldAccessPostAggregator =
                 new FieldAccessPostAggregator("stars");
 
-        ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator = ThetaSketchSetOpPostAggregator.builder()
-                .name("name")
-                .function(ThetaSketchFunction.INTERSECT)
-                .fields(Collections.singletonList(fieldAccessPostAggregator))
-                .build();
+        ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator =
+                ThetaSketchSetOpPostAggregator.builder()
+                        .name("name")
+                        .function(ThetaSketchFunction.INTERSECT)
+                        .fields(Collections.singletonList(fieldAccessPostAggregator))
+                        .build();
 
         ThetaSketchEstimatePostAggregator thetaSketchEstimatePostAggregator =
-                new ThetaSketchEstimatePostAggregator("estimate_stars", thetaSketchSetOpPostAggregator, 2);
-
+                new ThetaSketchEstimatePostAggregator(
+                        "estimate_stars", thetaSketchSetOpPostAggregator, 2);
 
         JSONObject fieldAccess = getFieldAccessJSON();
 
@@ -145,5 +140,4 @@ public class ThetaSketchEstimatePostAggregatorTest {
         ThetaSketchEstimatePostAggregator thetaSketchEstimatePostAggregator =
                 new ThetaSketchEstimatePostAggregator("estimate_stars", null);
     }
-
 }

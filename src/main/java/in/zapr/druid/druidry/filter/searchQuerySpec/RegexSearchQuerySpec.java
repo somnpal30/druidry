@@ -22,7 +22,7 @@ import lombok.NonNull;
 
 @Getter
 public class RegexSearchQuerySpec extends SearchQuerySpec {
-    private final static String REGEX_SEARCH_QUERY_SPEC = "regex";
+    private static final String REGEX_SEARCH_QUERY_SPEC = "regex";
 
     private String pattern;
 

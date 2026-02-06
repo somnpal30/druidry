@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.filter;
 
 import java.util.Optional;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;

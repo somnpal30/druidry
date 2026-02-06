@@ -17,9 +17,7 @@
 package in.zapr.druid.druidry.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -43,11 +41,12 @@ public class JavaScriptAggregator extends DruidAggregator {
     private String functionReset;
 
     @Builder
-    private JavaScriptAggregator(@NonNull String name,
-                                 @NonNull List<String> fieldNames,
-                                 @NonNull String functionAggregate,
-                                 @NonNull String functionCombine,
-                                 @NonNull String functionReset) {
+    private JavaScriptAggregator(
+            @NonNull String name,
+            @NonNull List<String> fieldNames,
+            @NonNull String functionAggregate,
+            @NonNull String functionCombine,
+            @NonNull String functionReset) {
 
         this.type = JAVASCRIPT_AGGREGATOR_TYPE;
         this.name = name;

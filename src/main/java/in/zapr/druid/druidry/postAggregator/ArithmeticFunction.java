@@ -25,7 +25,6 @@ public enum ArithmeticFunction {
     DIVIDE("/"),
     QUOTIENT("quotient");
 
-
     private String value;
 
     ArithmeticFunction(String value) {

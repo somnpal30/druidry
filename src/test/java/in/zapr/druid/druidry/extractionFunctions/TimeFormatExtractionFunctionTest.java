@@ -16,8 +16,8 @@
 
 package in.zapr.druid.druidry.extractionFunctions;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.granularity.DurationGranularity;
+import java.util.Locale;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -26,10 +26,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Locale;
-
-import in.zapr.druid.druidry.granularity.DurationGranularity;
+import tools.jackson.databind.ObjectMapper;
 
 public class TimeFormatExtractionFunctionTest {
 
@@ -52,26 +49,29 @@ public class TimeFormatExtractionFunctionTest {
 
         DurationGranularity spec = new DurationGranularity(7200000, originDate);
 
-        TimeFormatExtractionFunction timeFormatExtractonFunction = TimeFormatExtractionFunction.builder()
-                .format(format)
-                .timeZone(timeZone)
-                .locale(locale)
-                .granularity(spec)
-                .asMillis(true)
-                .build();
+        TimeFormatExtractionFunction timeFormatExtractonFunction =
+                TimeFormatExtractionFunction.builder()
+                        .format(format)
+                        .timeZone(timeZone)
+                        .locale(locale)
+                        .granularity(spec)
+                        .asMillis(true)
+                        .build();
 
         String actualJSON = objectMapper.writeValueAsString(timeFormatExtractonFunction);
 
-        String expectedJSONString = "{\n\"type\" : \"timeFormat\",\n \"format\" : \"dd-MM-yyyy\",\n    \"timeZone\" : \"America/Montreal\",\n    \"locale\" : \"fr\",\n    \"granularity\": {\"type\": \"duration\", \"duration\": 7200000, \"origin\": \"" +
-                originDate.toDateTimeISO() +
-                "\"},\n    \"asMillis\": true\n\n  }";
+        String expectedJSONString =
+                "{\n\"type\" : \"timeFormat\",\n \"format\" : \"dd-MM-yyyy\",\n    \"timeZone\" : \"America/Montreal\",\n    \"locale\" : \"fr\",\n    \"granularity\": {\"type\": \"duration\", \"duration\": 7200000, \"origin\": \""
+                        + originDate.toDateTimeISO()
+                        + "\"},\n    \"asMillis\": true\n\n  }";
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test
     public void TestRequiredFields() throws JacksonException, JSONException {
-        TimeFormatExtractionFunction timeFormatExtractionFunction = TimeFormatExtractionFunction.builder().build();
+        TimeFormatExtractionFunction timeFormatExtractionFunction =
+                TimeFormatExtractionFunction.builder().build();
 
         String actualJSON = objectMapper.writeValueAsString(timeFormatExtractionFunction);
         String expectedJSONString = "{ \"type\" : \"timeFormat\" }\n";

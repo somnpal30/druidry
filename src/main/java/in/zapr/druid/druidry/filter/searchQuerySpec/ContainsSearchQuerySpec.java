@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.filter.searchQuerySpec;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -25,7 +24,7 @@ import lombok.NonNull;
 @Getter
 public class ContainsSearchQuerySpec extends SearchQuerySpec {
 
-    private final static String CONTAINS_SEARCH_QUERY_SPEC = "contains";
+    private static final String CONTAINS_SEARCH_QUERY_SPEC = "contains";
 
     private String value;
     private Boolean caseSensitive;

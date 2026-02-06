@@ -28,9 +28,11 @@ public class LongMeanNoNullsAverager extends DruidAverager {
     private static final String LONG_MEAN_NO_NULLS_AVERAGER = "longMeanNoNulls";
 
     @Builder
-    private LongMeanNoNullsAverager(@NonNull String name, @NonNull String fieldName,
-                             @NonNull Integer buckets, Integer cycleSize) {
+    private LongMeanNoNullsAverager(
+            @NonNull String name,
+            @NonNull String fieldName,
+            @NonNull Integer buckets,
+            Integer cycleSize) {
         super(LONG_MEAN_NO_NULLS_AVERAGER, name, fieldName, buckets, cycleSize);
     }
-
 }

@@ -19,7 +19,6 @@ package in.zapr.druid.druidry.query;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum QueryType {
-
     TIMESERIES("timeseries"),
     TOPN("topN"),
     GROUP_BY("groupBy"),

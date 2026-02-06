@@ -16,9 +16,7 @@
 package in.zapr.druid.druidry.query.select;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.util.Map;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,11 +29,9 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class PagingSpec {
-    @NonNull
-    private Integer threshold;
+    @NonNull private Integer threshold;
 
     private Boolean fromNext;
 
-    @NonNull
-    private Map<String, Integer> pagingIdentifiers;
+    @NonNull private Map<String, Integer> pagingIdentifiers;
 }

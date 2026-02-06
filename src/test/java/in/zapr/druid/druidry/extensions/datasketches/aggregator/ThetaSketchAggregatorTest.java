@@ -16,8 +16,6 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,6 +23,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class ThetaSketchAggregatorTest {
 
@@ -47,12 +46,13 @@ public class ThetaSketchAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        ThetaSketchAggregator thetaSketchAggregator = ThetaSketchAggregator.builder()
-                .name("estimated_stars")
-                .fieldName("stars")
-                .isInputThetaSketch(true)
-                .size(1024L)
-                .build();
+        ThetaSketchAggregator thetaSketchAggregator =
+                ThetaSketchAggregator.builder()
+                        .name("estimated_stars")
+                        .fieldName("stars")
+                        .isInputThetaSketch(true)
+                        .size(1024L)
+                        .build();
 
         JSONObject jsonObject = getThetaSketchAggregatorJSON();
         jsonObject.put("isInputThetaSketch", true);
@@ -66,10 +66,8 @@ public class ThetaSketchAggregatorTest {
     @Test
     public void testRequiredFields() throws JacksonException, JSONException {
 
-        ThetaSketchAggregator thetaSketchAggregator = ThetaSketchAggregator.builder()
-                .name("estimated_stars")
-                .fieldName("stars")
-                .build();
+        ThetaSketchAggregator thetaSketchAggregator =
+                ThetaSketchAggregator.builder().name("estimated_stars").fieldName("stars").build();
 
         JSONObject jsonObject = getThetaSketchAggregatorJSON();
 
@@ -81,27 +79,25 @@ public class ThetaSketchAggregatorTest {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void preconditionCheck() {
 
-        ThetaSketchAggregator thetaSketchAggregator = ThetaSketchAggregator.builder()
-                .name("estimated_stars")
-                .fieldName("stars")
-                .size(420L)
-                .build();
+        ThetaSketchAggregator thetaSketchAggregator =
+                ThetaSketchAggregator.builder()
+                        .name("estimated_stars")
+                        .fieldName("stars")
+                        .size(420L)
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
 
-        ThetaSketchAggregator thetaSketchAggregator = ThetaSketchAggregator.builder()
-                .fieldName("stars")
-                .build();
+        ThetaSketchAggregator thetaSketchAggregator =
+                ThetaSketchAggregator.builder().fieldName("stars").build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() {
 
-        ThetaSketchAggregator thetaSketchAggregator = ThetaSketchAggregator.builder()
-                .name("estimated_stars")
-                .build();
+        ThetaSketchAggregator thetaSketchAggregator =
+                ThetaSketchAggregator.builder().name("estimated_stars").build();
     }
-
 }

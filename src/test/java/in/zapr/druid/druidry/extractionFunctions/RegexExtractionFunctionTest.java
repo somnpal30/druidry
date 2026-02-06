@@ -16,14 +16,13 @@
 
 package in.zapr.druid.druidry.extractionFunctions;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class RegexExtractionFunctionTest {
     private static ObjectMapper objectMapper;
@@ -35,24 +34,25 @@ public class RegexExtractionFunctionTest {
 
     @Test
     public void testAllFields() throws JacksonException, JSONException {
-        RegexExtractionFunction regexExtractionFunction = RegexExtractionFunction.builder()
-                .expr("abcd")
-                .replaceMissingValue(true)
-                .replaceMissingValueWith("xyz")
-                .build();
+        RegexExtractionFunction regexExtractionFunction =
+                RegexExtractionFunction.builder()
+                        .expr("abcd")
+                        .replaceMissingValue(true)
+                        .replaceMissingValueWith("xyz")
+                        .build();
 
         String actualJSON = objectMapper.writeValueAsString(regexExtractionFunction);
 
-        String expectedJSONString = "{\n  \"type\" : \"regex\", \"expr\" : \"abcd\",\n  \"replaceMissingValue\" : true,\n  \"replaceMissingValueWith\" : \"xyz\"\n}";
+        String expectedJSONString =
+                "{\n  \"type\" : \"regex\", \"expr\" : \"abcd\",\n  \"replaceMissingValue\" : true,\n  \"replaceMissingValueWith\" : \"xyz\"\n}";
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test
     public void testRequiredValues() throws JacksonException, JSONException {
-        RegexExtractionFunction regexExtractionFunction = RegexExtractionFunction.builder()
-                .expr("abcd")
-                .build();
+        RegexExtractionFunction regexExtractionFunction =
+                RegexExtractionFunction.builder().expr("abcd").build();
 
         String actualJSON = objectMapper.writeValueAsString(regexExtractionFunction);
 
@@ -63,7 +63,6 @@ public class RegexExtractionFunctionTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testExprField() {
-        RegexExtractionFunction regexExtractionFunction = RegexExtractionFunction.builder()
-                .build();
+        RegexExtractionFunction regexExtractionFunction = RegexExtractionFunction.builder().build();
     }
 }

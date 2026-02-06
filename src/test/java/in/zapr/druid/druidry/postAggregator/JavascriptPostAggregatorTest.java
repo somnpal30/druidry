@@ -16,7 +16,10 @@
 
 package in.zapr.druid.druidry.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,12 +29,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class JavascriptPostAggregatorTest {
@@ -48,11 +46,12 @@ public class JavascriptPostAggregatorTest {
 
         List<String> fields = Arrays.asList("Cardinal", "Aggregator");
 
-        JavaScriptPostAggregator javaScriptPostAggregator = JavaScriptPostAggregator.builder()
-                .name("Hello")
-                .fieldNames(fields)
-                .function("fn")
-                .build();
+        JavaScriptPostAggregator javaScriptPostAggregator =
+                JavaScriptPostAggregator.builder()
+                        .name("Hello")
+                        .fieldNames(fields)
+                        .function("fn")
+                        .build();
 
         JSONArray fieldJsonArray = new JSONArray(fields);
 
@@ -72,19 +71,15 @@ public class JavascriptPostAggregatorTest {
 
         List<String> fields = Arrays.asList("Cardinal", "Aggregator");
 
-        JavaScriptPostAggregator javaScriptPostAggregator = JavaScriptPostAggregator.builder()
-                .fieldNames(fields)
-                .function("fn")
-                .build();
+        JavaScriptPostAggregator javaScriptPostAggregator =
+                JavaScriptPostAggregator.builder().fieldNames(fields).function("fn").build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testMissingFieldsField() {
 
-        JavaScriptPostAggregator javaScriptPostAggregator = JavaScriptPostAggregator.builder()
-                .name("Hello")
-                .function("fn")
-                .build();
+        JavaScriptPostAggregator javaScriptPostAggregator =
+                JavaScriptPostAggregator.builder().name("Hello").function("fn").build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
@@ -92,55 +87,57 @@ public class JavascriptPostAggregatorTest {
 
         List<String> fields = Arrays.asList("Cardinal", "Aggregator");
 
-        JavaScriptPostAggregator javaScriptPostAggregator = JavaScriptPostAggregator.builder()
-                .name("Hello")
-                .fieldNames(fields)
-                .build();
+        JavaScriptPostAggregator javaScriptPostAggregator =
+                JavaScriptPostAggregator.builder().name("Hello").fieldNames(fields).build();
     }
 
     @Test
     public void testEqualsPositive() {
-        JavaScriptPostAggregator aggregator1 = JavaScriptPostAggregator.builder()
-                .name("Hello")
-                .fieldNames(Collections.singletonList("Field"))
-                .function("fn")
-                .build();
+        JavaScriptPostAggregator aggregator1 =
+                JavaScriptPostAggregator.builder()
+                        .name("Hello")
+                        .fieldNames(Collections.singletonList("Field"))
+                        .function("fn")
+                        .build();
 
-        JavaScriptPostAggregator aggregator2 = JavaScriptPostAggregator.builder()
-                .name("Hello")
-                .fieldNames(Collections.singletonList("Field"))
-                .function("fn")
-                .build();
+        JavaScriptPostAggregator aggregator2 =
+                JavaScriptPostAggregator.builder()
+                        .name("Hello")
+                        .fieldNames(Collections.singletonList("Field"))
+                        .function("fn")
+                        .build();
 
         Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
     }
 
     @Test
     public void testEqualsNegative() {
-        JavaScriptPostAggregator aggregator1 = JavaScriptPostAggregator.builder()
-                .name("Hello")
-                .fieldNames(Collections.singletonList("Field"))
-                .function("fn")
-                .build();
+        JavaScriptPostAggregator aggregator1 =
+                JavaScriptPostAggregator.builder()
+                        .name("Hello")
+                        .fieldNames(Collections.singletonList("Field"))
+                        .function("fn")
+                        .build();
 
-        JavaScriptPostAggregator aggregator2 = JavaScriptPostAggregator.builder()
-                .name("Hello")
-                .fieldNames(Collections.singletonList("Field"))
-                .function("helloWordd()")
-                .build();
+        JavaScriptPostAggregator aggregator2 =
+                JavaScriptPostAggregator.builder()
+                        .name("Hello")
+                        .fieldNames(Collections.singletonList("Field"))
+                        .function("helloWordd()")
+                        .build();
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
 
     @Test
     public void testEqualsWithAnotherSubClass() {
-        JavaScriptPostAggregator aggregator1 = JavaScriptPostAggregator.builder()
-                .name("Hello")
-                .fieldNames(Collections.singletonList("Field"))
-                .function("fn")
-                .build();
-        FieldAccessPostAggregator aggregator2
-                = new FieldAccessPostAggregator("Hello", "Yaha");
+        JavaScriptPostAggregator aggregator1 =
+                JavaScriptPostAggregator.builder()
+                        .name("Hello")
+                        .fieldNames(Collections.singletonList("Field"))
+                        .function("fn")
+                        .build();
+        FieldAccessPostAggregator aggregator2 = new FieldAccessPostAggregator("Hello", "Yaha");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }

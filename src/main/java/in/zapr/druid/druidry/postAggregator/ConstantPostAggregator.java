@@ -24,7 +24,7 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public class ConstantPostAggregator extends DruidPostAggregator {
 
-    private final static String CONSTANT_POST_AGGREGATOR_TYPE = "constant";
+    private static final String CONSTANT_POST_AGGREGATOR_TYPE = "constant";
 
     private Double value;
 

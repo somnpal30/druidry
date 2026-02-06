@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import in.zapr.druid.druidry.filter.DruidFilter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

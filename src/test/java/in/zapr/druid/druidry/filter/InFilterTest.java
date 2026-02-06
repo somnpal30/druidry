@@ -16,8 +16,8 @@
 
 package in.zapr.druid.druidry.filter;
 
-import tools.jackson.databind.ObjectMapper;
-
+import java.util.Arrays;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,9 +26,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Arrays;
-import java.util.List;
+import tools.jackson.databind.ObjectMapper;
 
 public class InFilterTest {
 
@@ -66,5 +64,4 @@ public class InFilterTest {
     public void testValueMissing() {
         InFilter filter = new InFilter("Hello", null);
     }
-
 }

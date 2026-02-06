@@ -16,11 +16,10 @@
 
 package in.zapr.druid.druidry.client;
 
-import org.apache.commons.lang3.StringUtils;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 @Getter
 @Setter
@@ -29,14 +28,10 @@ public class DruidConfiguration {
     private static final int DEFAULT_HTTP_PORT = 8082;
     private static final int DEFAULT_HTTPS_PORT = 8282;
 
-    /**
-     * Protocol by which Druid Broker is accessible Defaults to HTTP
-     */
+    /** Protocol by which Druid Broker is accessible Defaults to HTTP */
     private DruidQueryProtocol protocol;
 
-    /**
-     * Address of Druid Broker Instance
-     */
+    /** Address of Druid Broker Instance */
     private String host;
 
     /**
@@ -45,9 +40,7 @@ public class DruidConfiguration {
      */
     private Integer port;
 
-    /**
-     * Endpoint (without host address) at which query needs to be fired
-     */
+    /** Endpoint (without host address) at which query needs to be fired */
     private String endpoint;
 
     /**
@@ -57,11 +50,12 @@ public class DruidConfiguration {
     private Integer concurrentConnectionsRequired;
 
     @Builder
-    private DruidConfiguration(DruidQueryProtocol protocol,
-                               String host,
-                               Integer port,
-                               String endpoint,
-                               Integer concurrentConnectionsRequired) {
+    private DruidConfiguration(
+            DruidQueryProtocol protocol,
+            String host,
+            Integer port,
+            String endpoint,
+            Integer concurrentConnectionsRequired) {
 
         if (StringUtils.isEmpty(host)) {
             throw new IllegalArgumentException("Host cannot be null or empty");
@@ -97,11 +91,8 @@ public class DruidConfiguration {
             endpoint = "";
         }
 
-        return "%s://%s:%d/%s".formatted(
-                this.getProtocol(),
-                this.getHost(),
-                this.getPort(),
-                endpoint);
+        return "%s://%s:%d/%s"
+                .formatted(this.getProtocol(), this.getHost(), this.getPort(), endpoint);
     }
 
     private Integer getDefaultPortOnBasisOfProtocol(DruidQueryProtocol protocol) {

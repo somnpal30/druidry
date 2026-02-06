@@ -33,5 +33,4 @@ public class NumericMetric extends TopNMetric {
         this.type = NUMERIC_METRIC_TYPE;
         this.metric = metric;
     }
-
 }

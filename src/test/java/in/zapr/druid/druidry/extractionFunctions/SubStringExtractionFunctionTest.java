@@ -16,14 +16,13 @@
 
 package in.zapr.druid.druidry.extractionFunctions;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class SubStringExtractionFunctionTest {
     private static ObjectMapper objectMapper;
@@ -35,23 +34,19 @@ public class SubStringExtractionFunctionTest {
 
     @Test
     public void testAllFields() throws JacksonException, JSONException {
-        SubStringExtractionFunction subStringExtractionFunction = SubStringExtractionFunction.builder()
-                .index(1)
-                .length(4)
-                .build();
+        SubStringExtractionFunction subStringExtractionFunction =
+                SubStringExtractionFunction.builder().index(1).length(4).build();
         String actualJSON = objectMapper.writeValueAsString(subStringExtractionFunction);
 
         String expectedJSONString = "{ \"type\" : \"substring\", \"index\" : 1, \"length\" : 4 }\n";
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
-
     }
 
     @Test
     public void testRequiredValues() throws JacksonException, JSONException {
-        SubStringExtractionFunction subStringExtractionFunction = SubStringExtractionFunction.builder()
-                .index(1)
-                .build();
+        SubStringExtractionFunction subStringExtractionFunction =
+                SubStringExtractionFunction.builder().index(1).build();
         String actualJSON = objectMapper.writeValueAsString(subStringExtractionFunction);
 
         String expectedJSONString = "{ \"type\" : \"substring\", \"index\" : 1}\n";
@@ -61,8 +56,7 @@ public class SubStringExtractionFunctionTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testIndexField() {
-        SubStringExtractionFunction subStringExtractionFunction = SubStringExtractionFunction.builder()
-                .build();
+        SubStringExtractionFunction subStringExtractionFunction =
+                SubStringExtractionFunction.builder().build();
     }
-
 }

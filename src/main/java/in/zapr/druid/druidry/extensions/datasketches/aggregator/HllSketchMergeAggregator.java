@@ -18,7 +18,6 @@ package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -34,19 +33,20 @@ public class HllSketchMergeAggregator extends DruidAggregator {
 
     private String fieldName;
     private Integer lgK;
+
     @JsonProperty("tgtHllType")
     private TargetHllType targetHllType;
 
     @Builder
-    private HllSketchMergeAggregator(@NonNull String name,
-                                     @NonNull String fieldName,
-                                     Integer lgK,
-                                     TargetHllType targetHllType) {
+    private HllSketchMergeAggregator(
+            @NonNull String name,
+            @NonNull String fieldName,
+            Integer lgK,
+            TargetHllType targetHllType) {
         this.type = HLL_SKETCH_MERGE_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
         this.lgK = lgK;
         this.targetHllType = targetHllType;
     }
-
 }

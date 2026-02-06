@@ -30,16 +30,10 @@ import in.zapr.druid.druidry.averager.LongSumAverager;
 
 class MovingAverageCreators {
 
-    private MovingAverageCreators() {
-
-    }
+    private MovingAverageCreators() {}
 
     static DruidAverager doubleMax(String name, String fieldName, int buckets) {
-        return DoubleMaxAverager.builder()
-                .name(name)
-                .fieldName(fieldName)
-                .buckets(buckets)
-                .build();
+        return DoubleMaxAverager.builder().name(name).fieldName(fieldName).buckets(buckets).build();
     }
 
     public static DruidAverager doubleMean(String name, String fieldName, int buckets) {
@@ -59,35 +53,19 @@ class MovingAverageCreators {
     }
 
     public static DruidAverager doubleMin(String name, String fieldName, int buckets) {
-        return DoubleMinAverager.builder()
-                .name(name)
-                .fieldName(fieldName)
-                .buckets(buckets)
-                .build();
+        return DoubleMinAverager.builder().name(name).fieldName(fieldName).buckets(buckets).build();
     }
 
     public static DruidAverager doubleSum(String name, String fieldName, int buckets) {
-        return DoubleSumAverager.builder()
-                .name(name)
-                .fieldName(fieldName)
-                .buckets(buckets)
-                .build();
+        return DoubleSumAverager.builder().name(name).fieldName(fieldName).buckets(buckets).build();
     }
 
     public static DruidAverager longMax(String name, String fieldName, int buckets) {
-        return LongMaxAverager.builder()
-                .name(name)
-                .fieldName(fieldName)
-                .buckets(buckets)
-                .build();
+        return LongMaxAverager.builder().name(name).fieldName(fieldName).buckets(buckets).build();
     }
 
     public static DruidAverager longMean(String name, String fieldName, int buckets) {
-        return LongMeanAverager.builder()
-                .name(name)
-                .fieldName(fieldName)
-                .buckets(buckets)
-                .build();
+        return LongMeanAverager.builder().name(name).fieldName(fieldName).buckets(buckets).build();
     }
 
     public static DruidAverager longMeanNoNulls(String name, String fieldName, int buckets) {
@@ -99,26 +77,16 @@ class MovingAverageCreators {
     }
 
     public static DruidAverager longMin(String name, String fieldName, int buckets) {
-        return LongMinAverager.builder()
-                .name(name)
-                .fieldName(fieldName)
-                .buckets(buckets)
-                .build();
+        return LongMinAverager.builder().name(name).fieldName(fieldName).buckets(buckets).build();
     }
 
     public static DruidAverager longSum(String name, String fieldName, int buckets) {
-        return LongSumAverager.builder()
-                .name(name)
-                .fieldName(fieldName)
-                .buckets(buckets)
-                .build();
+        return LongSumAverager.builder().name(name).fieldName(fieldName).buckets(buckets).build();
     }
 
     @FunctionalInterface
     interface Creator {
 
         DruidAverager apply(String name, String fieldName, int buckets);
-
     }
-
 }

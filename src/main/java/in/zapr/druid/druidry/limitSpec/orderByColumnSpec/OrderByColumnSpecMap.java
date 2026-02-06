@@ -31,7 +31,8 @@ public class OrderByColumnSpecMap extends OrderByColumnSpec {
     private String direction;
     private SortingOrder dimensionOrder;
 
-    public OrderByColumnSpecMap(String dimension, boolean isAscending, SortingOrder dimensionOrder) {
+    public OrderByColumnSpecMap(
+            String dimension, boolean isAscending, SortingOrder dimensionOrder) {
         this.dimension = dimension;
         this.direction = isAscending ? ASCENDING_ORDER : DESCENDING_ORDER;
         this.dimensionOrder = dimensionOrder;

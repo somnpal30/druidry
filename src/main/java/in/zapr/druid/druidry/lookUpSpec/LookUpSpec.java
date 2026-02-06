@@ -16,5 +16,4 @@
 
 package in.zapr.druid.druidry.lookUpSpec;
 
-public abstract class LookUpSpec {
-}
+public abstract class LookUpSpec {}

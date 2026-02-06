@@ -28,9 +28,11 @@ public class DoubleSumAverager extends DruidAverager {
     private static final String DOUBLE_SUM_AVERAGER = "doubleSum";
 
     @Builder
-    private DoubleSumAverager(@NonNull String name, @NonNull String fieldName,
-                              @NonNull Integer buckets, Integer cycleSize) {
+    private DoubleSumAverager(
+            @NonNull String name,
+            @NonNull String fieldName,
+            @NonNull Integer buckets,
+            Integer cycleSize) {
         super(DOUBLE_SUM_AVERAGER, name, fieldName, buckets, cycleSize);
     }
-
 }

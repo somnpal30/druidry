@@ -16,8 +16,9 @@
 
 package in.zapr.druid.druidry.filter;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.query.config.Interval;
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
@@ -28,11 +29,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import in.zapr.druid.druidry.query.config.Interval;
+import tools.jackson.databind.ObjectMapper;
 
 public class IntervalFilterTest {
 
@@ -58,30 +55,28 @@ public class IntervalFilterTest {
     @Test
     public void testFields() throws JacksonException, JSONException {
 
-        JSONArray intervalJsonArray
-                = new JSONArray(Arrays.asList("2013-08-31T00:00:00.000Z/2013-09-03T00:00:00.000Z",
-                "2018-08-31T00:00:00.000Z/2018-09-03T00:00:00.000Z"));
+        JSONArray intervalJsonArray =
+                new JSONArray(
+                        Arrays.asList(
+                                "2013-08-31T00:00:00.000Z/2013-09-03T00:00:00.000Z",
+                                "2018-08-31T00:00:00.000Z/2018-09-03T00:00:00.000Z"));
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "interval");
         jsonObject.put("dimension", "__time");
         jsonObject.put("intervals", intervalJsonArray);
 
-        DateTime startTimeInterval1 = new DateTime(2013, 8, 31,
-                0, 0, 0, DateTimeZone.UTC);
-        DateTime endTimeInterval1 = new DateTime(2013, 9, 3,
-                0, 0, 0, DateTimeZone.UTC);
+        DateTime startTimeInterval1 = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTimeInterval1 = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
 
-        DateTime startTimeInterval2 = new DateTime(2018, 8, 31,
-                0, 0, 0, DateTimeZone.UTC);
-        DateTime endTimeInterval2 = new DateTime(2018, 9, 3,
-                0, 0, 0, DateTimeZone.UTC);
+        DateTime startTimeInterval2 = new DateTime(2018, 8, 31, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTimeInterval2 = new DateTime(2018, 9, 3, 0, 0, 0, DateTimeZone.UTC);
 
         Interval interval1 = new Interval(startTimeInterval1, endTimeInterval1);
         Interval interval2 = new Interval(startTimeInterval2, endTimeInterval2);
 
-        IntervalFilter intervalFilter
-                = new IntervalFilter("__time", Arrays.asList(interval1, interval2));
+        IntervalFilter intervalFilter =
+                new IntervalFilter("__time", Arrays.asList(interval1, interval2));
 
         String actualJSON = objectMapper.writeValueAsString(intervalFilter);
         String expectedJSON = jsonObject.toString();

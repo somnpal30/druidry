@@ -17,9 +17,7 @@
 package in.zapr.druid.druidry.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.util.List;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,11 +29,12 @@ import lombok.NonNull;
 public class CardinalityAggregator extends DruidAggregator {
 
     private static final String CARDINALITY_AGGREGATOR_TYPE = "cardinality";
-    private List<String> fields;
-    private Boolean byRow;
+    private final List<String> fields;
+    private final Boolean byRow;
 
     @Builder
-    private CardinalityAggregator(@NonNull String name, @NonNull List<String> fields, Boolean byRow) {
+    private CardinalityAggregator(
+            @NonNull String name, @NonNull List<String> fields, Boolean byRow) {
         this.type = CARDINALITY_AGGREGATOR_TYPE;
         this.name = name;
         this.fields = fields;

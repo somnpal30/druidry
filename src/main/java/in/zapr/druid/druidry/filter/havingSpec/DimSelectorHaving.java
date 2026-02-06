@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.filter.havingSpec;
 
 import java.util.Optional;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -28,7 +27,6 @@ public class DimSelectorHaving extends HavingSpec {
     private static String DIM_SELECTOR_DRUID_HAVING_TYPE = "dimSelector";
     protected String dimension;
     protected Object value;
-
 
     private DimSelectorHaving(@NonNull String dimension) {
         this.type = DIM_SELECTOR_DRUID_HAVING_TYPE;

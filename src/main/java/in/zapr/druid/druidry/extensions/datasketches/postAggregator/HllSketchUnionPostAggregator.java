@@ -18,11 +18,9 @@ package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.List;
-
 import in.zapr.druid.druidry.extensions.datasketches.aggregator.TargetHllType;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
+import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,19 +34,20 @@ public class HllSketchUnionPostAggregator extends DruidPostAggregator {
     private static final String HLL_SKETCH_UNION_POST_AGGREGATOR_TYPE = "HLLSketchUnion";
     private List<DruidPostAggregator> fields;
     private Integer lgK;
+
     @JsonProperty("tgtHllType")
     private TargetHllType targetHllType;
 
     @Builder
-    private HllSketchUnionPostAggregator(@NonNull String name,
-                                         @NonNull List<DruidPostAggregator> fields,
-                                         Integer lgK,
-                                         TargetHllType targetHllType) {
+    private HllSketchUnionPostAggregator(
+            @NonNull String name,
+            @NonNull List<DruidPostAggregator> fields,
+            Integer lgK,
+            TargetHllType targetHllType) {
         this.type = HLL_SKETCH_UNION_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.fields = fields;
         this.lgK = lgK;
         this.targetHllType = targetHllType;
     }
-
 }

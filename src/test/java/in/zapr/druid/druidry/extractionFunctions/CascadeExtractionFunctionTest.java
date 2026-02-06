@@ -16,17 +16,15 @@
 
 package in.zapr.druid.druidry.extractionFunctions;
 
-import tools.jackson.databind.ObjectMapper;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.ArrayList;
-import java.util.List;
+import tools.jackson.databind.ObjectMapper;
 
 public class CascadeExtractionFunctionTest {
     private static ObjectMapper objectMapper;
@@ -36,34 +34,32 @@ public class CascadeExtractionFunctionTest {
         objectMapper = new ObjectMapper();
     }
 
-
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
+        PartialExtractionFunction partialExtractionFunction =
+                PartialExtractionFunction.builder().expr("abcd").build();
 
-        PartialExtractionFunction partialExtractionFunction = PartialExtractionFunction.builder()
-                .expr("abcd")
-                .build();
-
-        StrLenExtractionFunction strLenExtractionFunction = StrLenExtractionFunction.builder().build();
-
+        StrLenExtractionFunction strLenExtractionFunction =
+                StrLenExtractionFunction.builder().build();
 
         List<ExtractionFunction> extractionFunctions = new ArrayList<>();
         extractionFunctions.add(partialExtractionFunction);
         extractionFunctions.add(strLenExtractionFunction);
 
-        CascadeExtractionFunction cascadeExtractionFunction = CascadeExtractionFunction.builder()
-                .extractionFns(extractionFunctions)
-                .build();
+        CascadeExtractionFunction cascadeExtractionFunction =
+                CascadeExtractionFunction.builder().extractionFns(extractionFunctions).build();
 
         String actualJSON = objectMapper.writeValueAsString(cascadeExtractionFunction);
 
-        String expecedJSONString = "{\n  \"type\" : \"cascade\", \n  \"extractionFns\": [\n    { \"type\" : \"partial\", \"expr\" : \"abcd\" },\n    { \n      \"type\" : \"strlen\" \n    }\n  ]\n}";
+        String expecedJSONString =
+                "{\n  \"type\" : \"cascade\", \n  \"extractionFns\": [\n    { \"type\" : \"partial\", \"expr\" : \"abcd\" },\n    { \n      \"type\" : \"strlen\" \n    }\n  ]\n}";
         JSONAssert.assertEquals(expecedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testExtractionFunctionsFields() {
-        CascadeExtractionFunction cascadeExtractionFunction = CascadeExtractionFunction.builder().build();
+        CascadeExtractionFunction cascadeExtractionFunction =
+                CascadeExtractionFunction.builder().build();
     }
 }

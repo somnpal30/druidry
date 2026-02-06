@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -29,18 +28,17 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public class QuantilesSketchToQuantilePostAggregator extends DruidPostAggregator {
 
-    private static final String QUANTILES_SKETCH_TO_QUANTILE_POST_AGGREGATOR_TYPE = "quantilesDoublesSketchToQuantile";
+    private static final String QUANTILES_SKETCH_TO_QUANTILE_POST_AGGREGATOR_TYPE =
+            "quantilesDoublesSketchToQuantile";
     private DruidPostAggregator field;
     private Double fraction;
 
     @Builder
-    private QuantilesSketchToQuantilePostAggregator(@NonNull String name,
-                                                    @NonNull DruidPostAggregator field,
-                                                    @NonNull Double fraction) {
+    private QuantilesSketchToQuantilePostAggregator(
+            @NonNull String name, @NonNull DruidPostAggregator field, @NonNull Double fraction) {
         this.type = QUANTILES_SKETCH_TO_QUANTILE_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.field = field;
         this.fraction = fraction;
     }
-
 }

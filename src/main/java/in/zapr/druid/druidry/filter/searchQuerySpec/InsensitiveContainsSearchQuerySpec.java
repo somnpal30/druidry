@@ -22,7 +22,7 @@ import lombok.NonNull;
 @Getter
 public class InsensitiveContainsSearchQuerySpec extends SearchQuerySpec {
 
-    private final static String INSENSITIVE_CONTAINS = "insensitive_contains";
+    private static final String INSENSITIVE_CONTAINS = "insensitive_contains";
 
     private String value;
 

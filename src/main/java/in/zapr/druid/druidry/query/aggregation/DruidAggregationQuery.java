@@ -17,16 +17,14 @@
 package in.zapr.druid.druidry.query.aggregation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.List;
-
-import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.query.DruidQuery;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.virtualColumn.DruidVirtualColumn;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 

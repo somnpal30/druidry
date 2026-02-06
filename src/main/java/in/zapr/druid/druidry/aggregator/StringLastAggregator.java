@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,12 +33,11 @@ public class StringLastAggregator extends DruidAggregator {
     private Integer maxStringBytes;
 
     @Builder
-    private StringLastAggregator(@NonNull String name, @NonNull String fieldName,
-                                 Integer maxStringBytes) {
+    private StringLastAggregator(
+            @NonNull String name, @NonNull String fieldName, Integer maxStringBytes) {
         this.type = STRING_LAST_TYPE;
         this.name = name;
         this.fieldName = fieldName;
         this.maxStringBytes = maxStringBytes;
     }
-
 }

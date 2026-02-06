@@ -16,11 +16,9 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.Preconditions;
 import com.google.common.math.LongMath;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -37,9 +35,7 @@ public class QuantilesSketchAggregator extends DruidAggregator {
     private Integer k;
 
     @Builder
-    private QuantilesSketchAggregator(@NonNull String name,
-                                      @NonNull String fieldName,
-                                      Integer k) {
+    private QuantilesSketchAggregator(@NonNull String name, @NonNull String fieldName, Integer k) {
         this.type = QUANTILES_SKETCH_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
@@ -49,5 +45,4 @@ public class QuantilesSketchAggregator extends DruidAggregator {
             Preconditions.checkArgument(LongMath.isPowerOfTwo(k), "k must be a power of 2");
         }
     }
-
 }

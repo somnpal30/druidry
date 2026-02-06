@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -27,7 +26,7 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public class FieldAccessPostAggregator extends DruidPostAggregator {
 
-    private final static String FIELD_ACCESS_POST_AGGREGATOR_TYPE = "fieldAccess";
+    private static final String FIELD_ACCESS_POST_AGGREGATOR_TYPE = "fieldAccess";
 
     private String fieldName;
 

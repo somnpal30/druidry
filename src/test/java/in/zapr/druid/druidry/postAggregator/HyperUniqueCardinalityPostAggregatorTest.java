@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class HyperUniqueCardinalityPostAggregatorTest {
@@ -40,8 +40,8 @@ public class HyperUniqueCardinalityPostAggregatorTest {
     @Test
     public void testArithmeticPostAggregatorAllFields() throws JacksonException, JSONException {
 
-        HyperUniqueCardinalityPostAggregator hyperUniqueCardinalityPostAggregator
-                = new HyperUniqueCardinalityPostAggregator("Hello", "World");
+        HyperUniqueCardinalityPostAggregator hyperUniqueCardinalityPostAggregator =
+                new HyperUniqueCardinalityPostAggregator("Hello", "World");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "hyperUniqueCardinality");
@@ -56,44 +56,42 @@ public class HyperUniqueCardinalityPostAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
 
-        HyperUniqueCardinalityPostAggregator hyperUniqueCardinalityPostAggregator
-                = new HyperUniqueCardinalityPostAggregator(null, "Haha");
+        HyperUniqueCardinalityPostAggregator hyperUniqueCardinalityPostAggregator =
+                new HyperUniqueCardinalityPostAggregator(null, "Haha");
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() {
 
-        HyperUniqueCardinalityPostAggregator hyperUniqueCardinalityPostAggregator
-                = new HyperUniqueCardinalityPostAggregator("Name",
-                null);
+        HyperUniqueCardinalityPostAggregator hyperUniqueCardinalityPostAggregator =
+                new HyperUniqueCardinalityPostAggregator("Name", null);
     }
 
     @Test
     public void testEqualsPositive() {
-        HyperUniqueCardinalityPostAggregator aggregator1
-                = new HyperUniqueCardinalityPostAggregator("Hello", "World");
-        HyperUniqueCardinalityPostAggregator aggregator2
-                = new HyperUniqueCardinalityPostAggregator("Hello", "World");
+        HyperUniqueCardinalityPostAggregator aggregator1 =
+                new HyperUniqueCardinalityPostAggregator("Hello", "World");
+        HyperUniqueCardinalityPostAggregator aggregator2 =
+                new HyperUniqueCardinalityPostAggregator("Hello", "World");
 
         Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
     }
 
     @Test
     public void testEqualsNegative() {
-        HyperUniqueCardinalityPostAggregator aggregator1
-                = new HyperUniqueCardinalityPostAggregator("Hello", "World");
-        HyperUniqueCardinalityPostAggregator aggregator2
-                = new HyperUniqueCardinalityPostAggregator("Hola", "Duniya");
+        HyperUniqueCardinalityPostAggregator aggregator1 =
+                new HyperUniqueCardinalityPostAggregator("Hello", "World");
+        HyperUniqueCardinalityPostAggregator aggregator2 =
+                new HyperUniqueCardinalityPostAggregator("Hola", "Duniya");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
 
     @Test
     public void testEqualsWithAnotherSubClass() {
-        HyperUniqueCardinalityPostAggregator aggregator1
-                = new HyperUniqueCardinalityPostAggregator("Hello", "Yaha");
-        FieldAccessPostAggregator aggregator2
-                = new FieldAccessPostAggregator("Hello", "Yaha");
+        HyperUniqueCardinalityPostAggregator aggregator1 =
+                new HyperUniqueCardinalityPostAggregator("Hello", "Yaha");
+        FieldAccessPostAggregator aggregator2 = new FieldAccessPostAggregator("Hello", "Yaha");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }

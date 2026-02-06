@@ -20,8 +20,6 @@ import org.assertj.core.api.Assertions;
 import org.joda.time.DateTime;
 import org.testng.annotations.Test;
 
-import in.zapr.druid.druidry.query.config.Interval;
-
 public class IntervalTest {
 
     @Test(expectedExceptions = NullPointerException.class)

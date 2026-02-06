@@ -17,18 +17,16 @@
 package in.zapr.druid.druidry.query.config;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-
-import org.joda.time.DateTime;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import org.joda.time.DateTime;
 
 @Getter
 @EqualsAndHashCode
 public class Interval {
 
-    private final static String DRUID_INTERVAL_FORMAT = "%s/%s";
+    private static final String DRUID_INTERVAL_FORMAT = "%s/%s";
 
     private DateTime startTime;
     private DateTime endTime;
@@ -40,7 +38,8 @@ public class Interval {
 
     @JsonValue
     private String getIntervalAsString() {
-        //return DRUID_INTERVAL_FORMAT.formatted(startTime.toDateTimeISO(), endTime.toDateTimeISO());
+        // return DRUID_INTERVAL_FORMAT.formatted(startTime.toDateTimeISO(),
+        // endTime.toDateTimeISO());
         return DRUID_INTERVAL_FORMAT.formatted(startTime.toDateTimeISO(), endTime.toDateTimeISO());
     }
 }

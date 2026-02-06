@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.filter.havingSpec;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.filter.SelectorFilter;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,8 +24,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import in.zapr.druid.druidry.filter.SelectorFilter;
+import tools.jackson.databind.ObjectMapper;
 
 public class FilterHavingTest {
     private static ObjectMapper objectMapper;
@@ -59,4 +57,3 @@ public class FilterHavingTest {
         HavingSpec filter = new FilterHaving(null);
     }
 }
-

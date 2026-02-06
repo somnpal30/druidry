@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class LongMaxAggregatorTest {
@@ -40,8 +40,7 @@ public class LongMaxAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        LongMaxAggregator countAggregator = new LongMaxAggregator("CarpeDiem",
-                "Hey");
+        LongMaxAggregator countAggregator = new LongMaxAggregator("CarpeDiem", "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "longMax");
@@ -57,10 +56,10 @@ public class LongMaxAggregatorTest {
     public void testAllFieldsButFieldName() throws JacksonException, JSONException {
 
         LongMaxAggregator countAggregator =
-            LongMaxAggregator.builder()
-                .name("CarpeDiem")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                LongMaxAggregator.builder()
+                        .name("CarpeDiem")
+                        .expression("(\"foo\" / \"bar\")")
+                        .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "longMax");
@@ -75,37 +74,22 @@ public class LongMaxAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() throws JacksonException, JSONException {
 
-        LongMaxAggregator longMaxAggregator =
-            LongMaxAggregator.builder()
-                .fieldName("Haha")
-                .build();
+        LongMaxAggregator longMaxAggregator = LongMaxAggregator.builder().fieldName("Haha").build();
     }
 
     @Test
     public void testEqualsPositive() {
         LongMaxAggregator aggregator1 =
-            LongMaxAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                LongMaxAggregator.builder().name("name").fieldName("field").build();
 
         LongMaxAggregator aggregator2 =
-            LongMaxAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                LongMaxAggregator.builder().name("name").fieldName("field").build();
 
         LongMaxAggregator aggregator3 =
-            LongMaxAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                LongMaxAggregator.builder().name("name").expression("(\"foo\" / \"bar\")").build();
 
         LongMaxAggregator aggregator4 =
-            LongMaxAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                LongMaxAggregator.builder().name("name").expression("(\"foo\" / \"bar\")").build();
 
         Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
         Assertions.assertThat(aggregator3).isEqualTo(aggregator4);
@@ -114,28 +98,16 @@ public class LongMaxAggregatorTest {
     @Test
     public void testEqualsNegative() {
         LongMaxAggregator aggregator1 =
-            LongMaxAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                LongMaxAggregator.builder().name("name").fieldName("field").build();
 
         LongMaxAggregator aggregator2 =
-            LongMaxAggregator.builder()
-                .name("name1")
-                .fieldName("field1")
-                .build();
+                LongMaxAggregator.builder().name("name1").fieldName("field1").build();
 
         LongMaxAggregator aggregator3 =
-            LongMaxAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                LongMaxAggregator.builder().name("name").expression("(\"foo\" / \"bar\")").build();
 
         LongMaxAggregator aggregator4 =
-            LongMaxAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"baz\")")
-                .build();
+                LongMaxAggregator.builder().name("name").expression("(\"foo\" / \"baz\")").build();
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
         Assertions.assertThat(aggregator3).isNotEqualTo(aggregator4);
@@ -144,14 +116,10 @@ public class LongMaxAggregatorTest {
     @Test
     public void testEqualsWithAnotherSubClass() {
         LongMaxAggregator aggregator1 =
-            LongMaxAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                LongMaxAggregator.builder().name("name").fieldName("field").build();
 
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
-
 }

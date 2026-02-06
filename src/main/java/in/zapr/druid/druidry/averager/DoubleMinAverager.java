@@ -28,9 +28,11 @@ public class DoubleMinAverager extends DruidAverager {
     private static final String DOUBLE_MIN_AVERAGER = "doubleMin";
 
     @Builder
-    private DoubleMinAverager(@NonNull String name, @NonNull String fieldName,
-                              @NonNull Integer buckets, Integer cycleSize) {
+    private DoubleMinAverager(
+            @NonNull String name,
+            @NonNull String fieldName,
+            @NonNull Integer buckets,
+            Integer cycleSize) {
         super(DOUBLE_MIN_AVERAGER, name, fieldName, buckets, cycleSize);
     }
-
 }

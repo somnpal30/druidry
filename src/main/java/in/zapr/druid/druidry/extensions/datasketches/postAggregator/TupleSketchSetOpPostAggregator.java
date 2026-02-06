@@ -16,14 +16,11 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.Preconditions;
 import com.google.common.math.LongMath;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.List;
-
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
+import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,18 +31,20 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public class TupleSketchSetOpPostAggregator extends DruidPostAggregator {
 
-    private static final String TUPLE_SKETCH_SET_OP_POST_AGGREGATOR_TYPE = "arrayOfDoublesSketchSetOp";
+    private static final String TUPLE_SKETCH_SET_OP_POST_AGGREGATOR_TYPE =
+            "arrayOfDoublesSketchSetOp";
     private TupleSketchOperation operation;
     private List<DruidPostAggregator> fields;
     private Integer nominalEntries;
     private Integer numberOfValues;
 
     @Builder
-    private TupleSketchSetOpPostAggregator(@NonNull String name,
-                                           @NonNull TupleSketchOperation operation,
-                                           @NonNull List<DruidPostAggregator> fields,
-                                           Integer nominalEntries,
-                                           Integer numberOfValues) {
+    private TupleSketchSetOpPostAggregator(
+            @NonNull String name,
+            @NonNull TupleSketchOperation operation,
+            @NonNull List<DruidPostAggregator> fields,
+            Integer nominalEntries,
+            Integer numberOfValues) {
         this.type = TUPLE_SKETCH_SET_OP_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.operation = operation;
@@ -54,8 +53,8 @@ public class TupleSketchSetOpPostAggregator extends DruidPostAggregator {
         this.numberOfValues = numberOfValues;
 
         if (nominalEntries != null) {
-            Preconditions.checkArgument(LongMath.isPowerOfTwo(nominalEntries), "nominalEntries must be a power of 2");
+            Preconditions.checkArgument(
+                    LongMath.isPowerOfTwo(nominalEntries), "nominalEntries must be a power of 2");
         }
     }
-
 }

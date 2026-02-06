@@ -18,9 +18,7 @@ package in.zapr.druid.druidry.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,18 +29,20 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public class ArithmeticPostAggregator extends DruidPostAggregator {
 
-    private final static String ARITHMETIC_POST_AGGREGATOR_TYPE = "arithmetic";
+    private static final String ARITHMETIC_POST_AGGREGATOR_TYPE = "arithmetic";
 
     @JsonProperty("fn")
     private ArithmeticFunction function;
+
     private List<DruidPostAggregator> fields;
     private ArithmeticOrdering ordering;
 
     @Builder
-    private ArithmeticPostAggregator(@NonNull String name,
-                                     @NonNull ArithmeticFunction function,
-                                     @NonNull List<DruidPostAggregator> fields,
-                                     ArithmeticOrdering ordering) {
+    private ArithmeticPostAggregator(
+            @NonNull String name,
+            @NonNull ArithmeticFunction function,
+            @NonNull List<DruidPostAggregator> fields,
+            ArithmeticOrdering ordering) {
         this.type = ARITHMETIC_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.function = function;

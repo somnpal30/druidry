@@ -16,9 +16,8 @@
 
 package in.zapr.druid.druidry.filter;
 
-import java.util.List;
-
 import in.zapr.druid.druidry.query.config.Interval;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;

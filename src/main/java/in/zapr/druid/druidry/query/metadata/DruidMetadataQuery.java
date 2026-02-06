@@ -20,5 +20,4 @@ import in.zapr.druid.druidry.query.DruidQuery;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
-abstract class DruidMetadataQuery extends DruidQuery {
-}
+abstract class DruidMetadataQuery extends DruidQuery {}

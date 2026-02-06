@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.filter;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.query.config.SortingOrder;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,8 +24,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import in.zapr.druid.druidry.query.config.SortingOrder;
+import tools.jackson.databind.ObjectMapper;
 
 public class BoundFilterTest {
 
@@ -40,14 +38,15 @@ public class BoundFilterTest {
     @Test
     public void testAllFields() throws JSONException, JacksonException {
 
-        BoundFilter filter = BoundFilter.builder()
-                .dimension("Hello")
-                .lower("21")
-                .upper("31")
-                .lowerStrict(true)
-                .upperStrict(false)
-                .ordering(SortingOrder.ALPHANUMERIC)
-                .build();
+        BoundFilter filter =
+                BoundFilter.builder()
+                        .dimension("Hello")
+                        .lower("21")
+                        .upper("31")
+                        .lowerStrict(true)
+                        .upperStrict(false)
+                        .ordering(SortingOrder.ALPHANUMERIC)
+                        .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "bound");
@@ -65,20 +64,20 @@ public class BoundFilterTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testRequiredFieldsMissing() {
-        BoundFilter filter = BoundFilter.builder()
-                .build();
+        BoundFilter filter = BoundFilter.builder().build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testSettingRequiredFieldAsNull() {
-        BoundFilter filter = BoundFilter.builder()
-                .dimension("Hello")
-                .lower("21")
-                .upper("31")
-                .lowerStrict(true)
-                .upperStrict(false)
-                .ordering(SortingOrder.ALPHANUMERIC)
-                .build();
+        BoundFilter filter =
+                BoundFilter.builder()
+                        .dimension("Hello")
+                        .lower("21")
+                        .upper("31")
+                        .lowerStrict(true)
+                        .upperStrict(false)
+                        .ordering(SortingOrder.ALPHANUMERIC)
+                        .build();
 
         filter.setDimension(null);
     }

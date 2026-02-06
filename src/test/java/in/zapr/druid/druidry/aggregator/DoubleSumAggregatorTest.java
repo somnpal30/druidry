@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class DoubleSumAggregatorTest {
@@ -40,8 +40,7 @@ public class DoubleSumAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        DoubleSumAggregator doubleSumAggregator = new DoubleSumAggregator("CarpeDiem",
-                "Hey");
+        DoubleSumAggregator doubleSumAggregator = new DoubleSumAggregator("CarpeDiem", "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "doubleSum");
@@ -57,10 +56,10 @@ public class DoubleSumAggregatorTest {
     public void testAllFieldsButFieldName() throws JacksonException, JSONException {
 
         DoubleSumAggregator doubleSumAggregator =
-            DoubleSumAggregator.builder()
-                .name("CarpeDiem")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                DoubleSumAggregator.builder()
+                        .name("CarpeDiem")
+                        .expression("(\"foo\" / \"bar\")")
+                        .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "doubleSum");
@@ -76,36 +75,28 @@ public class DoubleSumAggregatorTest {
     public void testNullName() throws JacksonException, JSONException {
 
         DoubleSumAggregator doubleSumAggregator =
-            DoubleSumAggregator.builder()
-                .fieldName("Haha")
-                .build();
+                DoubleSumAggregator.builder().fieldName("Haha").build();
     }
 
     @Test
     public void testEqualsPositive() {
         DoubleSumAggregator aggregator1 =
-            DoubleSumAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                DoubleSumAggregator.builder().name("name").fieldName("field").build();
 
         DoubleSumAggregator aggregator2 =
-            DoubleSumAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                DoubleSumAggregator.builder().name("name").fieldName("field").build();
 
         DoubleSumAggregator aggregator3 =
-            DoubleSumAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                DoubleSumAggregator.builder()
+                        .name("name")
+                        .expression("(\"foo\" / \"bar\")")
+                        .build();
 
         DoubleSumAggregator aggregator4 =
-            DoubleSumAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                DoubleSumAggregator.builder()
+                        .name("name")
+                        .expression("(\"foo\" / \"bar\")")
+                        .build();
 
         Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
         Assertions.assertThat(aggregator3).isEqualTo(aggregator4);
@@ -114,28 +105,22 @@ public class DoubleSumAggregatorTest {
     @Test
     public void testEqualsNegative() {
         DoubleSumAggregator aggregator1 =
-            DoubleSumAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                DoubleSumAggregator.builder().name("name").fieldName("field").build();
 
         DoubleSumAggregator aggregator2 =
-            DoubleSumAggregator.builder()
-                .name("name1")
-                .fieldName("field1")
-                .build();
+                DoubleSumAggregator.builder().name("name1").fieldName("field1").build();
 
         DoubleSumAggregator aggregator3 =
-            DoubleSumAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                DoubleSumAggregator.builder()
+                        .name("name")
+                        .expression("(\"foo\" / \"bar\")")
+                        .build();
 
         DoubleSumAggregator aggregator4 =
-            DoubleSumAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"baz\")")
-                .build();
+                DoubleSumAggregator.builder()
+                        .name("name")
+                        .expression("(\"foo\" / \"baz\")")
+                        .build();
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
         Assertions.assertThat(aggregator3).isNotEqualTo(aggregator4);
@@ -144,14 +129,10 @@ public class DoubleSumAggregatorTest {
     @Test
     public void testEqualsWithAnotherSubClass() {
         DoubleSumAggregator aggregator1 =
-            DoubleSumAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                DoubleSumAggregator.builder().name("name").fieldName("field").build();
 
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
-
 }

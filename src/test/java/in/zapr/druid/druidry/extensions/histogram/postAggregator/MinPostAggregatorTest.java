@@ -16,8 +16,6 @@
 
 package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,6 +23,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class MinPostAggregatorTest {
 
@@ -37,8 +36,7 @@ public class MinPostAggregatorTest {
 
     @Test
     public void testAllFields() throws JacksonException, JSONException {
-        MinPostAggregator minPostAggregator
-                = new MinPostAggregator("CarpeDiem", "Seize the Day");
+        MinPostAggregator minPostAggregator = new MinPostAggregator("CarpeDiem", "Seize the Day");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "min");
@@ -52,13 +50,11 @@ public class MinPostAggregatorTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testMissingNameFields() {
-        MinPostAggregator minPostAggregator
-                = new MinPostAggregator(null, "Seize the day");
+        MinPostAggregator minPostAggregator = new MinPostAggregator(null, "Seize the day");
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testMissingFieldNameFields() {
-        MinPostAggregator minPostAggregator
-                = new MinPostAggregator("CarpeDiem", null);
+        MinPostAggregator minPostAggregator = new MinPostAggregator("CarpeDiem", null);
     }
 }

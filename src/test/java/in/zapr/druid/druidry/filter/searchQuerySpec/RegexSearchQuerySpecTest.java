@@ -16,14 +16,13 @@
 
 package in.zapr.druid.druidry.filter.searchQuerySpec;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class RegexSearchQuerySpecTest {
     private static ObjectMapper objectMapper;
@@ -35,13 +34,13 @@ public class RegexSearchQuerySpecTest {
 
     @Test
     public void testAllFields() throws JacksonException, JSONException {
-        RegexSearchQuerySpec regexSearchQuerySpec = RegexSearchQuerySpec.builder()
-                .pattern("some_pattern")
-                .build();
+        RegexSearchQuerySpec regexSearchQuerySpec =
+                RegexSearchQuerySpec.builder().pattern("some_pattern").build();
 
         String actualJSON = objectMapper.writeValueAsString(regexSearchQuerySpec);
 
-        String expectedJSONString = """
+        String expectedJSONString =
+                """
                 {
                   "type"  : "regex",
                   "pattern" : \
@@ -50,7 +49,6 @@ public class RegexSearchQuerySpecTest {
                 """;
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
-
     }
 
     @Test(expectedExceptions = NullPointerException.class)

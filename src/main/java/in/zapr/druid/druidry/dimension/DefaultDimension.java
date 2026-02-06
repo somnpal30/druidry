@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.dimension;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import in.zapr.druid.druidry.dimension.enums.OutputType;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -32,8 +31,8 @@ public class DefaultDimension extends DimensionSpec {
     private static final String DEFAULT_TYPE = "default";
 
     @Builder
-    public DefaultDimension(@NonNull String dimension, @NonNull String outputName,
-                            OutputType outputType) {
+    public DefaultDimension(
+            @NonNull String dimension, @NonNull String outputName, OutputType outputType) {
         this.type = DefaultDimension.DEFAULT_TYPE;
         this.dimension = dimension;
         this.outputName = outputName;

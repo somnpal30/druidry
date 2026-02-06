@@ -33,11 +33,11 @@ public abstract class ExtractionFunction {
     protected static final String JAVASCRIPT_TYPE = "javascript";
     protected static final String LOOPUP_TYPE = "lookup";
 
-    // todo: bottom 3 are left to code. Also check for timeZone in timeformat type. lookup is also left
+    // todo: bottom 3 are left to code. Also check for timeZone in timeformat type. lookup is also
+    // left
     protected static final String REGISTERED_LOOKUP_TYPE = "registeredLookup";
     protected static final String CASCADE_TYPE = "cascade";
     protected static final String STRING_FORMAT_TYPE = "stringFormat";
 
-    @NonNull
-    protected String type;
+    @NonNull protected String type;
 }

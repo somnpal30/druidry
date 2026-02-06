@@ -19,7 +19,6 @@ package in.zapr.druid.druidry.query.config;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Vectorize {
-
     FALSE("false"),
     TRUE("true"),
     FORCE("force");

@@ -16,14 +16,8 @@
 
 package in.zapr.druid.druidry.query.aggregation;
 
-import com.google.common.base.Preconditions;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.List;
-
-import in.zapr.druid.druidry.query.config.Context;
-import in.zapr.druid.druidry.query.config.Interval;
+import com.google.common.base.Preconditions;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import in.zapr.druid.druidry.dataSource.DataSource;
 import in.zapr.druid.druidry.dimension.DruidDimension;
@@ -31,8 +25,11 @@ import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.query.QueryType;
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.topNMetric.TopNMetric;
 import in.zapr.druid.druidry.virtualColumn.DruidVirtualColumn;
+import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -48,17 +45,18 @@ public class DruidTopNQuery extends DruidAggregationQuery {
     private TopNMetric metric;
 
     @Builder
-    private DruidTopNQuery(@NonNull DataSource dataSource,
-                           @NonNull List<Interval> intervals,
-                           @NonNull Granularity granularity,
-                           List<DruidVirtualColumn> virtualColumns,
-                           DruidFilter filter,
-                           List<DruidAggregator> aggregators,
-                           List<DruidPostAggregator> postAggregators,
-                           @NonNull DruidDimension dimension,
-                           @NonNull Integer threshold,
-                           @NonNull TopNMetric topNMetric,
-                           Context context) {
+    private DruidTopNQuery(
+            @NonNull DataSource dataSource,
+            @NonNull List<Interval> intervals,
+            @NonNull Granularity granularity,
+            List<DruidVirtualColumn> virtualColumns,
+            DruidFilter filter,
+            List<DruidAggregator> aggregators,
+            List<DruidPostAggregator> postAggregators,
+            @NonNull DruidDimension dimension,
+            @NonNull Integer threshold,
+            @NonNull TopNMetric topNMetric,
+            Context context) {
 
         this.queryType = QueryType.TOPN;
         this.dataSource = dataSource;

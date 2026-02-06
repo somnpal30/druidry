@@ -16,8 +16,8 @@
 
 package in.zapr.druid.druidry.limitSpec;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecMap;
+import in.zapr.druid.druidry.query.config.SortingOrder;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,9 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import in.zapr.druid.druidry.query.config.SortingOrder;
-import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecMap;
+import tools.jackson.databind.ObjectMapper;
 
 public class OrderByColumnSpecMapTest {
 
@@ -41,8 +39,8 @@ public class OrderByColumnSpecMapTest {
     @Test
     public void testOrderColumnSpecOnlyDimensionField() throws JSONException, JacksonException {
         String dimension = "dim";
-        OrderByColumnSpecMap orderByColumnSpecMap
-                = new OrderByColumnSpecMap(dimension, true, SortingOrder.ALPHANUMERIC);
+        OrderByColumnSpecMap orderByColumnSpecMap =
+                new OrderByColumnSpecMap(dimension, true, SortingOrder.ALPHANUMERIC);
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("dimension", dimension);

@@ -19,5 +19,4 @@ package in.zapr.druid.druidry.granularity;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode
-public abstract class Granularity {
-}
+public abstract class Granularity {}

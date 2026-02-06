@@ -16,9 +16,9 @@
 
 package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
-
+import java.util.HashSet;
+import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,11 +27,8 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class CustomBucketsPostAggregatorTest {
@@ -49,8 +46,12 @@ public class CustomBucketsPostAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        CustomBucketsPostAggregator customBucketsPostAgg = CustomBucketsPostAggregator.builder()
-                .name("custom_buckets").fieldName("_loadtime").breaks(breaks).build();
+        CustomBucketsPostAggregator customBucketsPostAgg =
+                CustomBucketsPostAggregator.builder()
+                        .name("custom_buckets")
+                        .fieldName("_loadtime")
+                        .breaks(breaks)
+                        .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "customBuckets");
@@ -66,13 +67,21 @@ public class CustomBucketsPostAggregatorTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
-        CustomBucketsPostAggregator customBucketsPostAgg = CustomBucketsPostAggregator.builder()
-                .name(null).fieldName("_loadtime").breaks(breaks).build();
+        CustomBucketsPostAggregator customBucketsPostAgg =
+                CustomBucketsPostAggregator.builder()
+                        .name(null)
+                        .fieldName("_loadtime")
+                        .breaks(breaks)
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() {
-        CustomBucketsPostAggregator customBucketsPostAgg = CustomBucketsPostAggregator.builder()
-                .name("custom_buckets").fieldName(null).breaks(breaks).build();
+        CustomBucketsPostAggregator customBucketsPostAgg =
+                CustomBucketsPostAggregator.builder()
+                        .name("custom_buckets")
+                        .fieldName(null)
+                        .breaks(breaks)
+                        .build();
     }
 }

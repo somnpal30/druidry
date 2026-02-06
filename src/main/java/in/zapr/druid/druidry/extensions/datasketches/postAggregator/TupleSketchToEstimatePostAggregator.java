@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -29,15 +28,15 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public class TupleSketchToEstimatePostAggregator extends DruidPostAggregator {
 
-    private static final String TUPLE_SKETCH_TO_ESTIMATE_POST_AGGREGATOR_TYPE = "arrayOfDoublesSketchToEstimate";
+    private static final String TUPLE_SKETCH_TO_ESTIMATE_POST_AGGREGATOR_TYPE =
+            "arrayOfDoublesSketchToEstimate";
     private DruidPostAggregator field;
 
     @Builder
-    private TupleSketchToEstimatePostAggregator(@NonNull String name,
-                                                @NonNull DruidPostAggregator field) {
+    private TupleSketchToEstimatePostAggregator(
+            @NonNull String name, @NonNull DruidPostAggregator field) {
         this.type = TUPLE_SKETCH_TO_ESTIMATE_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.field = field;
     }
-
 }

@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.granularity;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 

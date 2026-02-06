@@ -17,10 +17,8 @@
 package in.zapr.druid.druidry.extractionFunctions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.Locale;
-
 import in.zapr.druid.druidry.granularity.Granularity;
+import java.util.Locale;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -38,15 +36,18 @@ public class TimeFormatExtractionFunction extends ExtractionFunction {
     private String timeZone;
 
     @Builder
-    private TimeFormatExtractionFunction(String format, Locale locale, Granularity granularity, String
-            timeZone, Boolean asMillis) {
+    private TimeFormatExtractionFunction(
+            String format,
+            Locale locale,
+            Granularity granularity,
+            String timeZone,
+            Boolean asMillis) {
         this.type = TIME_FORMAT_TYPE;
         this.format = format;
         this.locale = locale;
         this.granularity = granularity;
         this.timeZone = timeZone;
         this.asMillis = asMillis;
-
     }
 
     public String getLocale() {

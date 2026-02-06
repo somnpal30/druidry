@@ -16,7 +16,9 @@
 
 package in.zapr.druid.druidry.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import java.util.Collections;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,11 +28,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Collections;
-import java.util.List;
-
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class ArithmeticPostAggregatorTest {
@@ -54,18 +52,19 @@ public class ArithmeticPostAggregatorTest {
     @Test
     public void testArithmeticPostAggregatorAllFields() throws JacksonException, JSONException {
 
-        FieldAccessPostAggregator fieldAccessPostAggregator
-                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator fieldAccessPostAggregator =
+                new FieldAccessPostAggregator("Hello", "World");
 
-        List<DruidPostAggregator> druidPostAggregators
-                = Collections.singletonList(fieldAccessPostAggregator);
+        List<DruidPostAggregator> druidPostAggregators =
+                Collections.singletonList(fieldAccessPostAggregator);
 
-        ArithmeticPostAggregator postAggregator = ArithmeticPostAggregator.builder()
-                .name("name")
-                .function(ArithmeticFunction.QUOTIENT)
-                .fields(druidPostAggregators)
-                .ordering(ArithmeticOrdering.NUMERIC_FIRST)
-                .build();
+        ArithmeticPostAggregator postAggregator =
+                ArithmeticPostAggregator.builder()
+                        .name("name")
+                        .function(ArithmeticFunction.QUOTIENT)
+                        .fields(druidPostAggregators)
+                        .ordering(ArithmeticOrdering.NUMERIC_FIRST)
+                        .build();
 
         JSONArray fieldJsonArray = new JSONArray(getDruidAggregatorJSONs());
 
@@ -82,20 +81,21 @@ public class ArithmeticPostAggregatorTest {
     }
 
     @Test
-    public void testArithmeticPostAggregatorRequiredFields() throws JacksonException,
-            JSONException {
+    public void testArithmeticPostAggregatorRequiredFields()
+            throws JacksonException, JSONException {
 
-        FieldAccessPostAggregator fieldAccessPostAggregator
-                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator fieldAccessPostAggregator =
+                new FieldAccessPostAggregator("Hello", "World");
 
-        List<DruidPostAggregator> druidPostAggregators
-                = Collections.singletonList(fieldAccessPostAggregator);
+        List<DruidPostAggregator> druidPostAggregators =
+                Collections.singletonList(fieldAccessPostAggregator);
 
-        ArithmeticPostAggregator postAggregator = ArithmeticPostAggregator.builder()
-                .name("name")
-                .function(ArithmeticFunction.QUOTIENT)
-                .fields(druidPostAggregators)
-                .build();
+        ArithmeticPostAggregator postAggregator =
+                ArithmeticPostAggregator.builder()
+                        .name("name")
+                        .function(ArithmeticFunction.QUOTIENT)
+                        .fields(druidPostAggregators)
+                        .build();
 
         JSONArray fieldJsonArray = new JSONArray(getDruidAggregatorJSONs());
 
@@ -113,121 +113,128 @@ public class ArithmeticPostAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testArithmeticPostAggregatorMissingNameFields() {
 
-        FieldAccessPostAggregator fieldAccessPostAggregator
-                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator fieldAccessPostAggregator =
+                new FieldAccessPostAggregator("Hello", "World");
 
-        List<DruidPostAggregator> druidPostAggregators
-                = Collections.singletonList(fieldAccessPostAggregator);
+        List<DruidPostAggregator> druidPostAggregators =
+                Collections.singletonList(fieldAccessPostAggregator);
 
-        ArithmeticPostAggregator postAggregator = ArithmeticPostAggregator.builder()
-                .function(ArithmeticFunction.QUOTIENT)
-                .fields(druidPostAggregators)
-                .build();
+        ArithmeticPostAggregator postAggregator =
+                ArithmeticPostAggregator.builder()
+                        .function(ArithmeticFunction.QUOTIENT)
+                        .fields(druidPostAggregators)
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testArithmeticPostAggregatorMissingFunctionFields() {
 
-        FieldAccessPostAggregator fieldAccessPostAggregator
-                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator fieldAccessPostAggregator =
+                new FieldAccessPostAggregator("Hello", "World");
 
-        List<DruidPostAggregator> druidPostAggregators
-                = Collections.singletonList(fieldAccessPostAggregator);
+        List<DruidPostAggregator> druidPostAggregators =
+                Collections.singletonList(fieldAccessPostAggregator);
 
-        ArithmeticPostAggregator postAggregator = ArithmeticPostAggregator.builder()
-                .name("name")
-                .fields(druidPostAggregators)
-                .build();
+        ArithmeticPostAggregator postAggregator =
+                ArithmeticPostAggregator.builder()
+                        .name("name")
+                        .fields(druidPostAggregators)
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testArithmeticPostAggregatorMissingFields() {
 
-        ArithmeticPostAggregator postAggregator = ArithmeticPostAggregator.builder()
-                .name("name")
-                .function(ArithmeticFunction.QUOTIENT)
-                .build();
+        ArithmeticPostAggregator postAggregator =
+                ArithmeticPostAggregator.builder()
+                        .name("name")
+                        .function(ArithmeticFunction.QUOTIENT)
+                        .build();
     }
 
     @Test
     public void testEqualsPositive() {
-        FieldAccessPostAggregator fieldAccessPostAggregator1
-                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator fieldAccessPostAggregator1 =
+                new FieldAccessPostAggregator("Hello", "World");
 
-        List<DruidPostAggregator> druidPostAggregators1
-                = Collections.singletonList(fieldAccessPostAggregator1);
+        List<DruidPostAggregator> druidPostAggregators1 =
+                Collections.singletonList(fieldAccessPostAggregator1);
 
-        ArithmeticPostAggregator aggregator1 = ArithmeticPostAggregator.builder()
-                .name("name")
-                .function(ArithmeticFunction.QUOTIENT)
-                .fields(druidPostAggregators1)
-                .ordering(ArithmeticOrdering.NUMERIC_FIRST)
-                .build();
+        ArithmeticPostAggregator aggregator1 =
+                ArithmeticPostAggregator.builder()
+                        .name("name")
+                        .function(ArithmeticFunction.QUOTIENT)
+                        .fields(druidPostAggregators1)
+                        .ordering(ArithmeticOrdering.NUMERIC_FIRST)
+                        .build();
 
-        FieldAccessPostAggregator fieldAccessPostAggregator2
-                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator fieldAccessPostAggregator2 =
+                new FieldAccessPostAggregator("Hello", "World");
 
-        List<DruidPostAggregator> druidPostAggregators2
-                = Collections.singletonList(fieldAccessPostAggregator2);
+        List<DruidPostAggregator> druidPostAggregators2 =
+                Collections.singletonList(fieldAccessPostAggregator2);
 
-        ArithmeticPostAggregator aggregator2 = ArithmeticPostAggregator.builder()
-                .name("name")
-                .function(ArithmeticFunction.QUOTIENT)
-                .fields(druidPostAggregators2)
-                .ordering(ArithmeticOrdering.NUMERIC_FIRST)
-                .build();
+        ArithmeticPostAggregator aggregator2 =
+                ArithmeticPostAggregator.builder()
+                        .name("name")
+                        .function(ArithmeticFunction.QUOTIENT)
+                        .fields(druidPostAggregators2)
+                        .ordering(ArithmeticOrdering.NUMERIC_FIRST)
+                        .build();
 
         Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
     }
 
     @Test
     public void testEqualsNegative() {
-        FieldAccessPostAggregator fieldAccessPostAggregator1
-                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator fieldAccessPostAggregator1 =
+                new FieldAccessPostAggregator("Hello", "World");
 
-        List<DruidPostAggregator> druidPostAggregators1
-                = Collections.singletonList(fieldAccessPostAggregator1);
+        List<DruidPostAggregator> druidPostAggregators1 =
+                Collections.singletonList(fieldAccessPostAggregator1);
 
-        ArithmeticPostAggregator aggregator1 = ArithmeticPostAggregator.builder()
-                .name("name")
-                .function(ArithmeticFunction.QUOTIENT)
-                .fields(druidPostAggregators1)
-                .ordering(ArithmeticOrdering.NUMERIC_FIRST)
-                .build();
+        ArithmeticPostAggregator aggregator1 =
+                ArithmeticPostAggregator.builder()
+                        .name("name")
+                        .function(ArithmeticFunction.QUOTIENT)
+                        .fields(druidPostAggregators1)
+                        .ordering(ArithmeticOrdering.NUMERIC_FIRST)
+                        .build();
 
-        FieldAccessPostAggregator fieldAccessPostAggregator2
-                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator fieldAccessPostAggregator2 =
+                new FieldAccessPostAggregator("Hello", "World");
 
-        List<DruidPostAggregator> druidPostAggregators2
-                = Collections.singletonList(fieldAccessPostAggregator2);
+        List<DruidPostAggregator> druidPostAggregators2 =
+                Collections.singletonList(fieldAccessPostAggregator2);
 
-        ArithmeticPostAggregator aggregator2 = ArithmeticPostAggregator.builder()
-                .name("name")
-                .function(ArithmeticFunction.DIVIDE)
-                .fields(druidPostAggregators2)
-                .ordering(ArithmeticOrdering.NUMERIC_FIRST)
-                .build();
+        ArithmeticPostAggregator aggregator2 =
+                ArithmeticPostAggregator.builder()
+                        .name("name")
+                        .function(ArithmeticFunction.DIVIDE)
+                        .fields(druidPostAggregators2)
+                        .ordering(ArithmeticOrdering.NUMERIC_FIRST)
+                        .build();
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
 
     @Test
     public void testEqualsWithAnotherSubClass() {
-        FieldAccessPostAggregator fieldAccessPostAggregator1
-                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator fieldAccessPostAggregator1 =
+                new FieldAccessPostAggregator("Hello", "World");
 
-        List<DruidPostAggregator> druidPostAggregators1
-                = Collections.singletonList(fieldAccessPostAggregator1);
+        List<DruidPostAggregator> druidPostAggregators1 =
+                Collections.singletonList(fieldAccessPostAggregator1);
 
-        ArithmeticPostAggregator aggregator1 = ArithmeticPostAggregator.builder()
-                .name("name")
-                .function(ArithmeticFunction.QUOTIENT)
-                .fields(druidPostAggregators1)
-                .ordering(ArithmeticOrdering.NUMERIC_FIRST)
-                .build();
+        ArithmeticPostAggregator aggregator1 =
+                ArithmeticPostAggregator.builder()
+                        .name("name")
+                        .function(ArithmeticFunction.QUOTIENT)
+                        .fields(druidPostAggregators1)
+                        .ordering(ArithmeticOrdering.NUMERIC_FIRST)
+                        .build();
 
-        FieldAccessPostAggregator aggregator2
-                = new FieldAccessPostAggregator("Hello", "Yaha");
+        FieldAccessPostAggregator aggregator2 = new FieldAccessPostAggregator("Hello", "Yaha");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }

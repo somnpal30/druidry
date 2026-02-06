@@ -17,9 +17,7 @@
 package in.zapr.druid.druidry.filter.searchQuerySpec;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.util.List;
-
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -27,7 +25,7 @@ import lombok.NonNull;
 @Getter
 public class FragmentSearchQuerySpec extends SearchQuerySpec {
 
-    private final static String FRAGMENT_SEARCH_QUERY_SPEC = "fragment";
+    private static final String FRAGMENT_SEARCH_QUERY_SPEC = "fragment";
 
     private List<String> values;
     private Boolean caseSensitive;

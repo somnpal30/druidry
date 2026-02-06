@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class FieldAccessPostAggregatorTest {
@@ -40,8 +40,8 @@ public class FieldAccessPostAggregatorTest {
     @Test
     public void testFieldAccessPostAggregatorAllFields() throws JacksonException, JSONException {
 
-        FieldAccessPostAggregator fieldAccessPostAggregator
-                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator fieldAccessPostAggregator =
+                new FieldAccessPostAggregator("Hello", "World");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "fieldAccess");
@@ -56,15 +56,15 @@ public class FieldAccessPostAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
 
-        FieldAccessPostAggregator fieldAccessPostAggregator = new FieldAccessPostAggregator(null,
-                "Haha");
+        FieldAccessPostAggregator fieldAccessPostAggregator =
+                new FieldAccessPostAggregator(null, "Haha");
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() {
 
-        FieldAccessPostAggregator fieldAccessPostAggregator = new FieldAccessPostAggregator("Name",
-                null);
+        FieldAccessPostAggregator fieldAccessPostAggregator =
+                new FieldAccessPostAggregator("Name", null);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
@@ -75,30 +75,24 @@ public class FieldAccessPostAggregatorTest {
 
     @Test
     public void testEqualsPositive() {
-        FieldAccessPostAggregator aggregator1
-                = new FieldAccessPostAggregator("Hello", "World");
-        FieldAccessPostAggregator aggregator2
-                = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator aggregator1 = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator aggregator2 = new FieldAccessPostAggregator("Hello", "World");
 
         Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
     }
 
     @Test
     public void testEqualsNegative() {
-        FieldAccessPostAggregator aggregator1
-                = new FieldAccessPostAggregator("Hello", "World");
-        FieldAccessPostAggregator aggregator2
-                = new FieldAccessPostAggregator("Hola", "Duniya");
+        FieldAccessPostAggregator aggregator1 = new FieldAccessPostAggregator("Hello", "World");
+        FieldAccessPostAggregator aggregator2 = new FieldAccessPostAggregator("Hola", "Duniya");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
 
     @Test
     public void testEqualsWithAnotherSubClass() {
-        ConstantPostAggregator aggregator1
-                = new ConstantPostAggregator("Hello", 10.57);
-        FieldAccessPostAggregator aggregator2
-                = new FieldAccessPostAggregator("Hello", "Yaha");
+        ConstantPostAggregator aggregator1 = new ConstantPostAggregator("Hello", 10.57);
+        FieldAccessPostAggregator aggregator2 = new FieldAccessPostAggregator("Hello", "Yaha");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }

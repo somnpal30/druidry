@@ -16,8 +16,6 @@
 
 package in.zapr.druid.druidry.dataSource;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,6 +23,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class TableDataSourceTest {
     private static ObjectMapper objectMapper;
@@ -33,7 +32,6 @@ public class TableDataSourceTest {
     public void init() {
         objectMapper = new ObjectMapper();
     }
-
 
     @Test
     public void testTableDataSource() throws JacksonException, JSONException {
@@ -47,10 +45,8 @@ public class TableDataSourceTest {
         JSONAssert.assertEquals(actualJson, dataSource, JSONCompareMode.NON_EXTENSIBLE);
     }
 
-
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullableDataSourceName() {
         new TableDataSource(null);
     }
 }
-

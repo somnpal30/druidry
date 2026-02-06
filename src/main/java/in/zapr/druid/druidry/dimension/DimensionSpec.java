@@ -25,14 +25,11 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public abstract class DimensionSpec extends DruidDimension {
 
-    @NonNull
-    protected String type;
+    @NonNull protected String type;
 
-    @NonNull
-    protected String dimension;
+    @NonNull protected String dimension;
 
-    @NonNull
-    protected String outputName;
+    @NonNull protected String outputName;
 
     protected OutputType outputType;
 }

@@ -16,14 +16,13 @@
 
 package in.zapr.druid.druidry.extractionFunctions;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class StrLenExtractionFunctionTest {
     private static ObjectMapper objectMapper;
@@ -35,7 +34,8 @@ public class StrLenExtractionFunctionTest {
 
     @Test
     public void testAllFields() throws JacksonException, JSONException {
-        StrLenExtractionFunction strLenExtractionFunction = StrLenExtractionFunction.builder().build();
+        StrLenExtractionFunction strLenExtractionFunction =
+                StrLenExtractionFunction.builder().build();
 
         String actualJSON = objectMapper.writeValueAsString(strLenExtractionFunction);
 
@@ -43,5 +43,4 @@ public class StrLenExtractionFunctionTest {
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
-
 }

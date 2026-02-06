@@ -16,8 +16,6 @@
 
 package in.zapr.druid.druidry.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +24,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class ConstantPostAggregatorTest {
 
@@ -39,8 +38,7 @@ public class ConstantPostAggregatorTest {
     @Test
     public void testConstantPostAggregatorAllFields() throws JacksonException, JSONException {
 
-        ConstantPostAggregator constantPostAggregator
-                = new ConstantPostAggregator("Hello", 10.57);
+        ConstantPostAggregator constantPostAggregator = new ConstantPostAggregator("Hello", 10.57);
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "constant");
@@ -55,43 +53,35 @@ public class ConstantPostAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
 
-        ConstantPostAggregator constantPostAggregator = new ConstantPostAggregator(null,
-                10.57);
+        ConstantPostAggregator constantPostAggregator = new ConstantPostAggregator(null, 10.57);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullValue() {
 
-        ConstantPostAggregator constantPostAggregator = new ConstantPostAggregator("Name",
-                null);
+        ConstantPostAggregator constantPostAggregator = new ConstantPostAggregator("Name", null);
     }
 
     @Test
     public void testEqualsPositive() {
-        ConstantPostAggregator aggregator1
-                = new ConstantPostAggregator("Hello", 10.57);
-        ConstantPostAggregator aggregator2
-                = new ConstantPostAggregator("Hello", 10.57);
+        ConstantPostAggregator aggregator1 = new ConstantPostAggregator("Hello", 10.57);
+        ConstantPostAggregator aggregator2 = new ConstantPostAggregator("Hello", 10.57);
 
         Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
     }
 
     @Test
     public void testEqualsNegative() {
-        ConstantPostAggregator aggregator1
-                = new ConstantPostAggregator("Hello", 10.57);
-        ConstantPostAggregator aggregator2
-                = new ConstantPostAggregator("Pi", 3.14);
+        ConstantPostAggregator aggregator1 = new ConstantPostAggregator("Hello", 10.57);
+        ConstantPostAggregator aggregator2 = new ConstantPostAggregator("Pi", 3.14);
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
 
     @Test
     public void testEqualsWithAnotherSubClass() {
-        ConstantPostAggregator aggregator1
-                = new ConstantPostAggregator("Hello", 10.57);
-        FieldAccessPostAggregator aggregator2
-                = new FieldAccessPostAggregator("Hello", "Yaha");
+        ConstantPostAggregator aggregator1 = new ConstantPostAggregator("Hello", 10.57);
+        FieldAccessPostAggregator aggregator2 = new FieldAccessPostAggregator("Hello", "Yaha");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }

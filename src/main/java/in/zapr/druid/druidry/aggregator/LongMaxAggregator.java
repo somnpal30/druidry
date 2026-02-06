@@ -16,10 +16,8 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import com.google.common.base.Preconditions;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-
+import com.google.common.base.Preconditions;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -50,9 +48,7 @@ public class LongMaxAggregator extends DruidAggregator {
         this.expression = expression;
 
         Preconditions.checkArgument(
-            fieldName == null ^ expression == null,
-            "Must have a valid, non-null fieldName or expression"
-        );
+                fieldName == null ^ expression == null,
+                "Must have a valid, non-null fieldName or expression");
     }
-
 }

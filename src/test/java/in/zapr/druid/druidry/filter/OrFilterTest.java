@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.filter;
 
-import tools.jackson.databind.ObjectMapper;
-
+import java.util.Arrays;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,8 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Arrays;
+import tools.jackson.databind.ObjectMapper;
 
 public class OrFilterTest {
 
@@ -71,5 +69,4 @@ public class OrFilterTest {
     public void testFieldsMissing() {
         OrFilter andFilter = new OrFilter(null);
     }
-
 }

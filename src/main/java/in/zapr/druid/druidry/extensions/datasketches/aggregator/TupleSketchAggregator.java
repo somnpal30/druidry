@@ -16,14 +16,11 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.Preconditions;
 import com.google.common.math.LongMath;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.List;
-
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
+import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -41,11 +38,12 @@ public class TupleSketchAggregator extends DruidAggregator {
     private List<String> metricColumns;
 
     @Builder
-    private TupleSketchAggregator(@NonNull String name,
-                                  @NonNull String fieldName,
-                                  Integer nominalEntries,
-                                  Integer numberOfValues,
-                                  List<String> metricColumns) {
+    private TupleSketchAggregator(
+            @NonNull String name,
+            @NonNull String fieldName,
+            Integer nominalEntries,
+            Integer numberOfValues,
+            List<String> metricColumns) {
         this.type = TUPLE_SKETCH_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
@@ -54,8 +52,8 @@ public class TupleSketchAggregator extends DruidAggregator {
         this.metricColumns = metricColumns;
 
         if (nominalEntries != null) {
-            Preconditions.checkArgument(LongMath.isPowerOfTwo(nominalEntries), "nominalEntries must be a power of 2");
+            Preconditions.checkArgument(
+                    LongMath.isPowerOfTwo(nominalEntries), "nominalEntries must be a power of 2");
         }
     }
-
 }

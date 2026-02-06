@@ -17,10 +17,8 @@
 package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.Set;
-
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
+import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -34,8 +32,8 @@ public class CustomBucketsPostAggregator extends DruidPostAggregator {
     private Set<Float> breaks;
 
     @Builder
-    private CustomBucketsPostAggregator(@NonNull String name, @NonNull String fieldName,
-                                        @NonNull Set<Float> breaks) {
+    private CustomBucketsPostAggregator(
+            @NonNull String name, @NonNull String fieldName, @NonNull Set<Float> breaks) {
         this.type = CUSTOMBUCKET_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.fieldName = fieldName;

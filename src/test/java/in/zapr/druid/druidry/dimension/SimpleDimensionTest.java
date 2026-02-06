@@ -16,15 +16,13 @@
 
 package in.zapr.druid.druidry.dimension;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.dimension.enums.OutputType;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import in.zapr.druid.druidry.dimension.enums.OutputType;
+import tools.jackson.databind.ObjectMapper;
 
 public class SimpleDimensionTest {
 
@@ -64,9 +62,7 @@ public class SimpleDimensionTest {
     @Test
     public void testEqualsWithAnotherSubClass() {
         SimpleDimension dimension1 = new SimpleDimension("name");
-        DefaultDimension dimension2 = new DefaultDimension("name",
-                "output",
-                OutputType.LONG);
+        DefaultDimension dimension2 = new DefaultDimension("name", "output", OutputType.LONG);
 
         Assertions.assertThat(dimension1).isNotEqualTo(dimension2);
     }

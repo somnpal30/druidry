@@ -16,9 +16,8 @@
 
 package in.zapr.druid.druidry.limitSpec;
 
-import java.util.List;
-
 import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpec;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;

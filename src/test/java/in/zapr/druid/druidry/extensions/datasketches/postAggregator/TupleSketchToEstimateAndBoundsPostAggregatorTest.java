@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,8 +24,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import tools.jackson.databind.ObjectMapper;
 
 public class TupleSketchToEstimateAndBoundsPostAggregatorTest {
 
@@ -70,7 +68,8 @@ public class TupleSketchToEstimateAndBoundsPostAggregatorTest {
         jsonObject.put("field", (getFieldAccessPostAggregatorJSON("MilkyWay")));
         jsonObject.put("numStdDevs", 1);
 
-        String actualJSON = objectMapper.writeValueAsString(tupleSketchToEstimateAndBoundsPostAggregator);
+        String actualJSON =
+                objectMapper.writeValueAsString(tupleSketchToEstimateAndBoundsPostAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -87,7 +86,8 @@ public class TupleSketchToEstimateAndBoundsPostAggregatorTest {
         JSONObject jsonObject = getTupleSketchToEstimateAndBoundsPostAggregatorJSON();
         jsonObject.put("field", getFieldAccessPostAggregatorJSON("MilkyWay"));
 
-        String actualJSON = objectMapper.writeValueAsString(tupleSketchToEstimateAndBoundsPostAggregator);
+        String actualJSON =
+                objectMapper.writeValueAsString(tupleSketchToEstimateAndBoundsPostAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -96,9 +96,7 @@ public class TupleSketchToEstimateAndBoundsPostAggregatorTest {
     public void testNullName() {
 
         TupleSketchToEstimateAndBoundsPostAggregator tupleSketchToEstimateAndBoundsPostAggregator =
-                TupleSketchToEstimateAndBoundsPostAggregator.builder()
-                        .field(milkyWay)
-                        .build();
+                TupleSketchToEstimateAndBoundsPostAggregator.builder().field(milkyWay).build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)

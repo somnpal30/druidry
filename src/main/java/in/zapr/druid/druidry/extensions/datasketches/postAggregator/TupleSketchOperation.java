@@ -19,7 +19,6 @@ package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum TupleSketchOperation {
-
     INTERSECT("INTERSECT"),
     UNION("UNION"),
     NOT("NOT");
@@ -34,5 +33,4 @@ public enum TupleSketchOperation {
     public String getValue() {
         return value;
     }
-
 }

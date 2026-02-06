@@ -16,27 +16,6 @@
 
 package in.zapr.druid.druidry.query.aggregation;
 
-import tools.jackson.databind.ObjectMapper;
-
-import in.zapr.druid.druidry.filter.havingSpec.HavingSpec;
-import in.zapr.druid.druidry.filter.havingSpec.GreaterThanHaving;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-import tools.jackson.core.JacksonException;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import in.zapr.druid.druidry.query.config.Context;
-import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.aggregator.CountAggregator;
 import in.zapr.druid.druidry.aggregator.DoubleSumAggregator;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
@@ -48,6 +27,8 @@ import in.zapr.druid.druidry.filter.AndFilter;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.filter.OrFilter;
 import in.zapr.druid.druidry.filter.SelectorFilter;
+import in.zapr.druid.druidry.filter.havingSpec.GreaterThanHaving;
+import in.zapr.druid.druidry.filter.havingSpec.HavingSpec;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.granularity.PredefinedGranularity;
 import in.zapr.druid.druidry.granularity.SimpleGranularity;
@@ -59,6 +40,22 @@ import in.zapr.druid.druidry.postAggregator.ArithmeticPostAggregator;
 import in.zapr.druid.druidry.postAggregator.ConstantPostAggregator;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class GroupByTest {
     private static ObjectMapper objectMapper;
@@ -70,7 +67,8 @@ public class GroupByTest {
 
     @Test
     public void testSampleQuery() throws JacksonException, JSONException {
-        String expectedJsonAsString = """
+        String expectedJsonAsString =
+                """
                 {
                   "queryType": "groupBy",
                   "dataSource": {
@@ -120,9 +118,10 @@ public class GroupByTest {
         DruidDimension druidDimension2 = new SimpleDimension("device");
 
         // Limit Spec
-        List<OrderByColumnSpec> orderByColumnSpecs
-                = Arrays.asList(new OrderByColumnSpecString("country"),
-                new OrderByColumnSpecString("data_transfer"));
+        List<OrderByColumnSpec> orderByColumnSpecs =
+                Arrays.asList(
+                        new OrderByColumnSpecString("country"),
+                        new OrderByColumnSpecString("data_transfer"));
         DefaultLimitSpec limitSpec = new DefaultLimitSpec(5000, orderByColumnSpecs);
 
         // Filters
@@ -135,7 +134,8 @@ public class GroupByTest {
 
         // Aggregations
         DruidAggregator usageAggregator = new LongSumAggregator("total_usage", "user_count");
-        DruidAggregator transferAggregator = new DoubleSumAggregator("data_transfer", "data_transfer");
+        DruidAggregator transferAggregator =
+                new DoubleSumAggregator("data_transfer", "data_transfer");
 
         // Having
         HavingSpec countHaving = new GreaterThanHaving("total_usage", 2);
@@ -144,28 +144,30 @@ public class GroupByTest {
         DruidPostAggregator transferPostAggregator = new FieldAccessPostAggregator("total_usage");
         DruidPostAggregator usagePostAggregator = new FieldAccessPostAggregator("data_transfer");
 
-        DruidPostAggregator postAggregator = ArithmeticPostAggregator.builder()
-                .name("avg_usage")
-                .function(ArithmeticFunction.DIVIDE)
-                .fields(Arrays.asList(transferPostAggregator, usagePostAggregator))
-                .build();
+        DruidPostAggregator postAggregator =
+                ArithmeticPostAggregator.builder()
+                        .name("avg_usage")
+                        .function(ArithmeticFunction.DIVIDE)
+                        .fields(Arrays.asList(transferPostAggregator, usagePostAggregator))
+                        .build();
 
         // Interval
         DateTime startTime = new DateTime(2012, 1, 1, 0, 0, 0, DateTimeZone.UTC);
         DateTime endTime = new DateTime(2012, 1, 3, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
-        DruidGroupByQuery query = DruidGroupByQuery.builder()
-                .dataSource(new TableDataSource("sample_datasource"))
-                .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
-                .dimensions(Arrays.asList(druidDimension1, druidDimension2))
-                .limitSpec(limitSpec)
-                .filter(filter)
-                .having(countHaving)
-                .aggregators(Arrays.asList(usageAggregator, transferAggregator))
-                .postAggregators(Collections.singletonList(postAggregator))
-                .intervals(Collections.singletonList(interval))
-                .build();
+        DruidGroupByQuery query =
+                DruidGroupByQuery.builder()
+                        .dataSource(new TableDataSource("sample_datasource"))
+                        .granularity(new SimpleGranularity(PredefinedGranularity.DAY))
+                        .dimensions(Arrays.asList(druidDimension1, druidDimension2))
+                        .limitSpec(limitSpec)
+                        .filter(filter)
+                        .having(countHaving)
+                        .aggregators(Arrays.asList(usageAggregator, transferAggregator))
+                        .postAggregators(Collections.singletonList(postAggregator))
+                        .intervals(Collections.singletonList(interval))
+                        .build();
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
@@ -182,12 +184,13 @@ public class GroupByTest {
         DateTime endTime = new DateTime(2012, 1, 3, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
-        DruidGroupByQuery druidGroupByQuery = DruidGroupByQuery.builder()
-                .dataSource(new TableDataSource("sample_datasource"))
-                .dimensions(Arrays.asList(druidDimension1, druidDimension2))
-                .granularity(granularity)
-                .intervals(Collections.singletonList(interval))
-                .build();
+        DruidGroupByQuery druidGroupByQuery =
+                DruidGroupByQuery.builder()
+                        .dataSource(new TableDataSource("sample_datasource"))
+                        .dimensions(Arrays.asList(druidDimension1, druidDimension2))
+                        .granularity(granularity)
+                        .intervals(Collections.singletonList(interval))
+                        .build();
 
         String actualJson = objectMapper.writeValueAsString(druidGroupByQuery);
 
@@ -199,7 +202,10 @@ public class GroupByTest {
         expectedQuery.put("queryType", "groupBy");
         expectedQuery.put("dataSource", dataSource);
 
-        JSONArray intervalArray = new JSONArray(Collections.singletonList("2012-01-01T00:00:00.000Z/2012-01-03T00:00:00.000Z"));
+        JSONArray intervalArray =
+                new JSONArray(
+                        Collections.singletonList(
+                                "2012-01-01T00:00:00.000Z/2012-01-03T00:00:00.000Z"));
         expectedQuery.put("intervals", intervalArray);
         expectedQuery.put("granularity", "all");
         JSONArray dimensionArray = new JSONArray(Arrays.asList("dim1", "dim2"));
@@ -222,20 +228,19 @@ public class GroupByTest {
         DruidFilter filter = new SelectorFilter("Spread", "Peace");
         DruidAggregator aggregator = new CountAggregator("Chill");
         DruidPostAggregator postAggregator = new ConstantPostAggregator("Keep", 16.11);
-        Context context = Context.builder()
-                .populateCache(true)
-                .build();
+        Context context = Context.builder().populateCache(true).build();
 
-        DruidGroupByQuery druidGroupByQuery = DruidGroupByQuery.builder()
-                .dataSource(new TableDataSource("sample_datasource"))
-                .dimensions(Arrays.asList(druidDimension1, druidDimension2))
-                .granularity(granularity)
-                .filter(filter)
-                .aggregators(Collections.singletonList(aggregator))
-                .postAggregators(Collections.singletonList(postAggregator))
-                .intervals(Collections.singletonList(interval))
-                .context(context)
-                .build();
+        DruidGroupByQuery druidGroupByQuery =
+                DruidGroupByQuery.builder()
+                        .dataSource(new TableDataSource("sample_datasource"))
+                        .dimensions(Arrays.asList(druidDimension1, druidDimension2))
+                        .granularity(granularity)
+                        .filter(filter)
+                        .aggregators(Collections.singletonList(aggregator))
+                        .postAggregators(Collections.singletonList(postAggregator))
+                        .intervals(Collections.singletonList(interval))
+                        .context(context)
+                        .build();
 
         String actualJson = objectMapper.writeValueAsString(druidGroupByQuery);
 
@@ -256,8 +261,10 @@ public class GroupByTest {
         JSONObject expectedContext = new JSONObject();
         expectedContext.put("populateCache", true);
 
-        JSONArray intervalArray = new JSONArray(Collections.singletonList("2012-01-01T00:00:00.000Z/" +
-                "2012-01-03T00:00:00.000Z"));
+        JSONArray intervalArray =
+                new JSONArray(
+                        Collections.singletonList(
+                                "2012-01-01T00:00:00.000Z/" + "2012-01-03T00:00:00.000Z"));
         JSONArray dimensionArray = new JSONArray(Arrays.asList("dim1", "dim2"));
 
         JSONObject dataSource = new JSONObject();
@@ -271,8 +278,11 @@ public class GroupByTest {
         expectedQuery.put("intervals", intervalArray);
         expectedQuery.put("granularity", "all");
         expectedQuery.put("filter", expectedFilter);
-        expectedQuery.put("aggregations", new JSONArray(Collections.singletonList(expectedAggregator)));
-        expectedQuery.put("postAggregations", new JSONArray(Collections.singletonList(expectedPostAggregator)));
+        expectedQuery.put(
+                "aggregations", new JSONArray(Collections.singletonList(expectedAggregator)));
+        expectedQuery.put(
+                "postAggregations",
+                new JSONArray(Collections.singletonList(expectedPostAggregator)));
         expectedQuery.put("context", expectedContext);
 
         JSONAssert.assertEquals(actualJson, expectedQuery, JSONCompareMode.NON_EXTENSIBLE);

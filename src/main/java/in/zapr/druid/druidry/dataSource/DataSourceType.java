@@ -19,7 +19,6 @@ package in.zapr.druid.druidry.dataSource;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum DataSourceType {
-
     TABLE("table"),
     UNION("union"),
     QUERY("query");

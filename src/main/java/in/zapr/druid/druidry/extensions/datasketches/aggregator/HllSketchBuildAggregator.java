@@ -18,7 +18,6 @@ package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -33,19 +32,20 @@ public class HllSketchBuildAggregator extends DruidAggregator {
     private static final String HLL_SKETCH_BUILD_TYPE_AGGREGATOR = "HLLSketchBuild";
     private String fieldName;
     private Integer lgK;
+
     @JsonProperty("tgtHllType")
     private TargetHllType targetHllType;
 
     @Builder
-    private HllSketchBuildAggregator(@NonNull String name,
-                                     @NonNull String fieldName,
-                                     Integer lgK,
-                                     TargetHllType targetHllType) {
+    private HllSketchBuildAggregator(
+            @NonNull String name,
+            @NonNull String fieldName,
+            Integer lgK,
+            TargetHllType targetHllType) {
         this.type = HLL_SKETCH_BUILD_TYPE_AGGREGATOR;
         this.name = name;
         this.fieldName = fieldName;
         this.lgK = lgK;
         this.targetHllType = targetHllType;
     }
-
 }

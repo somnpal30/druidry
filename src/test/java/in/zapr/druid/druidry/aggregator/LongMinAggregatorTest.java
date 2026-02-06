@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class LongMinAggregatorTest {
@@ -40,8 +40,7 @@ public class LongMinAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        LongMinAggregator longMinAggregator = new LongMinAggregator("CarpeDiem",
-                "Hey");
+        LongMinAggregator longMinAggregator = new LongMinAggregator("CarpeDiem", "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "longMin");
@@ -57,10 +56,10 @@ public class LongMinAggregatorTest {
     public void testAllFieldsButFieldName() throws JacksonException, JSONException {
 
         LongMinAggregator longMinAggregator =
-            LongMinAggregator.builder()
-                .name("CarpeDiem")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                LongMinAggregator.builder()
+                        .name("CarpeDiem")
+                        .expression("(\"foo\" / \"bar\")")
+                        .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "longMin");
@@ -75,37 +74,22 @@ public class LongMinAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() throws JacksonException, JSONException {
 
-        LongMinAggregator longMinAggregator =
-            LongMinAggregator.builder()
-                .fieldName("Haha")
-                .build();
+        LongMinAggregator longMinAggregator = LongMinAggregator.builder().fieldName("Haha").build();
     }
 
     @Test
     public void testEqualsPositive() {
         LongMinAggregator aggregator1 =
-            LongMinAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                LongMinAggregator.builder().name("name").fieldName("field").build();
 
         LongMinAggregator aggregator2 =
-            LongMinAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                LongMinAggregator.builder().name("name").fieldName("field").build();
 
         LongMinAggregator aggregator3 =
-            LongMinAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                LongMinAggregator.builder().name("name").expression("(\"foo\" / \"bar\")").build();
 
         LongMinAggregator aggregator4 =
-            LongMinAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                LongMinAggregator.builder().name("name").expression("(\"foo\" / \"bar\")").build();
 
         Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
         Assertions.assertThat(aggregator3).isEqualTo(aggregator4);
@@ -114,28 +98,16 @@ public class LongMinAggregatorTest {
     @Test
     public void testEqualsNegative() {
         LongMinAggregator aggregator1 =
-            LongMinAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                LongMinAggregator.builder().name("name").fieldName("field").build();
 
         LongMinAggregator aggregator2 =
-            LongMinAggregator.builder()
-                .name("name1")
-                .fieldName("field1")
-                .build();
+                LongMinAggregator.builder().name("name1").fieldName("field1").build();
 
         LongMinAggregator aggregator3 =
-            LongMinAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                LongMinAggregator.builder().name("name").expression("(\"foo\" / \"bar\")").build();
 
         LongMinAggregator aggregator4 =
-            LongMinAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"baz\")")
-                .build();
+                LongMinAggregator.builder().name("name").expression("(\"foo\" / \"baz\")").build();
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
         Assertions.assertThat(aggregator3).isNotEqualTo(aggregator4);
@@ -144,14 +116,10 @@ public class LongMinAggregatorTest {
     @Test
     public void testEqualsWithAnotherSubClass() {
         LongMinAggregator aggregator1 =
-            LongMinAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                LongMinAggregator.builder().name("name").fieldName("field").build();
 
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
-
 }

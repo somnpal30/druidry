@@ -17,22 +17,19 @@
 package in.zapr.druid.druidry.dataSource;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * Generate datasource for druid query. See documentation
- * <a href="http://druid.io/docs/latest/querying/datasource.html">
- * http://druid.io/docs/latest/querying/datasource.html
- * </a>
+ * Generate datasource for druid query. See documentation <a
+ * href="http://druid.io/docs/latest/querying/datasource.html">
+ * http://druid.io/docs/latest/querying/datasource.html </a>
  */
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode
 public abstract class DataSource {
 
-    @NonNull
-    protected DataSourceType type;
+    @NonNull protected DataSourceType type;
 }

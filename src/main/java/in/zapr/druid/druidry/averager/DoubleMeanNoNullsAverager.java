@@ -28,9 +28,11 @@ public class DoubleMeanNoNullsAverager extends DruidAverager {
     private static final String DOUBLE_MEAN_NO_NULLS_AVERAGER = "doubleMeanNoNulls";
 
     @Builder
-    private DoubleMeanNoNullsAverager(@NonNull String name, @NonNull String fieldName,
-                                      @NonNull Integer buckets, Integer cycleSize) {
+    private DoubleMeanNoNullsAverager(
+            @NonNull String name,
+            @NonNull String fieldName,
+            @NonNull Integer buckets,
+            Integer cycleSize) {
         super(DOUBLE_MEAN_NO_NULLS_AVERAGER, name, fieldName, buckets, cycleSize);
     }
-
 }

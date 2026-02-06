@@ -16,8 +16,6 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,6 +23,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class QuantilesSketchAggregatorTest {
 
@@ -46,11 +45,12 @@ public class QuantilesSketchAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        QuantilesSketchAggregator quantilesSketchAggregator = QuantilesSketchAggregator.builder()
-                .name("star_age_quantiles_sketch")
-                .fieldName("star_age")
-                .k(1024)
-                .build();
+        QuantilesSketchAggregator quantilesSketchAggregator =
+                QuantilesSketchAggregator.builder()
+                        .name("star_age_quantiles_sketch")
+                        .fieldName("star_age")
+                        .k(1024)
+                        .build();
 
         JSONObject jsonObject = getQuantilesSketchAggregatorJSON();
         jsonObject.put("fieldName", "star_age");
@@ -64,10 +64,11 @@ public class QuantilesSketchAggregatorTest {
     @Test
     public void testRequiredFields() throws JacksonException, JSONException {
 
-        QuantilesSketchAggregator quantilesSketchAggregator = QuantilesSketchAggregator.builder()
-                .name("star_age_quantiles_sketch")
-                .fieldName("star_age")
-                .build();
+        QuantilesSketchAggregator quantilesSketchAggregator =
+                QuantilesSketchAggregator.builder()
+                        .name("star_age_quantiles_sketch")
+                        .fieldName("star_age")
+                        .build();
 
         JSONObject jsonObject = getQuantilesSketchAggregatorJSON();
         jsonObject.put("fieldName", "star_age");
@@ -80,26 +81,25 @@ public class QuantilesSketchAggregatorTest {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void preconditionCheck() {
 
-        QuantilesSketchAggregator quantilesSketchAggregator = QuantilesSketchAggregator.builder()
-                .name("star_age_quantiles_sketch")
-                .fieldName("star_age")
-                .k(3)
-                .build();
+        QuantilesSketchAggregator quantilesSketchAggregator =
+                QuantilesSketchAggregator.builder()
+                        .name("star_age_quantiles_sketch")
+                        .fieldName("star_age")
+                        .k(3)
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
 
-        QuantilesSketchAggregator quantilesSketchAggregator = QuantilesSketchAggregator.builder()
-                .fieldName("star_age")
-                .build();
+        QuantilesSketchAggregator quantilesSketchAggregator =
+                QuantilesSketchAggregator.builder().fieldName("star_age").build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() {
 
-        QuantilesSketchAggregator quantilesSketchAggregator = QuantilesSketchAggregator.builder()
-                .name("star_age_quantiles_sketch")
-                .build();
+        QuantilesSketchAggregator quantilesSketchAggregator =
+                QuantilesSketchAggregator.builder().name("star_age_quantiles_sketch").build();
     }
 }

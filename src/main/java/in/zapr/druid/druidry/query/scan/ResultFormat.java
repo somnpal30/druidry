@@ -19,7 +19,6 @@ package in.zapr.druid.druidry.query.scan;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ResultFormat {
-
     LIST("list"),
     COMPACTED_LIST("compactedList"),
     VALUE_VECTOR("valueVector");

@@ -17,12 +17,6 @@
 package in.zapr.druid.druidry.query.search;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.List;
-
-import in.zapr.druid.druidry.query.config.Context;
-import in.zapr.druid.druidry.query.config.Interval;
-import in.zapr.druid.druidry.query.config.SortingOrder;
 import in.zapr.druid.druidry.dataSource.DataSource;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 import in.zapr.druid.druidry.filter.DruidFilter;
@@ -30,7 +24,11 @@ import in.zapr.druid.druidry.filter.searchQuerySpec.SearchQuerySpec;
 import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.query.DruidQuery;
 import in.zapr.druid.druidry.query.QueryType;
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
+import in.zapr.druid.druidry.query.config.SortingOrder;
 import in.zapr.druid.druidry.virtualColumn.DruidVirtualColumn;
+import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -51,16 +49,17 @@ public class DruidSearchQuery extends DruidQuery {
     private SearchSortSpec sort;
 
     @Builder
-    private DruidSearchQuery(@NonNull DataSource dataSource,
-                             @NonNull Granularity granularity,
-                             List<DruidVirtualColumn> virtualColumns,
-                             DruidFilter filter,
-                             Integer limit,
-                             @NonNull List<Interval> intervals,
-                             List<DruidDimension> searchDimensions,
-                             @NonNull SearchQuerySpec query,
-                             SortingOrder sort,
-                             Context context) {
+    private DruidSearchQuery(
+            @NonNull DataSource dataSource,
+            @NonNull Granularity granularity,
+            List<DruidVirtualColumn> virtualColumns,
+            DruidFilter filter,
+            Integer limit,
+            @NonNull List<Interval> intervals,
+            List<DruidDimension> searchDimensions,
+            @NonNull SearchQuerySpec query,
+            SortingOrder sort,
+            Context context) {
 
         this.queryType = QueryType.SEARCH;
         this.dataSource = dataSource;

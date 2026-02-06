@@ -16,8 +16,6 @@
 
 package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,6 +23,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class QuantilePostAggregatorTest {
 
@@ -38,8 +37,12 @@ public class QuantilePostAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        QuantilePostAggregator quantilesPostAgg = QuantilePostAggregator.builder().name("quantile")
-                .fieldName("timeAgg").probability(0.5F).build();
+        QuantilePostAggregator quantilesPostAgg =
+                QuantilePostAggregator.builder()
+                        .name("quantile")
+                        .fieldName("timeAgg")
+                        .probability(0.5F)
+                        .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "quantile");
@@ -53,25 +56,41 @@ public class QuantilePostAggregatorTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
-        QuantilePostAggregator quantilesPostAgg = QuantilePostAggregator.builder().name(null)
-                .fieldName("timeAgg").probability(0.5F).build();
+        QuantilePostAggregator quantilesPostAgg =
+                QuantilePostAggregator.builder()
+                        .name(null)
+                        .fieldName("timeAgg")
+                        .probability(0.5F)
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() {
-        QuantilePostAggregator quantilesPostAgg = QuantilePostAggregator.builder().name("quantiles")
-                .fieldName(null).probability(0.5F).build();
+        QuantilePostAggregator quantilesPostAgg =
+                QuantilePostAggregator.builder()
+                        .name("quantiles")
+                        .fieldName(null)
+                        .probability(0.5F)
+                        .build();
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidGreaterThan1ProbabilityValueName() {
-        QuantilePostAggregator quantilesPostAgg = QuantilePostAggregator.builder().name("quantiles")
-                .fieldName("timeAgg").probability(2F).build();
+        QuantilePostAggregator quantilesPostAgg =
+                QuantilePostAggregator.builder()
+                        .name("quantiles")
+                        .fieldName("timeAgg")
+                        .probability(2F)
+                        .build();
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testInvalidNegativeProbabilityValueName() {
-        QuantilePostAggregator quantilesPostAgg = QuantilePostAggregator.builder().name("quantiles")
-                .fieldName("timeAgg").probability(-1F).build();
+        QuantilePostAggregator quantilesPostAgg =
+                QuantilePostAggregator.builder()
+                        .name("quantiles")
+                        .fieldName("timeAgg")
+                        .probability(-1F)
+                        .build();
     }
 }

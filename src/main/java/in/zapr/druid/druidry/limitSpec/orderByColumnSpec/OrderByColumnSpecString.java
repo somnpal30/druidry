@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.limitSpec.orderByColumnSpec;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 

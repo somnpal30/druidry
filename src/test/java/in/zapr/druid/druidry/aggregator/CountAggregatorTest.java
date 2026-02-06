@@ -16,7 +16,8 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import java.util.Collections;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,10 +26,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Collections;
-
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class CountAggregatorTest {
@@ -78,11 +76,12 @@ public class CountAggregatorTest {
 
     @Test
     public void testEqualsWithAnotherSubClass() {
-        CardinalityAggregator aggregator1 = CardinalityAggregator.builder()
-                .name("Agg1")
-                .fields(Collections.singletonList("Haha"))
-                .byRow(true)
-                .build();
+        CardinalityAggregator aggregator1 =
+                CardinalityAggregator.builder()
+                        .name("Agg1")
+                        .fields(Collections.singletonList("Haha"))
+                        .byRow(true)
+                        .build();
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);

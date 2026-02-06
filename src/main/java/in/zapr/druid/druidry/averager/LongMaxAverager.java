@@ -28,9 +28,11 @@ public class LongMaxAverager extends DruidAverager {
     private static final String LONG_MAX_AVERAGER = "longMax";
 
     @Builder
-    private LongMaxAverager(@NonNull String name, @NonNull String fieldName,
-                            @NonNull Integer buckets, Integer cycleSize) {
+    private LongMaxAverager(
+            @NonNull String name,
+            @NonNull String fieldName,
+            @NonNull Integer buckets,
+            Integer cycleSize) {
         super(LONG_MAX_AVERAGER, name, fieldName, buckets, cycleSize);
     }
-
 }

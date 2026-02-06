@@ -16,8 +16,8 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import java.util.Collections;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,10 +26,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Collections;
-
-import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import tools.jackson.databind.ObjectMapper;
 
 public class ThetaSketchSetOpPostAggregatorTest {
 
@@ -54,12 +51,13 @@ public class ThetaSketchSetOpPostAggregatorTest {
         FieldAccessPostAggregator fieldAccessPostAggregator =
                 new FieldAccessPostAggregator("stars");
 
-        ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator = ThetaSketchSetOpPostAggregator.builder()
-                .name("name")
-                .function(ThetaSketchFunction.INTERSECT)
-                .fields(Collections.singletonList(fieldAccessPostAggregator))
-                .size(1024L)
-                .build();
+        ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator =
+                ThetaSketchSetOpPostAggregator.builder()
+                        .name("name")
+                        .function(ThetaSketchFunction.INTERSECT)
+                        .fields(Collections.singletonList(fieldAccessPostAggregator))
+                        .size(1024L)
+                        .build();
 
         JSONObject fieldAccess = getFieldAccessJSON();
 
@@ -83,11 +81,12 @@ public class ThetaSketchSetOpPostAggregatorTest {
         FieldAccessPostAggregator fieldAccessPostAggregator =
                 new FieldAccessPostAggregator("stars");
 
-        ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator = ThetaSketchSetOpPostAggregator.builder()
-                .name("name")
-                .function(ThetaSketchFunction.INTERSECT)
-                .fields(Collections.singletonList(fieldAccessPostAggregator))
-                .build();
+        ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator =
+                ThetaSketchSetOpPostAggregator.builder()
+                        .name("name")
+                        .function(ThetaSketchFunction.INTERSECT)
+                        .fields(Collections.singletonList(fieldAccessPostAggregator))
+                        .build();
 
         JSONObject fieldAccess = getFieldAccessJSON();
 
@@ -107,28 +106,30 @@ public class ThetaSketchSetOpPostAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
 
-        ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator = ThetaSketchSetOpPostAggregator.builder()
-                .function(ThetaSketchFunction.INTERSECT)
-                .fields(Collections.singletonList(new FieldAccessPostAggregator("stars")))
-                .build();
+        ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator =
+                ThetaSketchSetOpPostAggregator.builder()
+                        .function(ThetaSketchFunction.INTERSECT)
+                        .fields(Collections.singletonList(new FieldAccessPostAggregator("stars")))
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFunction() {
 
-        ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator = ThetaSketchSetOpPostAggregator.builder()
-                .name("estimate_stars")
-                .fields(Collections.singletonList(new FieldAccessPostAggregator("stars")))
-                .build();
+        ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator =
+                ThetaSketchSetOpPostAggregator.builder()
+                        .name("estimate_stars")
+                        .fields(Collections.singletonList(new FieldAccessPostAggregator("stars")))
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFields() {
 
-        ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator = ThetaSketchSetOpPostAggregator.builder()
-                .name("estimate_stars")
-                .function(ThetaSketchFunction.INTERSECT)
-                .build();
+        ThetaSketchSetOpPostAggregator thetaSketchSetOpPostAggregator =
+                ThetaSketchSetOpPostAggregator.builder()
+                        .name("estimate_stars")
+                        .function(ThetaSketchFunction.INTERSECT)
+                        .build();
     }
-
 }

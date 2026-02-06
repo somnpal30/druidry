@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class LongSumAggregatorTest {
@@ -40,8 +40,7 @@ public class LongSumAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        LongSumAggregator longSumAggregator = new LongSumAggregator("CarpeDiem",
-                "Hey");
+        LongSumAggregator longSumAggregator = new LongSumAggregator("CarpeDiem", "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "longSum");
@@ -57,10 +56,10 @@ public class LongSumAggregatorTest {
     public void testAllFieldsButFieldName() throws JacksonException, JSONException {
 
         LongSumAggregator longSumAggregator =
-            LongSumAggregator.builder()
-                .name("CarpeDiem")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                LongSumAggregator.builder()
+                        .name("CarpeDiem")
+                        .expression("(\"foo\" / \"bar\")")
+                        .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "longSum");
@@ -75,37 +74,22 @@ public class LongSumAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() throws JacksonException, JSONException {
 
-        LongSumAggregator longSumAggregator =
-            LongSumAggregator.builder()
-                .fieldName("Haha")
-                .build();
+        LongSumAggregator longSumAggregator = LongSumAggregator.builder().fieldName("Haha").build();
     }
 
     @Test
     public void testEqualsPositive() {
         LongSumAggregator aggregator1 =
-            LongSumAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                LongSumAggregator.builder().name("name").fieldName("field").build();
 
         LongSumAggregator aggregator2 =
-            LongSumAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                LongSumAggregator.builder().name("name").fieldName("field").build();
 
         LongSumAggregator aggregator3 =
-            LongSumAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                LongSumAggregator.builder().name("name").expression("(\"foo\" / \"bar\")").build();
 
         LongSumAggregator aggregator4 =
-            LongSumAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                LongSumAggregator.builder().name("name").expression("(\"foo\" / \"bar\")").build();
 
         Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
         Assertions.assertThat(aggregator3).isEqualTo(aggregator4);
@@ -114,28 +98,16 @@ public class LongSumAggregatorTest {
     @Test
     public void testEqualsNegative() {
         LongSumAggregator aggregator1 =
-            LongSumAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                LongSumAggregator.builder().name("name").fieldName("field").build();
 
         LongSumAggregator aggregator2 =
-            LongSumAggregator.builder()
-                .name("name1")
-                .fieldName("field1")
-                .build();
+                LongSumAggregator.builder().name("name1").fieldName("field1").build();
 
         LongSumAggregator aggregator3 =
-            LongSumAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                LongSumAggregator.builder().name("name").expression("(\"foo\" / \"bar\")").build();
 
         LongSumAggregator aggregator4 =
-            LongSumAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"baz\")")
-                .build();
+                LongSumAggregator.builder().name("name").expression("(\"foo\" / \"baz\")").build();
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
         Assertions.assertThat(aggregator3).isNotEqualTo(aggregator4);
@@ -144,14 +116,10 @@ public class LongSumAggregatorTest {
     @Test
     public void testEqualsWithAnotherSubClass() {
         LongSumAggregator aggregator1 =
-            LongSumAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                LongSumAggregator.builder().name("name").fieldName("field").build();
 
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
-
 }

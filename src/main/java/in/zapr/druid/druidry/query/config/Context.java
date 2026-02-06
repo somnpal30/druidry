@@ -16,11 +16,9 @@
 
 package in.zapr.druid.druidry.query.config;
 
-import com.google.common.base.Preconditions;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.google.common.base.Preconditions;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,6 +32,7 @@ public class Context {
     // general query contexts
     @JsonProperty("timeout")
     private Long timeoutInMilliSeconds;
+
     private Integer priority;
     private String queryId;
     private Boolean useCache;
@@ -75,39 +74,40 @@ public class Context {
     private Vectorize vectorize;
     private Integer vectorSize;
 
-    private Context(Long timeoutInMilliSeconds,
-                    Integer priority,
-                    String queryId,
-                    Boolean useCache,
-                    Boolean populateCache,
-                    Boolean useResultLevelCache,
-                    Boolean populateResultLevelCache,
-                    Boolean bySegment,
-                    Boolean finalize,
-                    String chunkPeriod,
-                    Long maxScatterGatherBytes,
-                    Long maxQueuedBytes,
-                    Boolean serializeDateTimeAsLong,
-                    Boolean serializeDateTimeAsLongInner,
-                    Integer minTopNThreshold,
-                    Boolean skipEmptyBuckets,
-                    Long maxMergingDictionarySize,
-                    Long maxOnDiskStorage,
-                    GroupByStrategy groupByStrategy,
-                    Boolean groupByIsSingleThreaded,
-                    Integer bufferGrouperInitialBuckets,
-                    Float bufferGrouperMaxLoadFactor,
-                    Boolean forceHashAggregation,
-                    Integer intermediateCombineDegree,
-                    Integer numParallelCombineThreads,
-                    Boolean sortByDimsFirst,
-                    Boolean forceLimitPushDown,
-                    Boolean applyLimitPushDown,
-                    Integer maxIntermediateRows,
-                    Integer maxResults,
-                    Boolean useOffheap,
-                    Vectorize vectorize,
-                    Integer vectorSize) {
+    private Context(
+            Long timeoutInMilliSeconds,
+            Integer priority,
+            String queryId,
+            Boolean useCache,
+            Boolean populateCache,
+            Boolean useResultLevelCache,
+            Boolean populateResultLevelCache,
+            Boolean bySegment,
+            Boolean finalize,
+            String chunkPeriod,
+            Long maxScatterGatherBytes,
+            Long maxQueuedBytes,
+            Boolean serializeDateTimeAsLong,
+            Boolean serializeDateTimeAsLongInner,
+            Integer minTopNThreshold,
+            Boolean skipEmptyBuckets,
+            Long maxMergingDictionarySize,
+            Long maxOnDiskStorage,
+            GroupByStrategy groupByStrategy,
+            Boolean groupByIsSingleThreaded,
+            Integer bufferGrouperInitialBuckets,
+            Float bufferGrouperMaxLoadFactor,
+            Boolean forceHashAggregation,
+            Integer intermediateCombineDegree,
+            Integer numParallelCombineThreads,
+            Boolean sortByDimsFirst,
+            Boolean forceLimitPushDown,
+            Boolean applyLimitPushDown,
+            Integer maxIntermediateRows,
+            Integer maxResults,
+            Boolean useOffheap,
+            Vectorize vectorize,
+            Integer vectorSize) {
 
         this.timeoutInMilliSeconds = timeoutInMilliSeconds;
         this.priority = priority;
@@ -144,7 +144,10 @@ public class Context {
         this.vectorSize = vectorSize;
 
         if (timeoutInMilliSeconds != null) {
-            Preconditions.checkArgument(timeoutInMilliSeconds >= 0, "Timeout must be a non negative value, but was [%s]", timeoutInMilliSeconds);
+            Preconditions.checkArgument(
+                    timeoutInMilliSeconds >= 0,
+                    "Timeout must be a non negative value, but was [%s]",
+                    timeoutInMilliSeconds);
         }
     }
 }

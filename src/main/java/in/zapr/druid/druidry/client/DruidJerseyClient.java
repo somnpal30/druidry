@@ -16,6 +16,9 @@
 
 package in.zapr.druid.druidry.client;
 
+import in.zapr.druid.druidry.client.exception.ConnectionException;
+import in.zapr.druid.druidry.client.exception.QueryException;
+import in.zapr.druid.druidry.query.DruidQuery;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -23,31 +26,15 @@ import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.List;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.reflect.TypeUtils;
-//import org.apache.http.conn.HttpClientConnectionManager;
-//import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.glassfish.jersey.apache.connector.ApacheClientProperties;
 import org.glassfish.jersey.apache.connector.ApacheConnectorProvider;
 import org.glassfish.jersey.client.ClientConfig;
-
-import java.util.List;
-
-/*import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;*/
-
-import in.zapr.druid.druidry.client.exception.ConnectionException;
-import in.zapr.druid.druidry.client.exception.QueryException;
-import in.zapr.druid.druidry.query.DruidQuery;
-import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class DruidJerseyClient implements DruidClient {
@@ -64,8 +51,8 @@ public class DruidJerseyClient implements DruidClient {
         this(druidConfiguration, null);
     }
 
-    public DruidJerseyClient(@NonNull DruidConfiguration druidConfiguration,
-                             ClientConfig jerseyConfig) {
+    public DruidJerseyClient(
+            @NonNull DruidConfiguration druidConfiguration, ClientConfig jerseyConfig) {
 
         this.druidUrl = druidConfiguration.getUrl();
         this.jerseyConfig = jerseyConfig;
@@ -82,7 +69,8 @@ public class DruidJerseyClient implements DruidClient {
 
                 HttpClientConnectionManager connectionManager = createConnectionManager();
                 this.jerseyConfig = new ClientConfig();
-                this.jerseyConfig.property(ApacheClientProperties.CONNECTION_MANAGER, connectionManager);
+                this.jerseyConfig.property(
+                        ApacheClientProperties.CONNECTION_MANAGER, connectionManager);
                 this.jerseyConfig.connectorProvider(new ApacheConnectorProvider());
             }
 
@@ -110,9 +98,10 @@ public class DruidJerseyClient implements DruidClient {
     @Override
     public String query(DruidQuery druidQuery) throws QueryException {
 
-        try (Response response = this.queryWebTarget
-                .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(druidQuery, MediaType.APPLICATION_JSON))) {
+        try (Response response =
+                this.queryWebTarget
+                        .request(MediaType.APPLICATION_JSON)
+                        .post(Entity.entity(druidQuery, MediaType.APPLICATION_JSON))) {
 
             if (response.getStatus() == Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()) {
                 handleInternalServerResponse(response);
@@ -131,16 +120,17 @@ public class DruidJerseyClient implements DruidClient {
 
     @Override
     public <T> List<T> query(DruidQuery druidQuery, Class<T> className) throws QueryException {
-        try (Response response = this.queryWebTarget
-                .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(druidQuery, MediaType.APPLICATION_JSON))) {
+        try (Response response =
+                this.queryWebTarget
+                        .request(MediaType.APPLICATION_JSON)
+                        .post(Entity.entity(druidQuery, MediaType.APPLICATION_JSON))) {
 
             if (response.getStatus() == Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()) {
                 handleInternalServerResponse(response);
             }
 
-            return response.readEntity(new GenericType<List<T>>(TypeUtils.parameterize(List.class, className)) {
-            });
+            return response.readEntity(
+                    new GenericType<List<T>>(TypeUtils.parameterize(List.class, className)) {});
         } catch (QueryException e) {
             log.error("Exception while querying :", e);
             throw e;
@@ -156,8 +146,8 @@ public class DruidJerseyClient implements DruidClient {
     }
 
     private HttpClientConnectionManager createConnectionManager() {
-        PoolingHttpClientConnectionManager connectionManager
-                = new PoolingHttpClientConnectionManager();
+        PoolingHttpClientConnectionManager connectionManager =
+                new PoolingHttpClientConnectionManager();
 
         int numberOfConnectionsInPool = DEFAULT_CONNECTION_POOL_LIMIT;
 

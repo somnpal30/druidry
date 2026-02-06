@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.filter.havingSpec;
 
-import tools.jackson.databind.ObjectMapper;
-
+import java.util.Arrays;
 import org.assertj.core.api.Assertions;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,8 +26,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Arrays;
+import tools.jackson.databind.ObjectMapper;
 
 public class AndHavingTest {
 
@@ -81,6 +79,4 @@ public class AndHavingTest {
 
         Assertions.assertThat(equalToHaving1).isEqualTo(equalToHaving2);
     }
-
 }
-

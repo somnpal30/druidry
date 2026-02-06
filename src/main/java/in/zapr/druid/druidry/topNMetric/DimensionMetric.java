@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.topNMetric;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import in.zapr.druid.druidry.query.config.SortingOrder;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -40,5 +39,4 @@ public class DimensionMetric extends TopNMetric {
         this.ordering = ordering;
         this.previousStop = previousStop;
     }
-
 }

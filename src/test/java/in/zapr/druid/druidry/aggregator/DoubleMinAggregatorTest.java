@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class DoubleMinAggregatorTest {
@@ -40,8 +40,7 @@ public class DoubleMinAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        DoubleMinAggregator doubleMinAggregator = new DoubleMinAggregator("CarpeDiem",
-                "Hey");
+        DoubleMinAggregator doubleMinAggregator = new DoubleMinAggregator("CarpeDiem", "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "doubleMin");
@@ -57,10 +56,10 @@ public class DoubleMinAggregatorTest {
     public void testAllFieldsButFieldName() throws JSONException, JacksonException {
 
         DoubleMinAggregator doubleMinAggregator =
-            DoubleMinAggregator.builder()
-                .name("CarpeDiem")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                DoubleMinAggregator.builder()
+                        .name("CarpeDiem")
+                        .expression("(\"foo\" / \"bar\")")
+                        .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "doubleMin");
@@ -76,36 +75,28 @@ public class DoubleMinAggregatorTest {
     public void testNullName() throws JacksonException, JSONException {
 
         DoubleMinAggregator doubleMinAggregator =
-            DoubleMinAggregator.builder()
-                .fieldName("Haha")
-                .build();
+                DoubleMinAggregator.builder().fieldName("Haha").build();
     }
 
     @Test
     public void testEqualsPositive() {
         DoubleMinAggregator aggregator1 =
-            DoubleMinAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                DoubleMinAggregator.builder().name("name").fieldName("field").build();
 
         DoubleMinAggregator aggregator2 =
-            DoubleMinAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                DoubleMinAggregator.builder().name("name").fieldName("field").build();
 
         DoubleMinAggregator aggregator3 =
-            DoubleMinAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                DoubleMinAggregator.builder()
+                        .name("name")
+                        .expression("(\"foo\" / \"bar\")")
+                        .build();
 
         DoubleMinAggregator aggregator4 =
-            DoubleMinAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                DoubleMinAggregator.builder()
+                        .name("name")
+                        .expression("(\"foo\" / \"bar\")")
+                        .build();
 
         Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
         Assertions.assertThat(aggregator3).isEqualTo(aggregator4);
@@ -114,28 +105,22 @@ public class DoubleMinAggregatorTest {
     @Test
     public void testEqualsNegative() {
         DoubleMinAggregator aggregator1 =
-            DoubleMinAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                DoubleMinAggregator.builder().name("name").fieldName("field").build();
 
         DoubleMinAggregator aggregator2 =
-            DoubleMinAggregator.builder()
-                .name("name1")
-                .fieldName("field1")
-                .build();
+                DoubleMinAggregator.builder().name("name1").fieldName("field1").build();
 
         DoubleMinAggregator aggregator3 =
-            DoubleMinAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"bar\")")
-                .build();
+                DoubleMinAggregator.builder()
+                        .name("name")
+                        .expression("(\"foo\" / \"bar\")")
+                        .build();
 
         DoubleMinAggregator aggregator4 =
-            DoubleMinAggregator.builder()
-                .name("name")
-                .expression("(\"foo\" / \"baz\")")
-                .build();
+                DoubleMinAggregator.builder()
+                        .name("name")
+                        .expression("(\"foo\" / \"baz\")")
+                        .build();
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
         Assertions.assertThat(aggregator3).isNotEqualTo(aggregator4);
@@ -144,14 +129,10 @@ public class DoubleMinAggregatorTest {
     @Test
     public void testEqualsWithAnotherSubClass() {
         DoubleMinAggregator aggregator1 =
-            DoubleMinAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+                DoubleMinAggregator.builder().name("name").fieldName("field").build();
 
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
-
 }

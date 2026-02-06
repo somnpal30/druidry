@@ -16,16 +16,14 @@
 
 package in.zapr.druid.druidry.dimension;
 
-import tools.jackson.databind.ObjectMapper;
-
+import java.util.Arrays;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Arrays;
+import tools.jackson.databind.ObjectMapper;
 
 public class ListFilteredDimensionTest {
     private static ObjectMapper objectMapper;
@@ -35,22 +33,24 @@ public class ListFilteredDimensionTest {
         objectMapper = new ObjectMapper();
     }
 
-
     @Test
     public void testListFilteredDimension() throws JacksonException, JSONException {
-        DimensionSpec dimensionSpec = DefaultDimension.builder()
-                .dimension("system_label_values")
-                .outputName("system_label_values")
-                .build();
+        DimensionSpec dimensionSpec =
+                DefaultDimension.builder()
+                        .dimension("system_label_values")
+                        .outputName("system_label_values")
+                        .build();
 
-        ListFilteredDimension listFilteredDimension = ListFilteredDimension.builder()
-                .dimensionSpec(dimensionSpec)
-                .values(Arrays.asList("compute.googleapis.com/cores`1"))
-                .whitelist(true)
-                .build();
+        ListFilteredDimension listFilteredDimension =
+                ListFilteredDimension.builder()
+                        .dimensionSpec(dimensionSpec)
+                        .values(Arrays.asList("compute.googleapis.com/cores`1"))
+                        .whitelist(true)
+                        .build();
 
         String jsonOutput = objectMapper.writeValueAsString(listFilteredDimension);
-        String expectedJSONString = """
+        String expectedJSONString =
+                """
                 {
                       "type": "listFiltered",
                       "delegate": {
@@ -66,20 +66,24 @@ public class ListFilteredDimensionTest {
     }
 
     @Test
-    public void testListFilteredDimensionIsWhiteListedFalse() throws JacksonException, JSONException {
-        DimensionSpec dimensionSpec = DefaultDimension.builder()
-                .dimension("system_label_values")
-                .outputName("system_label_values")
-                .build();
+    public void testListFilteredDimensionIsWhiteListedFalse()
+            throws JacksonException, JSONException {
+        DimensionSpec dimensionSpec =
+                DefaultDimension.builder()
+                        .dimension("system_label_values")
+                        .outputName("system_label_values")
+                        .build();
 
-        ListFilteredDimension listFilteredDimension = ListFilteredDimension.builder()
-                .dimensionSpec(dimensionSpec)
-                .values(Arrays.asList("compute.googleapis.com/cores`1"))
-                .whitelist(false)
-                .build();
+        ListFilteredDimension listFilteredDimension =
+                ListFilteredDimension.builder()
+                        .dimensionSpec(dimensionSpec)
+                        .values(Arrays.asList("compute.googleapis.com/cores`1"))
+                        .whitelist(false)
+                        .build();
 
         String jsonOutput = objectMapper.writeValueAsString(listFilteredDimension);
-        String expectedJSONString = """
+        String expectedJSONString =
+                """
                 {
                       "type": "listFiltered",
                       "delegate": {
@@ -95,19 +99,23 @@ public class ListFilteredDimensionTest {
     }
 
     @Test
-    public void testListFilteredDimensionIsWhiteListedDefault() throws JacksonException, JSONException {
-        DimensionSpec dimensionSpec = DefaultDimension.builder()
-                .dimension("system_label_values")
-                .outputName("system_label_values")
-                .build();
+    public void testListFilteredDimensionIsWhiteListedDefault()
+            throws JacksonException, JSONException {
+        DimensionSpec dimensionSpec =
+                DefaultDimension.builder()
+                        .dimension("system_label_values")
+                        .outputName("system_label_values")
+                        .build();
 
-        ListFilteredDimension listFilteredDimension = ListFilteredDimension.builder()
-                .dimensionSpec(dimensionSpec)
-                .values(Arrays.asList("compute.googleapis.com/cores`1"))
-                .build();
+        ListFilteredDimension listFilteredDimension =
+                ListFilteredDimension.builder()
+                        .dimensionSpec(dimensionSpec)
+                        .values(Arrays.asList("compute.googleapis.com/cores`1"))
+                        .build();
 
         String jsonOutput = objectMapper.writeValueAsString(listFilteredDimension);
-        String expectedJSONString = """
+        String expectedJSONString =
+                """
                 {
                       "type": "listFiltered",
                       "delegate": {
@@ -123,22 +131,21 @@ public class ListFilteredDimensionTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testListFilteredDimensionWithNullDimension() throws JacksonException {
-        ListFilteredDimension listFilteredDimension = ListFilteredDimension.builder()
-                .values(Arrays.asList("compute.googleapis.com/cores`1"))
-                .build();
+        ListFilteredDimension listFilteredDimension =
+                ListFilteredDimension.builder()
+                        .values(Arrays.asList("compute.googleapis.com/cores`1"))
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testListFilteredDimensionWithNullList() throws JacksonException {
-        DimensionSpec dimensionSpec = DefaultDimension.builder()
-                .dimension("system_label_values")
-                .outputName("system_label_values")
-                .build();
+        DimensionSpec dimensionSpec =
+                DefaultDimension.builder()
+                        .dimension("system_label_values")
+                        .outputName("system_label_values")
+                        .build();
 
-        ListFilteredDimension listFilteredDimension = ListFilteredDimension.builder()
-                .dimensionSpec(dimensionSpec)
-                .build();
+        ListFilteredDimension listFilteredDimension =
+                ListFilteredDimension.builder().dimensionSpec(dimensionSpec).build();
     }
-
-
 }

@@ -21,8 +21,7 @@ import lombok.Getter;
 
 public class QueryException extends DruidryException {
 
-    @Getter
-    private DruidError druidError;
+    @Getter private DruidError druidError;
 
     public QueryException(Exception e) {
         super(e);

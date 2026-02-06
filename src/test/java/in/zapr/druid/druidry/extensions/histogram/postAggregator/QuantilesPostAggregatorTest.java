@@ -16,9 +16,9 @@
 
 package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
-
+import java.util.HashSet;
+import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,11 +27,8 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class QuantilesPostAggregatorTest {
@@ -49,8 +46,12 @@ public class QuantilesPostAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        QuantilesPostAggregator quantilesPostAgg = QuantilesPostAggregator.builder().name("quantiles")
-                .fieldName("timeAgg").probabilities(probabilities).build();
+        QuantilesPostAggregator quantilesPostAgg =
+                QuantilesPostAggregator.builder()
+                        .name("quantiles")
+                        .fieldName("timeAgg")
+                        .probabilities(probabilities)
+                        .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "quantiles");
@@ -66,13 +67,21 @@ public class QuantilesPostAggregatorTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
-        QuantilesPostAggregator quantilesPostAgg = QuantilesPostAggregator.builder().name(null)
-                .fieldName("timeAgg").probabilities(probabilities).build();
+        QuantilesPostAggregator quantilesPostAgg =
+                QuantilesPostAggregator.builder()
+                        .name(null)
+                        .fieldName("timeAgg")
+                        .probabilities(probabilities)
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() {
-        QuantilesPostAggregator quantilesPostAgg = QuantilesPostAggregator.builder().name("quantiles")
-                .fieldName(null).probabilities(probabilities).build();
+        QuantilesPostAggregator quantilesPostAgg =
+                QuantilesPostAggregator.builder()
+                        .name("quantiles")
+                        .fieldName(null)
+                        .probabilities(probabilities)
+                        .build();
     }
 }

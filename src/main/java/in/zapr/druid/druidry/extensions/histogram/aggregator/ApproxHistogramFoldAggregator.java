@@ -18,7 +18,6 @@ package in.zapr.druid.druidry.extensions.histogram.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,12 +32,18 @@ public class ApproxHistogramFoldAggregator extends DruidAggregator {
     private Integer resolution;
     private Float lowerLimit;
     private Float upperLimit;
+
     @JsonProperty("numBuckets")
     private Integer numberOfBuckets;
 
     @Builder
-    private ApproxHistogramFoldAggregator(@NonNull String name, @NonNull String fieldName,
-                                          Integer resolution, Float lowerLimit, Float upperLimit, Integer numberOfBuckets) {
+    private ApproxHistogramFoldAggregator(
+            @NonNull String name,
+            @NonNull String fieldName,
+            Integer resolution,
+            Float lowerLimit,
+            Float upperLimit,
+            Integer numberOfBuckets) {
         this.type = APPROX_HISTOGRAM_AGGREGATOR_TYPE;
         this.name = name;
         this.fieldName = fieldName;

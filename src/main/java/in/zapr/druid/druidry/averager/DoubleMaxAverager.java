@@ -28,9 +28,11 @@ public class DoubleMaxAverager extends DruidAverager {
     private static final String DOUBLE_MAX_AVERAGER = "doubleMax";
 
     @Builder
-    private DoubleMaxAverager(@NonNull String name, @NonNull String fieldName,
-                              @NonNull Integer buckets, Integer cycleSize) {
+    private DoubleMaxAverager(
+            @NonNull String name,
+            @NonNull String fieldName,
+            @NonNull Integer buckets,
+            Integer cycleSize) {
         super(DOUBLE_MAX_AVERAGER, name, fieldName, buckets, cycleSize);
     }
-
 }

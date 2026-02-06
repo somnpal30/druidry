@@ -16,11 +16,10 @@
 
 package in.zapr.druid.druidry.client;
 
-import java.util.List;
-
 import in.zapr.druid.druidry.client.exception.ConnectionException;
 import in.zapr.druid.druidry.client.exception.QueryException;
 import in.zapr.druid.druidry.query.DruidQuery;
+import java.util.List;
 
 public interface DruidClient extends AutoCloseable {
 
@@ -51,8 +50,8 @@ public interface DruidClient extends AutoCloseable {
      * Queries druid
      *
      * @param druidQuery Druid Query Object
-     * @param className  Class according to which DruidResult should be converted to
-     * @param <T>        Class according to which DruidResult should be converted to
+     * @param className Class according to which DruidResult should be converted to
+     * @param <T> Class according to which DruidResult should be converted to
      * @return Druid Result in the form of class T object
      * @throws QueryException Error while querying
      */

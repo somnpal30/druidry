@@ -16,14 +16,13 @@
 
 package in.zapr.druid.druidry.dimension;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class PrefixFilteredDimensionTest {
 
@@ -34,20 +33,22 @@ public class PrefixFilteredDimensionTest {
         objectMapper = new ObjectMapper();
     }
 
-
     @Test
     public void testPreFixFilteredDimension() throws JacksonException, JSONException {
-        DimensionSpec dimensionSpec = DefaultDimension.builder()
-                .dimension("system_label_values")
-                .outputName("system_label_values")
-                .build();
-        PrefixFilteredDimension prefixFilteredDimension = PrefixFilteredDimension.builder()
-                .dimensionSpec(dimensionSpec)
-                .prefix("compute.googleapis.com/cores")
-                .build();
+        DimensionSpec dimensionSpec =
+                DefaultDimension.builder()
+                        .dimension("system_label_values")
+                        .outputName("system_label_values")
+                        .build();
+        PrefixFilteredDimension prefixFilteredDimension =
+                PrefixFilteredDimension.builder()
+                        .dimensionSpec(dimensionSpec)
+                        .prefix("compute.googleapis.com/cores")
+                        .build();
 
         String jsonOutput = objectMapper.writeValueAsString(prefixFilteredDimension);
-        String expectedJSONString = """
+        String expectedJSONString =
+                """
                 {
                       "type": "prefixFiltered",
                       "delegate": {
@@ -63,23 +64,19 @@ public class PrefixFilteredDimensionTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testPreFixFilteredDimensionWithNullDimensionSpec() throws JacksonException {
-        PrefixFilteredDimension prefixFilteredDimension = PrefixFilteredDimension.builder()
-                .prefix("compute.googleapis.com/cores")
-                .build();
-
+        PrefixFilteredDimension prefixFilteredDimension =
+                PrefixFilteredDimension.builder().prefix("compute.googleapis.com/cores").build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testPreFixFilteredDimensionWithNullPrefix() throws JacksonException {
-        DimensionSpec dimensionSpec = DefaultDimension.builder()
-                .dimension("system_label_values")
-                .outputName("system_label_values")
-                .build();
+        DimensionSpec dimensionSpec =
+                DefaultDimension.builder()
+                        .dimension("system_label_values")
+                        .outputName("system_label_values")
+                        .build();
 
-        PrefixFilteredDimension prefixFilteredDimension = PrefixFilteredDimension.builder()
-                .dimensionSpec(dimensionSpec)
-                .build();
+        PrefixFilteredDimension prefixFilteredDimension =
+                PrefixFilteredDimension.builder().dimensionSpec(dimensionSpec).build();
     }
-
-
 }

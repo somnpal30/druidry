@@ -23,14 +23,14 @@ public class DruidConfigurationTest {
 
     @Test
     public void testDruidConfiguration() {
-        DruidConfiguration config = DruidConfiguration
-                .builder()
-                .protocol(DruidQueryProtocol.HTTPS)
-                .host("druid.zapr.in")
-                .port(443)
-                .endpoint("druid/v2/")
-                .concurrentConnectionsRequired(8)
-                .build();
+        DruidConfiguration config =
+                DruidConfiguration.builder()
+                        .protocol(DruidQueryProtocol.HTTPS)
+                        .host("druid.zapr.in")
+                        .port(443)
+                        .endpoint("druid/v2/")
+                        .concurrentConnectionsRequired(8)
+                        .build();
 
         Assertions.assertThat(config.getProtocol()).isEqualTo(DruidQueryProtocol.HTTPS);
         Assertions.assertThat(config.getHost()).isEqualTo("druid.zapr.in");
@@ -42,12 +42,12 @@ public class DruidConfigurationTest {
 
     @Test
     public void testDefaultConfigProtocol() {
-        DruidConfiguration config = DruidConfiguration
-                .builder()
-                .host("druid.zapr.in")
-                .endpoint("druid/v2/")
-                .concurrentConnectionsRequired(8)
-                .build();
+        DruidConfiguration config =
+                DruidConfiguration.builder()
+                        .host("druid.zapr.in")
+                        .endpoint("druid/v2/")
+                        .concurrentConnectionsRequired(8)
+                        .build();
 
         Assertions.assertThat(config.getProtocol()).isEqualTo(DruidQueryProtocol.HTTP);
         Assertions.assertThat(config.getPort().intValue()).isEqualTo(8082);
@@ -56,55 +56,55 @@ public class DruidConfigurationTest {
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testNegativePort() {
-        DruidConfiguration config = DruidConfiguration
-                .builder()
-                .host("druid.zapr.in")
-                .port(-1)
-                .endpoint("druid/v2/")
-                .concurrentConnectionsRequired(8)
-                .build();
+        DruidConfiguration config =
+                DruidConfiguration.builder()
+                        .host("druid.zapr.in")
+                        .port(-1)
+                        .endpoint("druid/v2/")
+                        .concurrentConnectionsRequired(8)
+                        .build();
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testNegativeConcurrentConnectionValue() {
-        DruidConfiguration config = DruidConfiguration
-                .builder()
-                .host("druid.zapr.in")
-                .port(443)
-                .endpoint("druid/v2/")
-                .concurrentConnectionsRequired(-1)
-                .build();
+        DruidConfiguration config =
+                DruidConfiguration.builder()
+                        .host("druid.zapr.in")
+                        .port(443)
+                        .endpoint("druid/v2/")
+                        .concurrentConnectionsRequired(-1)
+                        .build();
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testNullHost() {
-        DruidConfiguration config = DruidConfiguration
-                .builder()
-                .port(443)
-                .endpoint("druid/v2/")
-                .concurrentConnectionsRequired(14)
-                .build();
+        DruidConfiguration config =
+                DruidConfiguration.builder()
+                        .port(443)
+                        .endpoint("druid/v2/")
+                        .concurrentConnectionsRequired(14)
+                        .build();
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testEmptyHost() {
-        DruidConfiguration config = DruidConfiguration
-                .builder()
-                .host("")
-                .port(443)
-                .endpoint("druid/v2/")
-                .concurrentConnectionsRequired(16)
-                .build();
+        DruidConfiguration config =
+                DruidConfiguration.builder()
+                        .host("")
+                        .port(443)
+                        .endpoint("druid/v2/")
+                        .concurrentConnectionsRequired(16)
+                        .build();
     }
 
     @Test
     public void testNullEndpoint() {
-        DruidConfiguration config = DruidConfiguration
-                .builder()
-                .host("druid.zapr.in")
-                .port(443)
-                .concurrentConnectionsRequired(11)
-                .build();
+        DruidConfiguration config =
+                DruidConfiguration.builder()
+                        .host("druid.zapr.in")
+                        .port(443)
+                        .concurrentConnectionsRequired(11)
+                        .build();
 
         Assertions.assertThat(config.getUrl()).isEqualTo("http://druid.zapr.in:443/");
     }

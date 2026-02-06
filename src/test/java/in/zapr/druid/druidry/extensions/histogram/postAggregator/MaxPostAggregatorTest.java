@@ -16,8 +16,6 @@
 
 package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,6 +23,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class MaxPostAggregatorTest {
 
@@ -37,8 +36,7 @@ public class MaxPostAggregatorTest {
 
     @Test
     public void testAllFields() throws JacksonException, JSONException {
-        MaxPostAggregator maxPostAggregator
-                = new MaxPostAggregator("CarpeDiem", "Seize the Day");
+        MaxPostAggregator maxPostAggregator = new MaxPostAggregator("CarpeDiem", "Seize the Day");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "max");
@@ -52,13 +50,11 @@ public class MaxPostAggregatorTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testMissingNameFields() {
-        MaxPostAggregator maxPostAggregator
-                = new MaxPostAggregator(null, "Seize the day");
+        MaxPostAggregator maxPostAggregator = new MaxPostAggregator(null, "Seize the day");
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testMissingFieldNameFields() {
-        MaxPostAggregator maxPostAggregator
-                = new MaxPostAggregator("CarpeDiem", null);
+        MaxPostAggregator maxPostAggregator = new MaxPostAggregator("CarpeDiem", null);
     }
 }

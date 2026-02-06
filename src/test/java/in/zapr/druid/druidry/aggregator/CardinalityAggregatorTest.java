@@ -16,8 +16,9 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,10 +28,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import tools.jackson.databind.ObjectMapper;
 
 public class CardinalityAggregatorTest {
 
@@ -46,11 +44,8 @@ public class CardinalityAggregatorTest {
 
         List<String> fields = Arrays.asList("Cardinal", "Aggregator");
 
-        CardinalityAggregator cardinalityAggregator = CardinalityAggregator.builder()
-                .name("Hello")
-                .fields(fields)
-                .byRow(true)
-                .build();
+        CardinalityAggregator cardinalityAggregator =
+                CardinalityAggregator.builder().name("Hello").fields(fields).byRow(true).build();
 
         JSONArray fieldJsonArray = new JSONArray(fields);
 
@@ -70,10 +65,8 @@ public class CardinalityAggregatorTest {
 
         List<String> fields = Arrays.asList("Cardinal", "Aggregator");
 
-        CardinalityAggregator cardinalityAggregator = CardinalityAggregator.builder()
-                .name("Hello")
-                .fields(fields)
-                .build();
+        CardinalityAggregator cardinalityAggregator =
+                CardinalityAggregator.builder().name("Hello").fields(fields).build();
 
         JSONArray fieldJsonArray = new JSONArray(fields);
 
@@ -92,10 +85,8 @@ public class CardinalityAggregatorTest {
 
         List<String> fields = Arrays.asList("Cardinal", "Aggregator");
 
-        CardinalityAggregator cardinalityAggregator = CardinalityAggregator.builder()
-                .fields(fields)
-                .byRow(true)
-                .build();
+        CardinalityAggregator cardinalityAggregator =
+                CardinalityAggregator.builder().fields(fields).byRow(true).build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
@@ -103,51 +94,54 @@ public class CardinalityAggregatorTest {
 
         List<String> fields = Arrays.asList("Cardinal", "Aggregator");
 
-        CardinalityAggregator cardinalityAggregator = CardinalityAggregator.builder()
-                .name("Haha")
-                .byRow(true)
-                .build();
+        CardinalityAggregator cardinalityAggregator =
+                CardinalityAggregator.builder().name("Haha").byRow(true).build();
     }
 
     @Test
     public void testEqualsPositive() {
-        CardinalityAggregator aggregator1 = CardinalityAggregator.builder()
-                .name("Agg1")
-                .fields(Collections.singletonList("Haha"))
-                .byRow(true)
-                .build();
-        CardinalityAggregator aggregator2 = CardinalityAggregator.builder()
-                .name("Agg1")
-                .fields(Collections.singletonList("Haha"))
-                .byRow(true)
-                .build();
+        CardinalityAggregator aggregator1 =
+                CardinalityAggregator.builder()
+                        .name("Agg1")
+                        .fields(Collections.singletonList("Haha"))
+                        .byRow(true)
+                        .build();
+        CardinalityAggregator aggregator2 =
+                CardinalityAggregator.builder()
+                        .name("Agg1")
+                        .fields(Collections.singletonList("Haha"))
+                        .byRow(true)
+                        .build();
 
         Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
     }
 
     @Test
     public void testEqualsNegative() {
-        CardinalityAggregator aggregator1 = CardinalityAggregator.builder()
-                .name("Agg1")
-                .fields(Collections.singletonList("Haha"))
-                .byRow(true)
-                .build();
-        CardinalityAggregator aggregator2 = CardinalityAggregator.builder()
-                .name("Agg1")
-                .fields(Collections.singletonList("Haha1"))
-                .byRow(false)
-                .build();
+        CardinalityAggregator aggregator1 =
+                CardinalityAggregator.builder()
+                        .name("Agg1")
+                        .fields(Collections.singletonList("Haha"))
+                        .byRow(true)
+                        .build();
+        CardinalityAggregator aggregator2 =
+                CardinalityAggregator.builder()
+                        .name("Agg1")
+                        .fields(Collections.singletonList("Haha1"))
+                        .byRow(false)
+                        .build();
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
 
     @Test
     public void testEqualsWithAnotherSubClass() {
-        CardinalityAggregator aggregator1 = CardinalityAggregator.builder()
-                .name("Agg1")
-                .fields(Collections.singletonList("Haha"))
-                .byRow(true)
-                .build();
+        CardinalityAggregator aggregator1 =
+                CardinalityAggregator.builder()
+                        .name("Agg1")
+                        .fields(Collections.singletonList("Haha"))
+                        .byRow(true)
+                        .build();
         CountAggregator aggregator2 = new CountAggregator("count");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);

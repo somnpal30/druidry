@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class HyperUniqueAggregatorTest {
@@ -49,11 +49,12 @@ public class HyperUniqueAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        HyperUniqueAggregator hyperUniqueAggregator = HyperUniqueAggregator.builder()
-                .name("CarpeDiem")
-                .fieldName("Hey")
-                .round(true)
-                .build();
+        HyperUniqueAggregator hyperUniqueAggregator =
+                HyperUniqueAggregator.builder()
+                        .name("CarpeDiem")
+                        .fieldName("Hey")
+                        .round(true)
+                        .build();
 
         JSONObject jsonObject = getHyperUniqueAggregatorJSON();
         jsonObject.put("round", true);
@@ -66,46 +67,37 @@ public class HyperUniqueAggregatorTest {
     @Test
     public void testRequiredFields() throws JacksonException, JSONException {
 
-        HyperUniqueAggregator hyperUniqueAggregator = HyperUniqueAggregator.builder()
-                .name("CarpeDiem")
-                .fieldName("Hey")
-                .build();
+        HyperUniqueAggregator hyperUniqueAggregator =
+                HyperUniqueAggregator.builder().name("CarpeDiem").fieldName("Hey").build();
 
         JSONObject jsonObject = getHyperUniqueAggregatorJSON();
 
         String actualJSON = objectMapper.writeValueAsString(hyperUniqueAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
-
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() throws JacksonException, JSONException {
 
-        HyperUniqueAggregator hyperUniqueAggregator = HyperUniqueAggregator.builder()
-                .fieldName("Haha")
-                .build();
+        HyperUniqueAggregator hyperUniqueAggregator =
+                HyperUniqueAggregator.builder().fieldName("Haha").build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() throws JacksonException, JSONException {
 
-        HyperUniqueAggregator hyperUniqueAggregator = HyperUniqueAggregator.builder()
-                .name("Name")
-                .build();
+        HyperUniqueAggregator hyperUniqueAggregator =
+                HyperUniqueAggregator.builder().name("Name").build();
     }
 
     @Test
     public void testEqualsPositive() {
 
-        HyperUniqueAggregator aggregator1 = HyperUniqueAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
-        HyperUniqueAggregator aggregator2 = HyperUniqueAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+        HyperUniqueAggregator aggregator1 =
+                HyperUniqueAggregator.builder().name("name").fieldName("field").build();
+        HyperUniqueAggregator aggregator2 =
+                HyperUniqueAggregator.builder().name("name").fieldName("field").build();
 
         Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
     }
@@ -113,14 +105,10 @@ public class HyperUniqueAggregatorTest {
     @Test
     public void testEqualsNegative() {
 
-        HyperUniqueAggregator aggregator1 = HyperUniqueAggregator.builder()
-                .name("name1")
-                .fieldName("field1")
-                .build();
-        HyperUniqueAggregator aggregator2 = HyperUniqueAggregator.builder()
-                .name("name2")
-                .fieldName("field2")
-                .build();
+        HyperUniqueAggregator aggregator1 =
+                HyperUniqueAggregator.builder().name("name1").fieldName("field1").build();
+        HyperUniqueAggregator aggregator2 =
+                HyperUniqueAggregator.builder().name("name2").fieldName("field2").build();
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
@@ -128,10 +116,8 @@ public class HyperUniqueAggregatorTest {
     @Test
     public void testEqualsWithAnotherSubClass() {
 
-        HyperUniqueAggregator aggregator1 = HyperUniqueAggregator.builder()
-                .name("name")
-                .fieldName("field")
-                .build();
+        HyperUniqueAggregator aggregator1 =
+                HyperUniqueAggregator.builder().name("name").fieldName("field").build();
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);

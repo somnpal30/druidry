@@ -17,9 +17,7 @@
 package in.zapr.druid.druidry.extractionFunctions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.text.SimpleDateFormat;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -32,8 +30,8 @@ public class TimeParsingExtractionFunction extends ExtractionFunction {
     private SimpleDateFormat resultFormat;
 
     @Builder
-    private TimeParsingExtractionFunction(@NonNull SimpleDateFormat timeFormat, @NonNull SimpleDateFormat
-            resultFormat) {
+    private TimeParsingExtractionFunction(
+            @NonNull SimpleDateFormat timeFormat, @NonNull SimpleDateFormat resultFormat) {
         this.type = TIME_PARSING_TYPE;
         this.timeFormat = timeFormat;
         this.resultFormat = resultFormat;

@@ -16,26 +16,10 @@
 
 package in.zapr.druid.druidry.query.aggregation;
 
+import static com.google.common.collect.ImmutableList.of;
+import static java.util.Collections.singletonList;
+
 import com.google.common.io.Resources;
-
-import tools.jackson.databind.ObjectMapper;
-
-import org.assertj.core.api.Assertions;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-import org.testng.reporters.Files;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import in.zapr.druid.druidry.aggregator.DoubleSumAggregator;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import in.zapr.druid.druidry.averager.DoubleMeanAverager;
@@ -53,9 +37,21 @@ import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
 import in.zapr.druid.druidry.query.config.Context;
 import in.zapr.druid.druidry.query.config.Interval;
-
-import static com.google.common.collect.ImmutableList.of;
-import static java.util.Collections.singletonList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import org.assertj.core.api.Assertions;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import org.testng.reporters.Files;
+import tools.jackson.databind.ObjectMapper;
 
 public class MovingAverageTest {
 
@@ -82,37 +78,43 @@ public class MovingAverageTest {
         DruidDimension druidDimension1 = new SimpleDimension("dimension_1");
         DruidDimension druidDimension2 = new SimpleDimension("dimension_2");
         DefaultLimitSpec limitSpec =
-                new DefaultLimitSpec(5000, of(new OrderByColumnSpecString("column_1"),
-                        new OrderByColumnSpecString("column_2")));
+                new DefaultLimitSpec(
+                        5000,
+                        of(
+                                new OrderByColumnSpecString("column_1"),
+                                new OrderByColumnSpecString("column_2")));
         DateTime startTime = new DateTime(2020, 2, 1, 0, 0, 0, DateTimeZone.UTC);
         DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
         String averagedName = "averagedName";
         DruidAggregator aggregator = new DoubleSumAggregator(averagedName, "aggregatedFieldName");
-        DruidPostAggregator postAggregator = new FieldAccessPostAggregator("postAggregatedFieldName");
+        DruidPostAggregator postAggregator =
+                new FieldAccessPostAggregator("postAggregatedFieldName");
         Context context = Context.builder().useCache(true).build();
-        DruidAverager averager = DoubleMeanAverager.builder()
-                .name("averagingResult")
-                .fieldName(averagedName)
-                .buckets(60)
-                .cycleSize(5)
-                .build();
+        DruidAverager averager =
+                DoubleMeanAverager.builder()
+                        .name("averagingResult")
+                        .fieldName(averagedName)
+                        .buckets(60)
+                        .cycleSize(5)
+                        .build();
         DruidPostAggregator postAverager = new FieldAccessPostAggregator("postAveragedFieldName");
 
-        DruidMovingAverageQuery query = DruidMovingAverageQuery.builder()
-                .dataSource(new TableDataSource("allFieldsDataSource"))
-                .dimensions(of(druidDimension1, druidDimension2))
-                .limitSpec(limitSpec)
-                .having(new EqualToHaving("havingField", 5))
-                .granularity(new SimpleGranularity(PredefinedGranularity.FIFTEEN_MINUTE))
-                .filter(new SelectorFilter("selectorField", "selectorValue"))
-                .aggregations(singletonList(aggregator))
-                .postAggregations(singletonList(postAggregator))
-                .intervals(singletonList(interval))
-                .context(context)
-                .averagers(singletonList(averager))
-                .postAveragers(singletonList(postAverager))
-                .build();
+        DruidMovingAverageQuery query =
+                DruidMovingAverageQuery.builder()
+                        .dataSource(new TableDataSource("allFieldsDataSource"))
+                        .dimensions(of(druidDimension1, druidDimension2))
+                        .limitSpec(limitSpec)
+                        .having(new EqualToHaving("havingField", 5))
+                        .granularity(new SimpleGranularity(PredefinedGranularity.FIFTEEN_MINUTE))
+                        .filter(new SelectorFilter("selectorField", "selectorValue"))
+                        .aggregations(singletonList(aggregator))
+                        .postAggregations(singletonList(postAggregator))
+                        .intervals(singletonList(interval))
+                        .context(context)
+                        .averagers(singletonList(averager))
+                        .postAveragers(singletonList(postAverager))
+                        .build();
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJson, JSONCompareMode.NON_EXTENSIBLE);
@@ -124,12 +126,13 @@ public class MovingAverageTest {
         DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
         DruidAggregator aggregator = new DoubleSumAggregator("name", "fieldName");
-        DruidAverager averager = DoubleMeanAverager.builder()
-                .name("name")
-                .fieldName("fieldName")
-                .buckets(60)
-                .cycleSize(5)
-                .build();
+        DruidAverager averager =
+                DoubleMeanAverager.builder()
+                        .name("name")
+                        .fieldName("fieldName")
+                        .buckets(60)
+                        .cycleSize(5)
+                        .build();
 
         DruidMovingAverageQuery.builder()
                 .granularity(new SimpleGranularity(PredefinedGranularity.FIFTEEN_MINUTE))
@@ -145,12 +148,13 @@ public class MovingAverageTest {
         DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
         DruidAggregator aggregator = new DoubleSumAggregator("name", "fieldName");
-        DruidAverager averager = DoubleMeanAverager.builder()
-                .name("name")
-                .fieldName("fieldName")
-                .buckets(60)
-                .cycleSize(5)
-                .build();
+        DruidAverager averager =
+                DoubleMeanAverager.builder()
+                        .name("name")
+                        .fieldName("fieldName")
+                        .buckets(60)
+                        .cycleSize(5)
+                        .build();
 
         DruidMovingAverageQuery.builder()
                 .dataSource(new TableDataSource("dataSource"))
@@ -165,12 +169,13 @@ public class MovingAverageTest {
         DateTime startTime = new DateTime(2020, 2, 1, 0, 0, 0, DateTimeZone.UTC);
         DateTime endTime = new DateTime(2020, 3, 31, 23, 59, 59, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
-        DruidAverager averager = DoubleMeanAverager.builder()
-                .name("name")
-                .fieldName("fieldName")
-                .buckets(60)
-                .cycleSize(5)
-                .build();
+        DruidAverager averager =
+                DoubleMeanAverager.builder()
+                        .name("name")
+                        .fieldName("fieldName")
+                        .buckets(60)
+                        .cycleSize(5)
+                        .build();
 
         DruidMovingAverageQuery.builder()
                 .dataSource(new TableDataSource("dataSource"))
@@ -183,12 +188,13 @@ public class MovingAverageTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void tryToBuildWithoutIntervals() {
         DruidAggregator aggregator = new DoubleSumAggregator("name", "fieldName");
-        DruidAverager averager = DoubleMeanAverager.builder()
-                .name("name")
-                .fieldName("fieldName")
-                .buckets(60)
-                .cycleSize(5)
-                .build();
+        DruidAverager averager =
+                DoubleMeanAverager.builder()
+                        .name("name")
+                        .fieldName("fieldName")
+                        .buckets(60)
+                        .cycleSize(5)
+                        .build();
 
         DruidMovingAverageQuery.builder()
                 .dataSource(new TableDataSource("dataSource"))
@@ -214,9 +220,8 @@ public class MovingAverageTest {
     }
 
     @Test(dataProvider = "averagerTypesProvider")
-    public void testAllAveragerTypes(String averagerName,
-                                     MovingAverageCreators.Creator averagerCreator)
-            throws Exception {
+    public void testAllAveragerTypes(
+            String averagerName, MovingAverageCreators.Creator averagerCreator) throws Exception {
         String expectedJson = loadExpectedJsonForType(averagerName);
 
         DruidMovingAverageQuery query = simpleQuery(averagerCreator);
@@ -227,17 +232,23 @@ public class MovingAverageTest {
 
     @DataProvider(name = "averagerTypesProvider")
     private static Object[][] averagerTypesProvider() {
-        return new Object[][]{
-                {"doubleMax", (MovingAverageCreators.Creator) MovingAverageCreators::doubleMax},
-                {"doubleMean", (MovingAverageCreators.Creator) MovingAverageCreators::doubleMean},
-                {"doubleMeanNoNulls", (MovingAverageCreators.Creator) MovingAverageCreators::doubleMeanNoNulls},
-                {"doubleMin", (MovingAverageCreators.Creator) MovingAverageCreators::doubleMin},
-                {"doubleSum", (MovingAverageCreators.Creator) MovingAverageCreators::doubleSum},
-                {"longMax", (MovingAverageCreators.Creator) MovingAverageCreators::longMax},
-                {"longMean", (MovingAverageCreators.Creator) MovingAverageCreators::longMean},
-                {"longMeanNoNulls", (MovingAverageCreators.Creator) MovingAverageCreators::longMeanNoNulls},
-                {"longMin", (MovingAverageCreators.Creator) MovingAverageCreators::longMin},
-                {"longSum", (MovingAverageCreators.Creator) MovingAverageCreators::longSum}
+        return new Object[][] {
+            {"doubleMax", (MovingAverageCreators.Creator) MovingAverageCreators::doubleMax},
+            {"doubleMean", (MovingAverageCreators.Creator) MovingAverageCreators::doubleMean},
+            {
+                "doubleMeanNoNulls",
+                (MovingAverageCreators.Creator) MovingAverageCreators::doubleMeanNoNulls
+            },
+            {"doubleMin", (MovingAverageCreators.Creator) MovingAverageCreators::doubleMin},
+            {"doubleSum", (MovingAverageCreators.Creator) MovingAverageCreators::doubleSum},
+            {"longMax", (MovingAverageCreators.Creator) MovingAverageCreators::longMax},
+            {"longMean", (MovingAverageCreators.Creator) MovingAverageCreators::longMean},
+            {
+                "longMeanNoNulls",
+                (MovingAverageCreators.Creator) MovingAverageCreators::longMeanNoNulls
+            },
+            {"longMin", (MovingAverageCreators.Creator) MovingAverageCreators::longMin},
+            {"longSum", (MovingAverageCreators.Creator) MovingAverageCreators::longSum}
         };
     }
 
@@ -271,5 +282,4 @@ public class MovingAverageTest {
                 .averagers(singletonList(averager))
                 .build();
     }
-
 }

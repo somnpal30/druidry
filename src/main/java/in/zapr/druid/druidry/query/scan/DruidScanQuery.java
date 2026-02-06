@@ -16,19 +16,16 @@
 
 package in.zapr.druid.druidry.query.scan;
 
-import com.google.common.base.Preconditions;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.List;
-
-import in.zapr.druid.druidry.query.config.Context;
-import in.zapr.druid.druidry.query.config.Interval;
+import com.google.common.base.Preconditions;
 import in.zapr.druid.druidry.dataSource.DataSource;
 import in.zapr.druid.druidry.filter.DruidFilter;
 import in.zapr.druid.druidry.query.DruidQuery;
 import in.zapr.druid.druidry.query.QueryType;
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.virtualColumn.DruidVirtualColumn;
+import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -48,9 +45,17 @@ public class DruidScanQuery extends DruidQuery {
     private Boolean legacy;
 
     @Builder
-    private DruidScanQuery(@NonNull DataSource dataSource, List<DruidVirtualColumn> virtualColumns, DruidFilter filter,
-            Integer batchSize, @NonNull List<Interval> intervals, List<String> columns, ResultFormat resultFormat,
-            Long limit, Boolean legacy, Context context) {
+    private DruidScanQuery(
+            @NonNull DataSource dataSource,
+            List<DruidVirtualColumn> virtualColumns,
+            DruidFilter filter,
+            Integer batchSize,
+            @NonNull List<Interval> intervals,
+            List<String> columns,
+            ResultFormat resultFormat,
+            Long limit,
+            Boolean legacy,
+            Context context) {
         this.virtualColumns = virtualColumns;
         this.filter = filter;
         this.intervals = intervals;

@@ -17,21 +17,19 @@
 package in.zapr.druid.druidry.query.aggregation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.List;
-
-import in.zapr.druid.druidry.query.config.Context;
-import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import in.zapr.druid.druidry.dataSource.DataSource;
 import in.zapr.druid.druidry.dimension.DruidDimension;
 import in.zapr.druid.druidry.filter.DruidFilter;
-import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.filter.havingSpec.HavingSpec;
+import in.zapr.druid.druidry.granularity.Granularity;
 import in.zapr.druid.druidry.limitSpec.DefaultLimitSpec;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.query.QueryType;
+import in.zapr.druid.druidry.query.config.Context;
+import in.zapr.druid.druidry.query.config.Interval;
 import in.zapr.druid.druidry.virtualColumn.DruidVirtualColumn;
+import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -44,21 +42,21 @@ public class DruidGroupByQuery extends DruidAggregationQuery {
 
     private DefaultLimitSpec limitSpec;
     private HavingSpec having;
-    @NonNull
-    private List<DruidDimension> dimensions;
+    @NonNull private List<DruidDimension> dimensions;
 
     @Builder
-    private DruidGroupByQuery(@NonNull DataSource dataSource,
-                              @NonNull List<DruidDimension> dimensions,
-                              DefaultLimitSpec limitSpec,
-                              @NonNull Granularity granularity,
-                              List<DruidVirtualColumn> virtualColumns,
-                              DruidFilter filter,
-                              List<DruidAggregator> aggregators,
-                              List<DruidPostAggregator> postAggregators,
-                              HavingSpec having,
-                              @NonNull List<Interval> intervals,
-                              Context context) {
+    private DruidGroupByQuery(
+            @NonNull DataSource dataSource,
+            @NonNull List<DruidDimension> dimensions,
+            DefaultLimitSpec limitSpec,
+            @NonNull Granularity granularity,
+            List<DruidVirtualColumn> virtualColumns,
+            DruidFilter filter,
+            List<DruidAggregator> aggregators,
+            List<DruidPostAggregator> postAggregators,
+            HavingSpec having,
+            @NonNull List<Interval> intervals,
+            Context context) {
 
         this.queryType = QueryType.GROUP_BY;
         this.dataSource = dataSource;

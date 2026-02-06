@@ -36,5 +36,4 @@ public class LessThanHaving extends HavingSpec {
         this(metric);
         this.value = value;
     }
-
 }

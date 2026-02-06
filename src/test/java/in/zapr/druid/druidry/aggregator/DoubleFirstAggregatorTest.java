@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class DoubleFirstAggregatorTest {
@@ -40,8 +40,7 @@ public class DoubleFirstAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        DoubleFirstAggregator doubleFirstAggregator = new DoubleFirstAggregator("CarpeDiem",
-                "Hey");
+        DoubleFirstAggregator doubleFirstAggregator = new DoubleFirstAggregator("CarpeDiem", "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "doubleFirst");
@@ -88,6 +87,4 @@ public class DoubleFirstAggregatorTest {
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
-
-
 }

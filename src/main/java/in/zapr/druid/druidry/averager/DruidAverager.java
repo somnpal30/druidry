@@ -48,5 +48,4 @@ public abstract class DruidAverager {
     protected String fieldName;
     protected Integer buckets;
     protected Integer cycleSize;
-
 }

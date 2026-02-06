@@ -16,8 +16,8 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import java.util.Arrays;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,10 +26,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Arrays;
-
-import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import tools.jackson.databind.ObjectMapper;
 
 public class TupleSketchSetOpPostAggregatorTest {
 
@@ -65,21 +62,22 @@ public class TupleSketchSetOpPostAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        TupleSketchSetOpPostAggregator tupleSketchSetOpPostAggregator = TupleSketchSetOpPostAggregator.builder()
-                .name("AndroWay")
-                .operation(TupleSketchOperation.UNION)
-                .fields(Arrays.asList(milkyWay, andromeda))
-                .nominalEntries(1024)
-                .numberOfValues(1)
-                .build();
+        TupleSketchSetOpPostAggregator tupleSketchSetOpPostAggregator =
+                TupleSketchSetOpPostAggregator.builder()
+                        .name("AndroWay")
+                        .operation(TupleSketchOperation.UNION)
+                        .fields(Arrays.asList(milkyWay, andromeda))
+                        .nominalEntries(1024)
+                        .numberOfValues(1)
+                        .build();
 
         JSONObject jsonObject = getTupleSketchSetOpPostAggregatorJSON();
-        jsonObject.put("fields", new JSONArray(
-                Arrays.asList(
-                        getFieldAccessPostAggregatorJSON("MilkyWay"),
-                        getFieldAccessPostAggregatorJSON("Andromeda")
-                ))
-        );
+        jsonObject.put(
+                "fields",
+                new JSONArray(
+                        Arrays.asList(
+                                getFieldAccessPostAggregatorJSON("MilkyWay"),
+                                getFieldAccessPostAggregatorJSON("Andromeda"))));
         jsonObject.put("nominalEntries", 1024);
         jsonObject.put("numberOfValues", 1);
 
@@ -91,19 +89,20 @@ public class TupleSketchSetOpPostAggregatorTest {
     @Test
     public void testRequiredFields() throws JacksonException, JSONException {
 
-        TupleSketchSetOpPostAggregator tupleSketchSetOpPostAggregator = TupleSketchSetOpPostAggregator.builder()
-                .name("AndroWay")
-                .operation(TupleSketchOperation.UNION)
-                .fields(Arrays.asList(milkyWay, andromeda))
-                .build();
+        TupleSketchSetOpPostAggregator tupleSketchSetOpPostAggregator =
+                TupleSketchSetOpPostAggregator.builder()
+                        .name("AndroWay")
+                        .operation(TupleSketchOperation.UNION)
+                        .fields(Arrays.asList(milkyWay, andromeda))
+                        .build();
 
         JSONObject jsonObject = getTupleSketchSetOpPostAggregatorJSON();
-        jsonObject.put("fields", new JSONArray(
-                Arrays.asList(
-                        getFieldAccessPostAggregatorJSON("MilkyWay"),
-                        getFieldAccessPostAggregatorJSON("Andromeda")
-                )
-        ));
+        jsonObject.put(
+                "fields",
+                new JSONArray(
+                        Arrays.asList(
+                                getFieldAccessPostAggregatorJSON("MilkyWay"),
+                                getFieldAccessPostAggregatorJSON("Andromeda"))));
 
         String actualJSON = objectMapper.writeValueAsString(tupleSketchSetOpPostAggregator);
         String expectedJSON = jsonObject.toString();
@@ -113,38 +112,42 @@ public class TupleSketchSetOpPostAggregatorTest {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void preconditionCheck() {
 
-        TupleSketchSetOpPostAggregator tupleSketchSetOpPostAggregator = TupleSketchSetOpPostAggregator.builder()
-                .name("AndroWay")
-                .operation(TupleSketchOperation.UNION)
-                .fields(Arrays.asList(milkyWay, andromeda))
-                .nominalEntries(3)
-                .build();
+        TupleSketchSetOpPostAggregator tupleSketchSetOpPostAggregator =
+                TupleSketchSetOpPostAggregator.builder()
+                        .name("AndroWay")
+                        .operation(TupleSketchOperation.UNION)
+                        .fields(Arrays.asList(milkyWay, andromeda))
+                        .nominalEntries(3)
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
 
-        TupleSketchSetOpPostAggregator tupleSketchSetOpPostAggregator = TupleSketchSetOpPostAggregator.builder()
-                .operation(TupleSketchOperation.UNION)
-                .fields(Arrays.asList(milkyWay, andromeda))
-                .build();
+        TupleSketchSetOpPostAggregator tupleSketchSetOpPostAggregator =
+                TupleSketchSetOpPostAggregator.builder()
+                        .operation(TupleSketchOperation.UNION)
+                        .fields(Arrays.asList(milkyWay, andromeda))
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullOperation() {
 
-        TupleSketchSetOpPostAggregator tupleSketchSetOpPostAggregator = TupleSketchSetOpPostAggregator.builder()
-                .name("AndroWay")
-                .fields(Arrays.asList(milkyWay, andromeda))
-                .build();
+        TupleSketchSetOpPostAggregator tupleSketchSetOpPostAggregator =
+                TupleSketchSetOpPostAggregator.builder()
+                        .name("AndroWay")
+                        .fields(Arrays.asList(milkyWay, andromeda))
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFields() {
 
-        TupleSketchSetOpPostAggregator tupleSketchSetOpPostAggregator = TupleSketchSetOpPostAggregator.builder()
-                .name("AndroWay")
-                .operation(TupleSketchOperation.UNION)
-                .build();
+        TupleSketchSetOpPostAggregator tupleSketchSetOpPostAggregator =
+                TupleSketchSetOpPostAggregator.builder()
+                        .name("AndroWay")
+                        .operation(TupleSketchOperation.UNION)
+                        .build();
     }
 }

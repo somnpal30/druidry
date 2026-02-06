@@ -16,14 +16,13 @@
 
 package in.zapr.druid.druidry.extractionFunctions;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class JavascriptExtractionFunctionTest {
     private static ObjectMapper objectMapper;
@@ -35,14 +34,16 @@ public class JavascriptExtractionFunctionTest {
 
     @Test
     public void testAllFields() throws JacksonException, JSONException {
-        JavascriptExtractionFunction javascriptExtractionFunction = JavascriptExtractionFunction.builder()
-                .function("function(str) { return str + '!!!'; }")
-                .injective(true)
-                .build();
+        JavascriptExtractionFunction javascriptExtractionFunction =
+                JavascriptExtractionFunction.builder()
+                        .function("function(str) { return str + '!!!'; }")
+                        .injective(true)
+                        .build();
 
         String actualJSON = objectMapper.writeValueAsString(javascriptExtractionFunction);
 
-        String expectedJSONString = """
+        String expectedJSONString =
+                """
                 {
                   "type" : "javascript",
                   "function" : "function\
@@ -56,13 +57,15 @@ public class JavascriptExtractionFunctionTest {
 
     @Test
     public void testRequiredFields() throws JSONException, JacksonException {
-        JavascriptExtractionFunction javascriptExtractionFunction = JavascriptExtractionFunction.builder()
-                .function("function(str) { return str + '!!!'; }")
-                .build();
+        JavascriptExtractionFunction javascriptExtractionFunction =
+                JavascriptExtractionFunction.builder()
+                        .function("function(str) { return str + '!!!'; }")
+                        .build();
 
         String actualJSON = objectMapper.writeValueAsString(javascriptExtractionFunction);
 
-        String expectedJSONString = """
+        String expectedJSONString =
+                """
                 {
                   "type" : "javascript",
                   "function" : "function\
@@ -71,12 +74,11 @@ public class JavascriptExtractionFunctionTest {
                 """;
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
-
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testFunctionField() {
-        JavascriptExtractionFunction javascriptExtractionFunction = JavascriptExtractionFunction.builder()
-                .build();
+        JavascriptExtractionFunction javascriptExtractionFunction =
+                JavascriptExtractionFunction.builder().build();
     }
 }

@@ -21,5 +21,4 @@ import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode
-public abstract class DruidDimension {
-}
+public abstract class DruidDimension {}

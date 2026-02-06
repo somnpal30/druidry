@@ -16,14 +16,13 @@
 
 package in.zapr.druid.druidry.dimension;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class RegexFilteredDimensionTest {
     private static ObjectMapper objectMapper;
@@ -35,18 +34,21 @@ public class RegexFilteredDimensionTest {
 
     @Test
     public void testSampleRegexFilteredDimension() throws JacksonException, JSONException {
-        DimensionSpec dimensionSpec = DefaultDimension.builder()
-                .dimension("system_label_values")
-                .outputName("system_label_values")
-                .build();
+        DimensionSpec dimensionSpec =
+                DefaultDimension.builder()
+                        .dimension("system_label_values")
+                        .outputName("system_label_values")
+                        .build();
 
-        RegexFilteredDimension regexFilteredDimension = RegexFilteredDimension.builder()
-                .dimensionSpec(dimensionSpec)
-                .pattern("compute.googleapis.com/cores`.*")
-                .build();
+        RegexFilteredDimension regexFilteredDimension =
+                RegexFilteredDimension.builder()
+                        .dimensionSpec(dimensionSpec)
+                        .pattern("compute.googleapis.com/cores`.*")
+                        .build();
 
         String jsonOutput = objectMapper.writeValueAsString(regexFilteredDimension);
-        String expectedJSONString = """
+        String expectedJSONString =
+                """
                 {
                       "type": "regexFiltered",
                       "delegate": {
@@ -62,21 +64,18 @@ public class RegexFilteredDimensionTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testSampleRegexFilteredDimensionWithNullDimensionSpec() throws JacksonException {
-        RegexFilteredDimension regexFilteredDimension = RegexFilteredDimension.builder()
-                .pattern("compute.googleapis.com/cores`.*")
-                .build();
+        RegexFilteredDimension regexFilteredDimension =
+                RegexFilteredDimension.builder().pattern("compute.googleapis.com/cores`.*").build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testSampleRegexFilteredDimensionWithNullRegex() throws JacksonException {
-        DimensionSpec dimensionSpec = DefaultDimension.builder()
-                .dimension("system_label_values")
-                .outputName("system_label_values")
-                .build();
-        RegexFilteredDimension regexFilteredDimension = RegexFilteredDimension.builder()
-                .dimensionSpec(dimensionSpec)
-                .build();
+        DimensionSpec dimensionSpec =
+                DefaultDimension.builder()
+                        .dimension("system_label_values")
+                        .outputName("system_label_values")
+                        .build();
+        RegexFilteredDimension regexFilteredDimension =
+                RegexFilteredDimension.builder().dimensionSpec(dimensionSpec).build();
     }
-
-
 }

@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.dataSource;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,8 +27,7 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public class TableDataSource extends DataSource {
 
-    @NonNull
-    private String name;
+    @NonNull private String name;
 
     @Builder
     public TableDataSource(@NonNull String name) {

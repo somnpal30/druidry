@@ -23,5 +23,4 @@ import lombok.Getter;
 @EqualsAndHashCode
 public abstract class HavingSpec {
     protected String type;
-
 }

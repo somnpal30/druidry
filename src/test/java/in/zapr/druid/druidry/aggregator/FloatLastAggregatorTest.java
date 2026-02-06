@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class FloatLastAggregatorTest {
@@ -40,8 +40,7 @@ public class FloatLastAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        FloatLastAggregator floatLastAggregator = new FloatLastAggregator("CarpeDiem",
-                "Hey");
+        FloatLastAggregator floatLastAggregator = new FloatLastAggregator("CarpeDiem", "Hey");
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "floatLast");
@@ -88,5 +87,4 @@ public class FloatLastAggregatorTest {
 
         Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
-
 }

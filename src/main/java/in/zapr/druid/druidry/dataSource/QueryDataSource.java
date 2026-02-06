@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.dataSource;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import in.zapr.druid.druidry.query.DruidQuery;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -29,8 +28,7 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public class QueryDataSource extends DataSource {
 
-    @NonNull
-    private DruidQuery query;
+    @NonNull private DruidQuery query;
 
     @Builder
     public QueryDataSource(@NonNull DruidQuery query) {

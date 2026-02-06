@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -33,11 +32,10 @@ public class HllSketchToStringPostAggregator extends DruidPostAggregator {
     private DruidPostAggregator field;
 
     @Builder
-    private HllSketchToStringPostAggregator(@NonNull String name,
-                                            @NonNull DruidPostAggregator field) {
+    private HllSketchToStringPostAggregator(
+            @NonNull String name, @NonNull DruidPostAggregator field) {
         this.type = HLL_SKETCH_TO_STRING_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.field = field;
     }
-
 }

@@ -17,9 +17,6 @@
 package in.zapr.druid.druidry.query.aggregation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.List;
-
 import in.zapr.druid.druidry.aggregator.DruidAggregator;
 import in.zapr.druid.druidry.averager.DruidAverager;
 import in.zapr.druid.druidry.dataSource.DataSource;
@@ -32,6 +29,7 @@ import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.query.QueryType;
 import in.zapr.druid.druidry.query.config.Context;
 import in.zapr.druid.druidry.query.config.Interval;
+import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -49,18 +47,19 @@ public class DruidMovingAverageQuery extends DruidAggregationQuery {
     private List<DruidPostAggregator> postAveragers;
 
     @Builder
-    private DruidMovingAverageQuery(@NonNull DataSource dataSource,
-                                    List<DruidDimension> dimensions,
-                                    DefaultLimitSpec limitSpec,
-                                    @NonNull Granularity granularity,
-                                    DruidFilter filter,
-                                    @NonNull List<DruidAggregator> aggregations,
-                                    List<DruidPostAggregator> postAggregations,
-                                    HavingSpec having,
-                                    @NonNull List<Interval> intervals,
-                                    Context context,
-                                    @NonNull List<DruidAverager> averagers,
-                                    List<DruidPostAggregator> postAveragers) {
+    private DruidMovingAverageQuery(
+            @NonNull DataSource dataSource,
+            List<DruidDimension> dimensions,
+            DefaultLimitSpec limitSpec,
+            @NonNull Granularity granularity,
+            DruidFilter filter,
+            @NonNull List<DruidAggregator> aggregations,
+            List<DruidPostAggregator> postAggregations,
+            HavingSpec having,
+            @NonNull List<Interval> intervals,
+            Context context,
+            @NonNull List<DruidAverager> averagers,
+            List<DruidPostAggregator> postAveragers) {
 
         queryType = QueryType.MOVING_AVERAGE;
         this.dataSource = dataSource;
@@ -76,5 +75,4 @@ public class DruidMovingAverageQuery extends DruidAggregationQuery {
         this.averagers = averagers;
         this.postAveragers = postAveragers;
     }
-
 }

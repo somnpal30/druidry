@@ -21,5 +21,4 @@ import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode
-public abstract class TopNMetric {
-}
+public abstract class TopNMetric {}

@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.extensions.histogram.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,7 +24,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 public class ApproxHistogramAggregatorTest {
@@ -40,14 +39,15 @@ public class ApproxHistogramAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        ApproxHistogramAggregator approxHistogramAgg = ApproxHistogramAggregator.builder()
-                .name("histogram")
-                .fieldName("_loadtime")
-                .resolution(100)
-                .lowerLimit(-2.50F)
-                .upperLimit(2.50F)
-                .numberOfBuckets(10)
-                .build();
+        ApproxHistogramAggregator approxHistogramAgg =
+                ApproxHistogramAggregator.builder()
+                        .name("histogram")
+                        .fieldName("_loadtime")
+                        .resolution(100)
+                        .lowerLimit(-2.50F)
+                        .upperLimit(2.50F)
+                        .numberOfBuckets(10)
+                        .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "approxHistogram");
@@ -65,16 +65,26 @@ public class ApproxHistogramAggregatorTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
-        ApproxHistogramAggregator approxHistogramAgg = ApproxHistogramAggregator.builder().name(null)
-                .fieldName("_loadtime").resolution(100).lowerLimit(Float.NEGATIVE_INFINITY)
-                .upperLimit(Float.POSITIVE_INFINITY).numberOfBuckets(10).build();
-
+        ApproxHistogramAggregator approxHistogramAgg =
+                ApproxHistogramAggregator.builder()
+                        .name(null)
+                        .fieldName("_loadtime")
+                        .resolution(100)
+                        .lowerLimit(Float.NEGATIVE_INFINITY)
+                        .upperLimit(Float.POSITIVE_INFINITY)
+                        .numberOfBuckets(10)
+                        .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() {
         ApproxHistogramAggregator approxHistogramAgg =
-                ApproxHistogramAggregator.builder().name("druidry").fieldName(null).resolution(100)
-                        .lowerLimit(Float.NEGATIVE_INFINITY).upperLimit(Float.POSITIVE_INFINITY).build();
+                ApproxHistogramAggregator.builder()
+                        .name("druidry")
+                        .fieldName(null)
+                        .resolution(100)
+                        .lowerLimit(Float.NEGATIVE_INFINITY)
+                        .upperLimit(Float.POSITIVE_INFINITY)
+                        .build();
     }
 }

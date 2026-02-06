@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.topNMetric;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.query.config.SortingOrder;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,8 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import in.zapr.druid.druidry.query.config.SortingOrder;
+import tools.jackson.databind.ObjectMapper;
 
 public class DimensionMetricTest {
 
@@ -48,10 +46,11 @@ public class DimensionMetricTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        DimensionMetric dimensionMetric = DimensionMetric.builder()
-                .ordering(SortingOrder.LEXICOGRAPHIC)
-                .previousStop("x")
-                .build();
+        DimensionMetric dimensionMetric =
+                DimensionMetric.builder()
+                        .ordering(SortingOrder.LEXICOGRAPHIC)
+                        .previousStop("x")
+                        .build();
 
         JSONObject jsonObject = getDimensionMetricJSON();
         jsonObject.put("ordering", "lexicographic");
@@ -65,8 +64,7 @@ public class DimensionMetricTest {
     @Test
     public void testRequiredFields() throws JacksonException, JSONException {
 
-        DimensionMetric dimensionMetric = DimensionMetric.builder()
-                .build();
+        DimensionMetric dimensionMetric = DimensionMetric.builder().build();
 
         JSONObject jsonObject = getDimensionMetricJSON();
 
@@ -77,24 +75,20 @@ public class DimensionMetricTest {
 
     @Test
     public void testEqualsPositive() {
-        DimensionMetric dimensionMetric1 = DimensionMetric.builder()
-                .ordering(SortingOrder.STRLEN)
-                .build();
-        DimensionMetric dimensionMetric2 = DimensionMetric.builder()
-                .ordering(SortingOrder.STRLEN)
-                .build();
+        DimensionMetric dimensionMetric1 =
+                DimensionMetric.builder().ordering(SortingOrder.STRLEN).build();
+        DimensionMetric dimensionMetric2 =
+                DimensionMetric.builder().ordering(SortingOrder.STRLEN).build();
 
         Assertions.assertThat(dimensionMetric1).isEqualTo(dimensionMetric2);
     }
 
     @Test
     public void testEqualsNegative() {
-        DimensionMetric dimensionMetric1 = DimensionMetric.builder()
-                .ordering(SortingOrder.STRLEN)
-                .build();
-        DimensionMetric dimensionMetric2 = DimensionMetric.builder()
-                .ordering(SortingOrder.ALPHANUMERIC)
-                .build();
+        DimensionMetric dimensionMetric1 =
+                DimensionMetric.builder().ordering(SortingOrder.STRLEN).build();
+        DimensionMetric dimensionMetric2 =
+                DimensionMetric.builder().ordering(SortingOrder.ALPHANUMERIC).build();
 
         Assertions.assertThat(dimensionMetric1).isNotEqualTo(dimensionMetric2);
     }

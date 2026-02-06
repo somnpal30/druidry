@@ -16,8 +16,10 @@
 
 package in.zapr.druid.druidry.limitSpec;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecMap;
+import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecString;
+import in.zapr.druid.druidry.query.config.SortingOrder;
+import java.util.Collections;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,12 +28,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Collections;
-
-import in.zapr.druid.druidry.query.config.SortingOrder;
-import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecMap;
-import in.zapr.druid.druidry.limitSpec.orderByColumnSpec.OrderByColumnSpecString;
+import tools.jackson.databind.ObjectMapper;
 
 public class DefaultLimitSpecTest {
 
@@ -51,8 +48,9 @@ public class DefaultLimitSpecTest {
         JSONArray columns = new JSONArray(Collections.singleton("Tagore"));
         jsonObject.put("columns", columns);
 
-        DefaultLimitSpec defaultLimitSpec = new DefaultLimitSpec(7,
-                Collections.singletonList(new OrderByColumnSpecString("Tagore")));
+        DefaultLimitSpec defaultLimitSpec =
+                new DefaultLimitSpec(
+                        7, Collections.singletonList(new OrderByColumnSpecString("Tagore")));
 
         String actualJson = objectMapper.writeValueAsString(defaultLimitSpec);
         JSONAssert.assertEquals(actualJson, jsonObject, JSONCompareMode.NON_EXTENSIBLE);
@@ -62,8 +60,8 @@ public class DefaultLimitSpecTest {
     public void testDefaultLimitSpecWithColumnSpecMap() throws JSONException, JacksonException {
 
         String dimension = "dim";
-        OrderByColumnSpecMap orderByColumnSpecMap
-                = new OrderByColumnSpecMap(dimension, true, SortingOrder.ALPHANUMERIC);
+        OrderByColumnSpecMap orderByColumnSpecMap =
+                new OrderByColumnSpecMap(dimension, true, SortingOrder.ALPHANUMERIC);
 
         JSONObject orderByColumnSpecJson = new JSONObject();
         orderByColumnSpecJson.put("dimension", dimension);
@@ -74,12 +72,12 @@ public class DefaultLimitSpecTest {
         jsonObject.put("type", "default");
         jsonObject.put("limit", 13);
 
-        JSONArray orderByColumnSpecArray
-                = new JSONArray(Collections.singletonList(orderByColumnSpecJson));
+        JSONArray orderByColumnSpecArray =
+                new JSONArray(Collections.singletonList(orderByColumnSpecJson));
         jsonObject.put("columns", orderByColumnSpecArray);
 
-        DefaultLimitSpec defaultLimitSpec = new DefaultLimitSpec(13,
-                Collections.singletonList(orderByColumnSpecMap));
+        DefaultLimitSpec defaultLimitSpec =
+                new DefaultLimitSpec(13, Collections.singletonList(orderByColumnSpecMap));
 
         String actualJson = objectMapper.writeValueAsString(defaultLimitSpec);
         JSONAssert.assertEquals(actualJson, jsonObject, JSONCompareMode.NON_EXTENSIBLE);

@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.dimension;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.dimension.enums.OutputType;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,8 +24,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import in.zapr.druid.druidry.dimension.enums.OutputType;
+import tools.jackson.databind.ObjectMapper;
 
 public class DefaultDimensionTest {
     private static ObjectMapper objectMapper;
@@ -39,12 +37,13 @@ public class DefaultDimensionTest {
     @Test
     public void testAllFields() throws JSONException, JacksonException {
 
-        DefaultDimension defaultDimension = new DefaultDimension("name",
-                "nombre", OutputType.STRING);
+        DefaultDimension defaultDimension =
+                new DefaultDimension("name", "nombre", OutputType.STRING);
 
         String actualJSON = objectMapper.writeValueAsString(defaultDimension);
 
-        String expectedJSONString = """
+        String expectedJSONString =
+                """
                 {
                   "type": "default",
                   "dimension": \
@@ -55,18 +54,16 @@ public class DefaultDimensionTest {
                 """;
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
-
     }
 
     @Test
     public void testRequiredFields() throws JacksonException, JSONException {
-        DefaultDimension defaultDimension = new DefaultDimension("name",
-                "nombre", null);
+        DefaultDimension defaultDimension = new DefaultDimension("name", "nombre", null);
 
         String actualJSON = objectMapper.writeValueAsString(defaultDimension);
 
-
-        String expectedJSONString = """
+        String expectedJSONString =
+                """
                 {
                   "type": "default",
                   "dimension": \
@@ -80,32 +77,26 @@ public class DefaultDimensionTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testDimensionMissingFields() {
-        DefaultDimension defaultDimension = new DefaultDimension(null, "nombre",
-                OutputType.STRING);
+        DefaultDimension defaultDimension = new DefaultDimension(null, "nombre", OutputType.STRING);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testOutputNameMissingFields() throws JacksonException, JSONException {
-        DefaultDimension defaultDimension = new DefaultDimension("name",
-                null, OutputType.STRING);
+        DefaultDimension defaultDimension = new DefaultDimension("name", null, OutputType.STRING);
     }
 
     @Test
     public void testEqualsPositive() {
-        DefaultDimension dimension1 = new DefaultDimension("name",
-                "nombre", OutputType.STRING);
-        DefaultDimension dimension2 = new DefaultDimension("name",
-                "nombre", OutputType.STRING);
+        DefaultDimension dimension1 = new DefaultDimension("name", "nombre", OutputType.STRING);
+        DefaultDimension dimension2 = new DefaultDimension("name", "nombre", OutputType.STRING);
 
         Assertions.assertThat(dimension1).isEqualTo(dimension2);
     }
 
     @Test
     public void testEqualsNegative() {
-        DefaultDimension dimension1 = new DefaultDimension("name",
-                "nombre", OutputType.STRING);
-        DefaultDimension dimension2 = new DefaultDimension("name",
-                "nombre", OutputType.LONG);
+        DefaultDimension dimension1 = new DefaultDimension("name", "nombre", OutputType.STRING);
+        DefaultDimension dimension2 = new DefaultDimension("name", "nombre", OutputType.LONG);
 
         Assertions.assertThat(dimension1).isNotEqualTo(dimension2);
     }
@@ -113,9 +104,7 @@ public class DefaultDimensionTest {
     @Test
     public void testEqualsWithAnotherSubClass() {
         SimpleDimension dimension1 = new SimpleDimension("name");
-        DefaultDimension dimension2 = new DefaultDimension("name",
-                "output",
-                OutputType.LONG);
+        DefaultDimension dimension2 = new DefaultDimension("name", "output", OutputType.LONG);
 
         Assertions.assertThat(dimension1).isNotEqualTo(dimension2);
     }

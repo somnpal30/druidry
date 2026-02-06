@@ -18,7 +18,6 @@ package in.zapr.druid.druidry.dimension;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import in.zapr.druid.druidry.dimension.enums.OutputType;
 import in.zapr.druid.druidry.extractionFunctions.ExtractionFunction;
 import lombok.Builder;
@@ -37,9 +36,11 @@ public class ExtractionDimension extends DimensionSpec {
     private ExtractionFunction extractionFunction;
 
     @Builder
-    public ExtractionDimension(@NonNull String dimension, @NonNull String outputName,
-                               OutputType outputType,
-                               @NonNull ExtractionFunction extractionFunction) {
+    public ExtractionDimension(
+            @NonNull String dimension,
+            @NonNull String outputName,
+            OutputType outputType,
+            @NonNull ExtractionFunction extractionFunction) {
         this.type = ExtractionDimension.EXTRACTION_TYPE;
         this.dimension = dimension;
         this.outputName = outputName;

@@ -18,11 +18,9 @@ package in.zapr.druid.druidry.granularity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import org.joda.time.DateTime;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.joda.time.DateTime;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -32,8 +30,10 @@ public class DurationGranularity extends Granularity {
     private static final String DURATION_GRANULARITY_TYPE = "duration";
 
     private final String type;
+
     @JsonProperty("duration")
     private long durationInMilliSeconds;
+
     private DateTime origin;
 
     public DurationGranularity(long durationInMilliSeconds) {

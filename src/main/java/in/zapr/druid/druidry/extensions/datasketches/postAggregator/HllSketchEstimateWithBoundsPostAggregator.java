@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -29,18 +28,17 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public class HllSketchEstimateWithBoundsPostAggregator extends DruidPostAggregator {
 
-    private static final String HLL_SKETCH_ESTIMATE_WITH_BOUNDS_POST_AGGREGATOR_TYPE = "HLLSketchEstimateWithBounds";
+    private static final String HLL_SKETCH_ESTIMATE_WITH_BOUNDS_POST_AGGREGATOR_TYPE =
+            "HLLSketchEstimateWithBounds";
     private DruidPostAggregator field;
     private Integer numStdDev;
 
     @Builder
-    private HllSketchEstimateWithBoundsPostAggregator(@NonNull String name,
-                                                      @NonNull DruidPostAggregator field,
-                                                      Integer numStdDev) {
+    private HllSketchEstimateWithBoundsPostAggregator(
+            @NonNull String name, @NonNull DruidPostAggregator field, Integer numStdDev) {
         this.type = HLL_SKETCH_ESTIMATE_WITH_BOUNDS_POST_AGGREGATOR_TYPE;
         this.name = name;
         this.field = field;
         this.numStdDev = numStdDev;
     }
-
 }

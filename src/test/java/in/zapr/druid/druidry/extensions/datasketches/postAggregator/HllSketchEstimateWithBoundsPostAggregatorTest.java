@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,8 +24,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import tools.jackson.databind.ObjectMapper;
 
 public class HllSketchEstimateWithBoundsPostAggregatorTest {
 
@@ -70,7 +68,8 @@ public class HllSketchEstimateWithBoundsPostAggregatorTest {
         jsonObject.put("field", getFieldAccessPostAggregatorJSON("stars_hll"));
         jsonObject.put("numStdDev", 1);
 
-        String actualJSON = objectMapper.writeValueAsString(hllSketchEstimateWithBoundsPostAggregator);
+        String actualJSON =
+                objectMapper.writeValueAsString(hllSketchEstimateWithBoundsPostAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -87,7 +86,8 @@ public class HllSketchEstimateWithBoundsPostAggregatorTest {
         JSONObject jsonObject = getHllSketchEstimateWithBoundsPostAggregatorJSON();
         jsonObject.put("field", getFieldAccessPostAggregatorJSON("stars_hll"));
 
-        String actualJSON = objectMapper.writeValueAsString(hllSketchEstimateWithBoundsPostAggregator);
+        String actualJSON =
+                objectMapper.writeValueAsString(hllSketchEstimateWithBoundsPostAggregator);
         String expectedJSON = jsonObject.toString();
         JSONAssert.assertEquals(expectedJSON, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -96,17 +96,13 @@ public class HllSketchEstimateWithBoundsPostAggregatorTest {
     public void testNullName() {
 
         HllSketchEstimateWithBoundsPostAggregator hllSketchEstimateWithBoundsPostAggregator =
-                HllSketchEstimateWithBoundsPostAggregator.builder()
-                        .field(starsHll)
-                        .build();
+                HllSketchEstimateWithBoundsPostAggregator.builder().field(starsHll).build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullField() {
 
         HllSketchEstimateWithBoundsPostAggregator hllSketchEstimateWithBoundsPostAggregator =
-                HllSketchEstimateWithBoundsPostAggregator.builder()
-                        .name("stars_estimate")
-                        .build();
+                HllSketchEstimateWithBoundsPostAggregator.builder().name("stars_estimate").build();
     }
 }

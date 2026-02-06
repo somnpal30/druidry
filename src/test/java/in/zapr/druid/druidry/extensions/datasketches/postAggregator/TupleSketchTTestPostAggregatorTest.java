@@ -16,8 +16,8 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.postAggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import java.util.Arrays;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,10 +26,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Arrays;
-
-import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import tools.jackson.databind.ObjectMapper;
 
 public class TupleSketchTTestPostAggregatorTest {
 
@@ -71,12 +68,12 @@ public class TupleSketchTTestPostAggregatorTest {
                         .build();
 
         JSONObject jsonObject = getTupleSketchTTestPostAggregatorJSON();
-        jsonObject.put("fields", new JSONArray(
-                Arrays.asList(
-                        getFieldAccessPostAggregatorJSON("MilkyWay"),
-                        getFieldAccessPostAggregatorJSON("Andromeda")
-                )
-        ));
+        jsonObject.put(
+                "fields",
+                new JSONArray(
+                        Arrays.asList(
+                                getFieldAccessPostAggregatorJSON("MilkyWay"),
+                                getFieldAccessPostAggregatorJSON("Andromeda"))));
 
         String actualJSON = objectMapper.writeValueAsString(tupleSketchTTestPostAggregator);
         String expectedJSON = jsonObject.toString();
@@ -96,8 +93,6 @@ public class TupleSketchTTestPostAggregatorTest {
     public void testNullFields() {
 
         TupleSketchTTestPostAggregator tupleSketchTTestPostAggregator =
-                TupleSketchTTestPostAggregator.builder()
-                        .name("androway_t_test")
-                        .build();
+                TupleSketchTTestPostAggregator.builder().name("androway_t_test").build();
     }
 }

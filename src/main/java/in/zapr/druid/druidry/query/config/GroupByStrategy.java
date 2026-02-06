@@ -19,7 +19,6 @@ package in.zapr.druid.druidry.query.config;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum GroupByStrategy {
-
     STRATEGY_V1("v1"),
     STRATEGY_V2("v2");
 
@@ -33,5 +32,4 @@ public enum GroupByStrategy {
     public String getValue() {
         return value;
     }
-
 }

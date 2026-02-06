@@ -16,16 +16,14 @@
 
 package in.zapr.druid.druidry.extractionFunctions;
 
-import tools.jackson.databind.ObjectMapper;
-
+import java.text.SimpleDateFormat;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.text.SimpleDateFormat;
+import tools.jackson.databind.ObjectMapper;
 
 public class TimeParsingExtractionFunctionTest {
     private static ObjectMapper objectMapper;
@@ -41,14 +39,16 @@ public class TimeParsingExtractionFunctionTest {
         SimpleDateFormat timeFormat = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat resultFormat = new SimpleDateFormat("MM-dd-yyyy");
 
-        TimeParsingExtractionFunction timeParsingTestExtractionFunction = TimeParsingExtractionFunction.builder()
-                .timeFormat(timeFormat)
-                .resultFormat(resultFormat)
-                .build();
+        TimeParsingExtractionFunction timeParsingTestExtractionFunction =
+                TimeParsingExtractionFunction.builder()
+                        .timeFormat(timeFormat)
+                        .resultFormat(resultFormat)
+                        .build();
 
         String actualJSON = objectMapper.writeValueAsString(timeParsingTestExtractionFunction);
 
-        String expectedJSONString = "{ \"type\" : \"time\",\n  \"timeFormat\" : \"dd-MM-yyyy\",\n  \"resultFormat\" : \"MM-dd-yyyy\" }";
+        String expectedJSONString =
+                "{ \"type\" : \"time\",\n  \"timeFormat\" : \"dd-MM-yyyy\",\n  \"resultFormat\" : \"MM-dd-yyyy\" }";
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
@@ -56,18 +56,14 @@ public class TimeParsingExtractionFunctionTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testTimeFormatField() {
         SimpleDateFormat resultFormat = new SimpleDateFormat("MM-dd-yyyy");
-        TimeParsingExtractionFunction timeParsingTestExtractionFunction = TimeParsingExtractionFunction.builder()
-                .resultFormat(resultFormat)
-                .build();
+        TimeParsingExtractionFunction timeParsingTestExtractionFunction =
+                TimeParsingExtractionFunction.builder().resultFormat(resultFormat).build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testRequiredField() {
         SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd-yyyy");
-        TimeParsingExtractionFunction timeParsingTestExtractionFunction = TimeParsingExtractionFunction.builder()
-                .timeFormat(timeFormat)
-                .build();
+        TimeParsingExtractionFunction timeParsingTestExtractionFunction =
+                TimeParsingExtractionFunction.builder().timeFormat(timeFormat).build();
     }
-
-
 }

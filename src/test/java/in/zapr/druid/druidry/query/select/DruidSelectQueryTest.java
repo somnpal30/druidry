@@ -16,8 +16,15 @@
 
 package in.zapr.druid.druidry.query.select;
 
-import tools.jackson.databind.ObjectMapper;
-
+import in.zapr.druid.druidry.dataSource.TableDataSource;
+import in.zapr.druid.druidry.dimension.enums.OutputType;
+import in.zapr.druid.druidry.granularity.Granularity;
+import in.zapr.druid.druidry.granularity.PredefinedGranularity;
+import in.zapr.druid.druidry.granularity.SimpleGranularity;
+import in.zapr.druid.druidry.query.config.Interval;
+import in.zapr.druid.druidry.virtualColumn.ExpressionVirtualColumn;
+import java.util.Collections;
+import java.util.HashMap;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
@@ -26,17 +33,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
-
-import java.util.Collections;
-import java.util.HashMap;
-
-import in.zapr.druid.druidry.query.config.Interval;
-import in.zapr.druid.druidry.dataSource.TableDataSource;
-import in.zapr.druid.druidry.dimension.enums.OutputType;
-import in.zapr.druid.druidry.granularity.Granularity;
-import in.zapr.druid.druidry.granularity.PredefinedGranularity;
-import in.zapr.druid.druidry.granularity.SimpleGranularity;
-import in.zapr.druid.druidry.virtualColumn.ExpressionVirtualColumn;
+import tools.jackson.databind.ObjectMapper;
 
 public class DruidSelectQueryTest {
     private static ObjectMapper objectMapper;
@@ -46,29 +43,31 @@ public class DruidSelectQueryTest {
         objectMapper = new ObjectMapper();
     }
 
-
     @Test
     public void testSampleQuery() throws JacksonException, JSONException {
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 2, 0,
-                0, 0, DateTimeZone.UTC);
+        DateTime startTime = new DateTime(2013, 1, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 2, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         PagingSpec pagingSpec = new PagingSpec(5, new HashMap<>());
 
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
 
-        DruidSelectQuery query = DruidSelectQuery.builder()
-                .dataSource(new TableDataSource("wikipedia"))
-                .descending(false)
-                .granularity(granularity)
-                .virtualColumns(Collections.singletonList(new ExpressionVirtualColumn("dim3", "dim1 + dim2", OutputType.FLOAT)))
-                .intervals(Collections.singletonList(interval))
-                .pagingSpec(pagingSpec)
-                .build();
+        DruidSelectQuery query =
+                DruidSelectQuery.builder()
+                        .dataSource(new TableDataSource("wikipedia"))
+                        .descending(false)
+                        .granularity(granularity)
+                        .virtualColumns(
+                                Collections.singletonList(
+                                        new ExpressionVirtualColumn(
+                                                "dim3", "dim1 + dim2", OutputType.FLOAT)))
+                        .intervals(Collections.singletonList(interval))
+                        .pagingSpec(pagingSpec)
+                        .build();
 
-        String expectedJsonAsString = """
+        String expectedJsonAsString =
+                """
                 {
                   "queryType": "select",
                   "dataSource": {
@@ -99,10 +98,8 @@ public class DruidSelectQueryTest {
 
     @Test
     public void testPagingQuery() throws JacksonException, JSONException {
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 2, 0,
-                0, 0, DateTimeZone.UTC);
+        DateTime startTime = new DateTime(2013, 1, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 2, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         HashMap<String, Integer> pagingIdentifiers = new HashMap<>();
@@ -111,15 +108,17 @@ public class DruidSelectQueryTest {
 
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);
 
-        DruidSelectQuery query = DruidSelectQuery.builder()
-                .dataSource(new TableDataSource("wikipedia"))
-                .descending(false)
-                .granularity(granularity)
-                .intervals(Collections.singletonList(interval))
-                .pagingSpec(pagingSpec)
-                .build();
+        DruidSelectQuery query =
+                DruidSelectQuery.builder()
+                        .dataSource(new TableDataSource("wikipedia"))
+                        .descending(false)
+                        .granularity(granularity)
+                        .intervals(Collections.singletonList(interval))
+                        .pagingSpec(pagingSpec)
+                        .build();
 
-        String expectedJsonAsString = """
+        String expectedJsonAsString =
+                """
                 {
                   "queryType": "select",
                   "dataSource": {
@@ -147,10 +146,8 @@ public class DruidSelectQueryTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullableDataSource() {
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 2, 0,
-                0, 0, DateTimeZone.UTC);
+        DateTime startTime = new DateTime(2013, 1, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 2, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         PagingSpec pagingSpec = new PagingSpec(5, new HashMap<>());
@@ -181,10 +178,8 @@ public class DruidSelectQueryTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullablePagingSpec() {
-        DateTime startTime = new DateTime(2013, 1, 1, 0,
-                0, 0, DateTimeZone.UTC);
-        DateTime endTime = new DateTime(2013, 1, 2, 0,
-                0, 0, DateTimeZone.UTC);
+        DateTime startTime = new DateTime(2013, 1, 1, 0, 0, 0, DateTimeZone.UTC);
+        DateTime endTime = new DateTime(2013, 1, 2, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
 
         Granularity granularity = new SimpleGranularity(PredefinedGranularity.ALL);

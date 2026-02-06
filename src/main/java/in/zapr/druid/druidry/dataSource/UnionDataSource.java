@@ -17,9 +17,7 @@
 package in.zapr.druid.druidry.dataSource;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.util.List;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,8 +28,7 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public class UnionDataSource extends DataSource {
 
-    @NonNull
-    private List<String> dataSources;
+    @NonNull private List<String> dataSources;
 
     @Builder
     public UnionDataSource(@NonNull List<String> dataSources) {

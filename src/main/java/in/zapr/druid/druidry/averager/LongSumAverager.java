@@ -28,9 +28,11 @@ public class LongSumAverager extends DruidAverager {
     private static final String LONG_SUM_AVERAGER = "longSum";
 
     @Builder
-    private LongSumAverager(@NonNull String name, @NonNull String fieldName,
-                            @NonNull Integer buckets, Integer cycleSize) {
+    private LongSumAverager(
+            @NonNull String name,
+            @NonNull String fieldName,
+            @NonNull Integer buckets,
+            Integer cycleSize) {
         super(LONG_SUM_AVERAGER, name, fieldName, buckets, cycleSize);
     }
-
 }

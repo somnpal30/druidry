@@ -19,6 +19,4 @@ package in.zapr.druid.druidry.extractionFunctions;
 import lombok.Getter;
 
 @Getter
-public class StringFormatExtractionFunction extends ExtractionFunction {
-
-}
+public class StringFormatExtractionFunction extends ExtractionFunction {}

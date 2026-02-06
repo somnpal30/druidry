@@ -16,8 +16,6 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,6 +23,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class StringFirstAggregatorTest {
 
@@ -40,10 +39,8 @@ public class StringFirstAggregatorTest {
         String name = "stringFirstNameRequired";
         String fieldName = "stringFirstFieldNameRequired";
 
-        DruidAggregator stringFirstAggregator = StringFirstAggregator.builder()
-                .name(name)
-                .fieldName(fieldName)
-                .build();
+        DruidAggregator stringFirstAggregator =
+                StringFirstAggregator.builder().name(name).fieldName(fieldName).build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "stringFirst");
@@ -61,11 +58,12 @@ public class StringFirstAggregatorTest {
         String fieldName = "stringFirstFieldNameAll";
         int maxStringBytes = 300;
 
-        DruidAggregator stringFirstAggregator = StringFirstAggregator.builder()
-                .name(name)
-                .fieldName(fieldName)
-                .maxStringBytes(maxStringBytes)
-                .build();
+        DruidAggregator stringFirstAggregator =
+                StringFirstAggregator.builder()
+                        .name(name)
+                        .fieldName(fieldName)
+                        .maxStringBytes(maxStringBytes)
+                        .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "stringFirst");
@@ -80,16 +78,11 @@ public class StringFirstAggregatorTest {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void tryToCreateWithoutName() {
-        StringFirstAggregator.builder()
-                .fieldName("fieldName")
-                .build();
+        StringFirstAggregator.builder().fieldName("fieldName").build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void tryToCreateWithoutFieldName() {
-        StringFirstAggregator.builder()
-                .name("name")
-                .build();
+        StringFirstAggregator.builder().name("name").build();
     }
-
 }

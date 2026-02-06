@@ -17,13 +17,11 @@
 package in.zapr.druid.druidry.granularity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 @Builder
 @Getter

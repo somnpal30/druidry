@@ -33,5 +33,4 @@ public class DistinctCountAggregator extends DruidAggregator {
         this.name = name;
         this.fieldName = fieldName;
     }
-
 }

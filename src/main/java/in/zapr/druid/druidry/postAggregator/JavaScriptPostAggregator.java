@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.postAggregator;
 
 import java.util.List;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -27,14 +26,14 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = true)
 public class JavaScriptPostAggregator extends DruidPostAggregator {
 
-    private final static String JAVASCRIPT_POST_AGGREGATOR_TYPE = "javascript";
+    private static final String JAVASCRIPT_POST_AGGREGATOR_TYPE = "javascript";
 
     private List<String> fieldNames;
     private String function;
 
     @Builder
-    private JavaScriptPostAggregator(@NonNull String name, @NonNull List<String> fieldNames,
-                                     @NonNull String function) {
+    private JavaScriptPostAggregator(
+            @NonNull String name, @NonNull List<String> fieldNames, @NonNull String function) {
 
         this.type = JAVASCRIPT_POST_AGGREGATOR_TYPE;
         this.name = name;

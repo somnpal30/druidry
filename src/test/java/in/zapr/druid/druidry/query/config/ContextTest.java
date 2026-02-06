@@ -16,8 +16,6 @@
 
 package in.zapr.druid.druidry.query.config;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +24,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class ContextTest {
 
@@ -49,41 +48,42 @@ public class ContextTest {
 
     @Test
     public void testAllFields() throws JacksonException, JSONException {
-        Context context = Context.builder()
-                .timeoutInMilliSeconds(1000L)
-                .priority(0)
-                .queryId("p0-query")
-                .useCache(true)
-                .populateCache(true)
-                .useResultLevelCache(false)
-                .populateResultLevelCache(false)
-                .bySegment(true)
-                .finalize(true)
-                .chunkPeriod("P1M")
-                .maxScatterGatherBytes(1024L)
-                .maxQueuedBytes(1024L)
-                .serializeDateTimeAsLong(true)
-                .serializeDateTimeAsLongInner(true)
-                .minTopNThreshold(10)
-                .skipEmptyBuckets(true)
-                .maxMergingDictionarySize(65536L)
-                .maxOnDiskStorage(262144L)
-                .groupByStrategy(GroupByStrategy.STRATEGY_V2)
-                .groupByIsSingleThreaded(false)
-                .bufferGrouperInitialBuckets(1024)
-                .bufferGrouperMaxLoadFactor(1.024F)
-                .forceHashAggregation(true)
-                .intermediateCombineDegree(8)
-                .numParallelCombineThreads(4)
-                .sortByDimsFirst(false)
-                .forceLimitPushDown(false)
-                .applyLimitPushDown(true)
-                .maxIntermediateRows(2048)
-                .maxResults(256)
-                .useOffheap(false)
-                .vectorize(Vectorize.FORCE)
-                .vectorSize(1024)
-                .build();
+        Context context =
+                Context.builder()
+                        .timeoutInMilliSeconds(1000L)
+                        .priority(0)
+                        .queryId("p0-query")
+                        .useCache(true)
+                        .populateCache(true)
+                        .useResultLevelCache(false)
+                        .populateResultLevelCache(false)
+                        .bySegment(true)
+                        .finalize(true)
+                        .chunkPeriod("P1M")
+                        .maxScatterGatherBytes(1024L)
+                        .maxQueuedBytes(1024L)
+                        .serializeDateTimeAsLong(true)
+                        .serializeDateTimeAsLongInner(true)
+                        .minTopNThreshold(10)
+                        .skipEmptyBuckets(true)
+                        .maxMergingDictionarySize(65536L)
+                        .maxOnDiskStorage(262144L)
+                        .groupByStrategy(GroupByStrategy.STRATEGY_V2)
+                        .groupByIsSingleThreaded(false)
+                        .bufferGrouperInitialBuckets(1024)
+                        .bufferGrouperMaxLoadFactor(1.024F)
+                        .forceHashAggregation(true)
+                        .intermediateCombineDegree(8)
+                        .numParallelCombineThreads(4)
+                        .sortByDimsFirst(false)
+                        .forceLimitPushDown(false)
+                        .applyLimitPushDown(true)
+                        .maxIntermediateRows(2048)
+                        .maxResults(256)
+                        .useOffheap(false)
+                        .vectorize(Vectorize.FORCE)
+                        .vectorSize(1024)
+                        .build();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("timeout", 1000L);
@@ -127,79 +127,81 @@ public class ContextTest {
 
     @Test
     public void testContextEquals() {
-        Context context1 = Context.builder()
-                .timeoutInMilliSeconds(3141L)
-                .priority(1)
-                .queryId("How are you?")
-                .useCache(true)
-                .populateCache(true)
-                .bySegment(true)
-                .finalize(true)
-                .chunkPeriod("P1M")
-                .minTopNThreshold(1407)
-                .maxResults(1611)
-                .maxIntermediateRows(1103)
-                .groupByIsSingleThreaded(true)
-                .build();
+        Context context1 =
+                Context.builder()
+                        .timeoutInMilliSeconds(3141L)
+                        .priority(1)
+                        .queryId("How are you?")
+                        .useCache(true)
+                        .populateCache(true)
+                        .bySegment(true)
+                        .finalize(true)
+                        .chunkPeriod("P1M")
+                        .minTopNThreshold(1407)
+                        .maxResults(1611)
+                        .maxIntermediateRows(1103)
+                        .groupByIsSingleThreaded(true)
+                        .build();
 
-        Context context2 = Context.builder()
-                .timeoutInMilliSeconds(3141L)
-                .priority(1)
-                .queryId("How are you?")
-                .useCache(true)
-                .populateCache(true)
-                .bySegment(true)
-                .finalize(true)
-                .chunkPeriod("P1M")
-                .minTopNThreshold(1407)
-                .maxResults(1611)
-                .maxIntermediateRows(1103)
-                .groupByIsSingleThreaded(true)
-                .build();
+        Context context2 =
+                Context.builder()
+                        .timeoutInMilliSeconds(3141L)
+                        .priority(1)
+                        .queryId("How are you?")
+                        .useCache(true)
+                        .populateCache(true)
+                        .bySegment(true)
+                        .finalize(true)
+                        .chunkPeriod("P1M")
+                        .minTopNThreshold(1407)
+                        .maxResults(1611)
+                        .maxIntermediateRows(1103)
+                        .groupByIsSingleThreaded(true)
+                        .build();
 
         Assertions.assertThat(context1).isEqualTo(context2);
     }
 
     @Test
     public void testContextUnequals() {
-        Context context1 = Context.builder()
-                .timeoutInMilliSeconds(3141L)
-                .priority(1)
-                .queryId("How are you?")
-                .useCache(true)
-                .populateCache(true)
-                .bySegment(true)
-                .finalize(true)
-                .chunkPeriod("P1M")
-                .minTopNThreshold(1407)
-                .maxResults(1611)
-                .maxIntermediateRows(1103)
-                .groupByIsSingleThreaded(true)
-                .build();
+        Context context1 =
+                Context.builder()
+                        .timeoutInMilliSeconds(3141L)
+                        .priority(1)
+                        .queryId("How are you?")
+                        .useCache(true)
+                        .populateCache(true)
+                        .bySegment(true)
+                        .finalize(true)
+                        .chunkPeriod("P1M")
+                        .minTopNThreshold(1407)
+                        .maxResults(1611)
+                        .maxIntermediateRows(1103)
+                        .groupByIsSingleThreaded(true)
+                        .build();
 
-        Context context2 = Context.builder()
-                .timeoutInMilliSeconds(3141L)
-                .priority(1)
-                .queryId("How are you?")
-                .useCache(true)
-                .populateCache(true)
-                .bySegment(true)
-                .finalize(true)
-                .chunkPeriod("P1M")
-                .minTopNThreshold(1407)
-                .maxResults(1611)
-                .maxIntermediateRows(1103)
-                // Differentiator
-                .groupByIsSingleThreaded(false)
-                .build();
+        Context context2 =
+                Context.builder()
+                        .timeoutInMilliSeconds(3141L)
+                        .priority(1)
+                        .queryId("How are you?")
+                        .useCache(true)
+                        .populateCache(true)
+                        .bySegment(true)
+                        .finalize(true)
+                        .chunkPeriod("P1M")
+                        .minTopNThreshold(1407)
+                        .maxResults(1611)
+                        .maxIntermediateRows(1103)
+                        // Differentiator
+                        .groupByIsSingleThreaded(false)
+                        .build();
 
         Assertions.assertThat(context1).isNotEqualTo(context2);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void preconditionCheck() {
-        Context context = Context.builder()
-                .timeoutInMilliSeconds(-1000L)
-                .build();
+        Context context = Context.builder().timeoutInMilliSeconds(-1000L).build();
     }
 }

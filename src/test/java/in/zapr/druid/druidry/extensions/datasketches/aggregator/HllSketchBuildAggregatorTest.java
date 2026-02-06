@@ -16,8 +16,6 @@
 
 package in.zapr.druid.druidry.extensions.datasketches.aggregator;
 
-import tools.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,6 +23,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class HllSketchBuildAggregatorTest {
 
@@ -46,12 +45,13 @@ public class HllSketchBuildAggregatorTest {
     @Test
     public void testAllFields() throws JacksonException, JSONException {
 
-        HllSketchBuildAggregator hllSketchBuildAggregator = HllSketchBuildAggregator.builder()
-                .name("stars_hll")
-                .fieldName("stars")
-                .lgK(4)
-                .targetHllType(TargetHllType.HLL_4)
-                .build();
+        HllSketchBuildAggregator hllSketchBuildAggregator =
+                HllSketchBuildAggregator.builder()
+                        .name("stars_hll")
+                        .fieldName("stars")
+                        .lgK(4)
+                        .targetHllType(TargetHllType.HLL_4)
+                        .build();
 
         JSONObject jsonObject = getHllSketchBuildAggregatorJSON();
         jsonObject.put("fieldName", "stars");
@@ -66,10 +66,8 @@ public class HllSketchBuildAggregatorTest {
     @Test
     public void testRequiredFields() throws JacksonException, JSONException {
 
-        HllSketchBuildAggregator hllSketchBuildAggregator = HllSketchBuildAggregator.builder()
-                .name("stars_hll")
-                .fieldName("stars")
-                .build();
+        HllSketchBuildAggregator hllSketchBuildAggregator =
+                HllSketchBuildAggregator.builder().name("stars_hll").fieldName("stars").build();
 
         JSONObject jsonObject = getHllSketchBuildAggregatorJSON();
         jsonObject.put("fieldName", "stars");
@@ -82,16 +80,14 @@ public class HllSketchBuildAggregatorTest {
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullName() {
 
-        HllSketchBuildAggregator hllSketchBuildAggregator = HllSketchBuildAggregator.builder()
-                .fieldName("stars")
-                .build();
+        HllSketchBuildAggregator hllSketchBuildAggregator =
+                HllSketchBuildAggregator.builder().fieldName("stars").build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
     public void testNullFieldName() {
 
-        HllSketchBuildAggregator hllSketchBuildAggregator = HllSketchBuildAggregator.builder()
-                .name("stars_hll")
-                .build();
+        HllSketchBuildAggregator hllSketchBuildAggregator =
+                HllSketchBuildAggregator.builder().name("stars_hll").build();
     }
 }

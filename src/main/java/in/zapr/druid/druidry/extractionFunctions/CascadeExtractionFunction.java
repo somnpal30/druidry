@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.extractionFunctions;
 
 import java.util.List;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;

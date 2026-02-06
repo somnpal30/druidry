@@ -17,7 +17,6 @@
 package in.zapr.druid.druidry.extractionFunctions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -26,15 +25,13 @@ import lombok.NonNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RegexExtractionFunction extends ExtractionFunction {
 
-
     private String expr;
     private Boolean replaceMissingValue;
     private String replaceMissingValueWith;
 
     @Builder
-    private RegexExtractionFunction(@NonNull String expr,
-                                    Boolean replaceMissingValue,
-                                    String replaceMissingValueWith) {
+    private RegexExtractionFunction(
+            @NonNull String expr, Boolean replaceMissingValue, String replaceMissingValueWith) {
         this.type = REGEX_TYPE;
         this.expr = expr;
         this.replaceMissingValue = replaceMissingValue;
