@@ -1,9 +1,8 @@
 package in.zapr.druid.druidry.client;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-
 import in.zapr.druid.druidry.query.DruidQuery;
+
+import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -14,11 +13,11 @@ public class DruidClientTest {
 
     @Test
     public void testAutoClosing() {
-        assertFalse(wasClientClosed, "Client closing indicator is not initialized properly");
+        Assertions.assertThat(wasClientClosed).withFailMessage("Client closing indicator is not initialized properly").isFalse();
         try (TestDruidClient client = new TestDruidClient()) {
             client.connect();
         }
-        assertTrue(wasClientClosed, "Close method has not been called");
+        Assertions.assertThat(wasClientClosed).withFailMessage("Close method has not been called").isTrue();
     }
 
     private class TestDruidClient implements DruidClient {

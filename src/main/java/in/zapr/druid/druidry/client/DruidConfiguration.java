@@ -97,7 +97,7 @@ public class DruidConfiguration {
             endpoint = "";
         }
 
-        return String.format("%s://%s:%d/%s",
+        return "%s://%s:%d/%s".formatted(
                 this.getProtocol(),
                 this.getHost(),
                 this.getPort(),

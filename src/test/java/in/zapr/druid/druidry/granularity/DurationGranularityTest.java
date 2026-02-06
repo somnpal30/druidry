@@ -18,13 +18,13 @@ package in.zapr.druid.druidry.granularity;
 
 import tools.jackson.databind.ObjectMapper;
 
+import org.assertj.core.api.Assertions;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
@@ -70,7 +70,7 @@ public class DurationGranularityTest {
         DurationGranularity granularity1 = new DurationGranularity(3141);
         DurationGranularity granularity2 = new DurationGranularity(3141);
 
-        Assert.assertEquals(granularity1, granularity2);
+        Assertions.assertThat(granularity1).isEqualTo(granularity2);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class DurationGranularityTest {
         DurationGranularity granularity1 = new DurationGranularity(3141);
         DurationGranularity granularity2 = new DurationGranularity(3140);
 
-        Assert.assertNotEquals(granularity1, granularity2);
+        Assertions.assertThat(granularity1).isNotEqualTo(granularity2);
     }
 
     @Test
@@ -88,6 +88,6 @@ public class DurationGranularityTest {
         DateTime originDate = new DateTime(DateTimeZone.UTC);
         DurationGranularity granularity2 = new DurationGranularity(3141, originDate);
 
-        Assert.assertNotEquals(granularity1, granularity2);
+        Assertions.assertThat(granularity1).isNotEqualTo(granularity2);
     }
 }

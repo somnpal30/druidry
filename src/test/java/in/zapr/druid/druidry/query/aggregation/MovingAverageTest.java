@@ -20,6 +20,7 @@ import com.google.common.io.Resources;
 
 import tools.jackson.databind.ObjectMapper;
 
+import org.assertj.core.api.Assertions;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -55,7 +56,6 @@ import in.zapr.druid.druidry.query.config.Interval;
 
 import static com.google.common.collect.ImmutableList.of;
 import static java.util.Collections.singletonList;
-import static org.testng.Assert.assertTrue;
 
 public class MovingAverageTest {
 
@@ -243,7 +243,7 @@ public class MovingAverageTest {
 
     private String loadExpectedJsonForType(String type) throws IOException, URISyntaxException {
         String json = loadExpectedJson("averager_type/" + type + ".json");
-        assertTrue(json.contains("\"type\": \"%s\"".formatted(type)));
+        Assertions.assertThat(json.contains("\"type\": \"%s\"".formatted(type))).isTrue();
         return json;
     }
 

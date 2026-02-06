@@ -24,7 +24,7 @@
         <logback.version>1.5.25</logback.version>
         <jsonassert.version>1.4.0</jsonassert.version>
         <commons.version>3.18.0</commons.version>
-        <jersey.version>2.26</jersey.version>
+        <jersey.version>3.1.11</jersey.version>
         <guava.version>32.0.1-android</guava.version>
     </properties>
 
@@ -46,6 +46,12 @@
             <groupId>tools.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>
             <version>3.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.27.7</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -92,15 +98,15 @@
             <version>${jersey.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-jackson</artifactId>
-            <version>${jersey.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+       <!-- <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
             <version>${jersey.version}</version>
         </dependency>
 
@@ -108,6 +114,18 @@
             <groupId>org.glassfish.jersey.connectors</groupId>
             <artifactId>jersey-apache-connector</artifactId>
             <version>${jersey.version}</version>
+        </dependency>-->
+  <!--      <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.6</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.glassfish.jersey.connectors</groupId>
+            <artifactId>jersey-apache-connector</artifactId>
+            <version>${jersey.version}</version>
+
         </dependency>
 
         <dependency>

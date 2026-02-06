@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.query.aggregation;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
+import tools.jackson.databind.SerializationFeature;
 import tools.jackson.databind.ObjectMapper;
 
 import org.joda.time.DateTime;

@@ -18,10 +18,10 @@ package in.zapr.druid.druidry.dimension;
 
 import tools.jackson.databind.ObjectMapper;
 
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
@@ -157,7 +157,7 @@ public class ExtractionDimensionTest {
                 .extractionFunction(partialExtractionFunction2)
                 .build();
 
-        Assert.assertEquals(dimension1, dimension2);
+        Assertions.assertThat(dimension1).isEqualTo(dimension2);
     }
 
     @Test
@@ -184,7 +184,7 @@ public class ExtractionDimensionTest {
                 .extractionFunction(partialExtractionFunction2)
                 .build();
 
-        Assert.assertNotEquals(dimension1, dimension2);
+        Assertions.assertThat(dimension1).isNotEqualTo(dimension2);
     }
 
     @Test
@@ -201,6 +201,6 @@ public class ExtractionDimensionTest {
                 .extractionFunction(partialExtractionFunction1)
                 .build();
 
-        Assert.assertNotEquals(dimension1, dimension2);
+        Assertions.assertThat(dimension1).isNotEqualTo(dimension2);
     }
 }

@@ -18,8 +18,8 @@ package in.zapr.druid.druidry.dimension;
 
 import tools.jackson.databind.ObjectMapper;
 
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
@@ -42,7 +42,7 @@ public class SimpleDimensionTest {
         String actualString = objectMapper.writeValueAsString(simpleDimension);
         String expectedString = "\"name\"";
 
-        Assert.assertEquals(expectedString, actualString);
+        Assertions.assertThat(expectedString).isEqualTo(actualString);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class SimpleDimensionTest {
         SimpleDimension dimension1 = new SimpleDimension("name");
         SimpleDimension dimension2 = new SimpleDimension("name");
 
-        Assert.assertEquals(dimension1, dimension2);
+        Assertions.assertThat(dimension1).isEqualTo(dimension2);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class SimpleDimensionTest {
         SimpleDimension dimension1 = new SimpleDimension("name");
         SimpleDimension dimension2 = new SimpleDimension("name1");
 
-        Assert.assertNotEquals(dimension1, dimension2);
+        Assertions.assertThat(dimension1).isNotEqualTo(dimension2);
     }
 
     @Test
@@ -68,6 +68,6 @@ public class SimpleDimensionTest {
                 "output",
                 OutputType.LONG);
 
-        Assert.assertNotEquals(dimension1, dimension2);
+        Assertions.assertThat(dimension1).isNotEqualTo(dimension2);
     }
 }

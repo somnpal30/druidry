@@ -16,9 +16,9 @@
 
 package in.zapr.druid.druidry.granularity;
 
+import org.assertj.core.api.Assertions;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class SimpleGranularityTest {
@@ -28,7 +28,7 @@ public class SimpleGranularityTest {
         SimpleGranularity granularity1 = new SimpleGranularity(PredefinedGranularity.ALL);
         SimpleGranularity granularity2 = new SimpleGranularity(PredefinedGranularity.ALL);
 
-        Assert.assertEquals(granularity1, granularity2);
+        Assertions.assertThat(granularity1).isEqualTo(granularity2);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class SimpleGranularityTest {
         SimpleGranularity granularity1 = new SimpleGranularity(PredefinedGranularity.ALL);
         SimpleGranularity granularity2 = new SimpleGranularity(PredefinedGranularity.WEEK);
 
-        Assert.assertNotEquals(granularity1, granularity2);
+        Assertions.assertThat(granularity1).isNotEqualTo(granularity2);
     }
 
     @Test
@@ -46,6 +46,6 @@ public class SimpleGranularityTest {
         DateTime originDate = new DateTime(DateTimeZone.UTC);
         DurationGranularity granularity2 = new DurationGranularity(3141, originDate);
 
-        Assert.assertNotEquals(granularity1, granularity2);
+        Assertions.assertThat(granularity1).isNotEqualTo(granularity2);
     }
 }

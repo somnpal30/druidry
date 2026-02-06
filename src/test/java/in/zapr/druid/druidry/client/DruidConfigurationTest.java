@@ -16,7 +16,7 @@
 
 package in.zapr.druid.druidry.client;
 
-import org.testng.Assert;
+import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 
 public class DruidConfigurationTest {
@@ -32,12 +32,12 @@ public class DruidConfigurationTest {
                 .concurrentConnectionsRequired(8)
                 .build();
 
-        Assert.assertEquals(config.getProtocol(), DruidQueryProtocol.HTTPS);
-        Assert.assertEquals(config.getHost(), "druid.zapr.in");
-        Assert.assertEquals(config.getPort().intValue(), 443);
-        Assert.assertEquals(config.getEndpoint(), "druid/v2/");
-        Assert.assertEquals(config.getConcurrentConnectionsRequired().intValue(), 8);
-        Assert.assertEquals(config.getUrl(), "https://druid.zapr.in:443/druid/v2/");
+        Assertions.assertThat(config.getProtocol()).isEqualTo(DruidQueryProtocol.HTTPS);
+        Assertions.assertThat(config.getHost()).isEqualTo("druid.zapr.in");
+        Assertions.assertThat(config.getPort().intValue()).isEqualTo(443);
+        Assertions.assertThat(config.getEndpoint()).isEqualTo("druid/v2/");
+        Assertions.assertThat(config.getConcurrentConnectionsRequired().intValue()).isEqualTo(8);
+        Assertions.assertThat(config.getUrl()).isEqualTo("https://druid.zapr.in:443/druid/v2/");
     }
 
     @Test
@@ -49,9 +49,9 @@ public class DruidConfigurationTest {
                 .concurrentConnectionsRequired(8)
                 .build();
 
-        Assert.assertEquals(config.getProtocol(), DruidQueryProtocol.HTTP);
-        Assert.assertEquals(config.getPort().intValue(), 8082);
-        Assert.assertEquals(config.getUrl(), "http://druid.zapr.in:8082/druid/v2/");
+        Assertions.assertThat(config.getProtocol()).isEqualTo(DruidQueryProtocol.HTTP);
+        Assertions.assertThat(config.getPort().intValue()).isEqualTo(8082);
+        Assertions.assertThat(config.getUrl()).isEqualTo("http://druid.zapr.in:8082/druid/v2/");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
@@ -106,6 +106,6 @@ public class DruidConfigurationTest {
                 .concurrentConnectionsRequired(11)
                 .build();
 
-        Assert.assertEquals(config.getUrl(), "http://druid.zapr.in:443/");
+        Assertions.assertThat(config.getUrl()).isEqualTo("http://druid.zapr.in:443/");
     }
 }

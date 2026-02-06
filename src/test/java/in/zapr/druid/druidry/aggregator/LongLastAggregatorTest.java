@@ -17,12 +17,11 @@
 package in.zapr.druid.druidry.aggregator;
 
 import tools.jackson.databind.ObjectMapper;
-
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
@@ -72,7 +71,7 @@ public class LongLastAggregatorTest {
         LongLastAggregator aggregator1 = new LongLastAggregator("name", "field");
         LongLastAggregator aggregator2 = new LongLastAggregator("name", "field");
 
-        Assert.assertEquals(aggregator1, aggregator2);
+        Assertions.assertThat(aggregator1).isEqualTo(aggregator2);
     }
 
     @Test
@@ -80,7 +79,7 @@ public class LongLastAggregatorTest {
         LongLastAggregator aggregator1 = new LongLastAggregator("name", "field");
         LongLastAggregator aggregator2 = new LongLastAggregator("name1", "field1");
 
-        Assert.assertNotEquals(aggregator1, aggregator2);
+        Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
 
     @Test
@@ -88,6 +87,6 @@ public class LongLastAggregatorTest {
         LongLastAggregator aggregator1 = new LongLastAggregator("name", "field");
         CountAggregator aggregator2 = new CountAggregator("countAgg1");
 
-        Assert.assertNotEquals(aggregator1, aggregator2);
+        Assertions.assertThat(aggregator1).isNotEqualTo(aggregator2);
     }
 }

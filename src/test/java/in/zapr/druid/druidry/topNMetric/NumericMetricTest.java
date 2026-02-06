@@ -18,11 +18,11 @@ package in.zapr.druid.druidry.topNMetric;
 
 import tools.jackson.databind.ObjectMapper;
 
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
@@ -68,7 +68,7 @@ public class NumericMetricTest {
         NumericMetric numericMetric1 = new NumericMetric("events");
         NumericMetric numericMetric2 = new NumericMetric("events");
 
-        Assert.assertEquals(numericMetric1, numericMetric2);
+        Assertions.assertThat(numericMetric1).isEqualTo(numericMetric2);
     }
 
     @Test
@@ -77,6 +77,6 @@ public class NumericMetricTest {
         NumericMetric numericMetric1 = new NumericMetric("events1");
         NumericMetric numericMetric2 = new NumericMetric("events2");
 
-        Assert.assertNotEquals(numericMetric1, numericMetric2);
+        Assertions.assertThat(numericMetric1).isNotEqualTo(numericMetric2);
     }
 }

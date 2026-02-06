@@ -18,6 +18,7 @@ package in.zapr.druid.druidry.query.aggregation;
 
 import tools.jackson.databind.ObjectMapper;
 
+import org.assertj.core.api.Assertions;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
@@ -25,7 +26,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
@@ -332,7 +332,7 @@ public class TopNQueryTest {
                 .context(context)
                 .build();
 
-        Assert.assertEquals(query1, query2);
+        Assertions.assertThat(query1).isEqualTo(query2);
     }
 
     @Test
@@ -379,7 +379,7 @@ public class TopNQueryTest {
                 .context(context)
                 .build();
 
-        Assert.assertNotEquals(query1, query2);
+        Assertions.assertThat(query1).isNotEqualTo(query2);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

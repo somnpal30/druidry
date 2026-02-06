@@ -2,11 +2,11 @@ package in.zapr.druid.druidry.topNMetric;
 
 import tools.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import tools.jackson.core.JacksonException;
@@ -52,7 +52,7 @@ public class InvertedMetricTest {
         InvertedMetric invertedMetric1 = new InvertedMetric(new SimpleMetric("count"));
         InvertedMetric invertedMetric2 = new InvertedMetric(new SimpleMetric("count"));
 
-        Assert.assertEquals(invertedMetric1, invertedMetric2);
+        Assertions.assertThat(invertedMetric1).isEqualTo(invertedMetric2);
     }
 
     @Test
@@ -61,6 +61,6 @@ public class InvertedMetricTest {
         InvertedMetric invertedMetric1 = new InvertedMetric(new SimpleMetric("sum"));
         InvertedMetric invertedMetric2 = new InvertedMetric(new SimpleMetric("count"));
 
-        Assert.assertNotEquals(invertedMetric1, invertedMetric2);
+        Assertions.assertThat(invertedMetric1).isNotEqualTo(invertedMetric2);
     }
 }

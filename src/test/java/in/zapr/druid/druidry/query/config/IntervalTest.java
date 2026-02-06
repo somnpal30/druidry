@@ -16,8 +16,8 @@
 
 package in.zapr.druid.druidry.query.config;
 
+import org.assertj.core.api.Assertions;
 import org.joda.time.DateTime;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import in.zapr.druid.druidry.query.config.Interval;
@@ -44,16 +44,16 @@ public class IntervalTest {
 
         Interval interval1 = new Interval(startTime, endTime);
         Interval interval2 = new Interval(startTime, endTime);
-        Assert.assertEquals(interval1, interval2);
+        Assertions.assertThat(interval1).isEqualTo(interval2);
 
         Interval interval3 = new Interval(startTime, endTime.plusDays(1));
 
-        Assert.assertNotEquals(interval1, interval3);
+        Assertions.assertThat(interval1).isNotEqualTo(interval3);
 
         DateTime otherStartTime = new DateTime(startTime);
         DateTime otherEndTime = new DateTime(endTime);
 
         Interval interval4 = new Interval(otherStartTime, otherEndTime);
-        Assert.assertEquals(interval1, interval4);
+        Assertions.assertThat(interval1).isEqualTo(interval4);
     }
 }
