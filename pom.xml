@@ -20,12 +20,12 @@
         <jackson.datatype.version>2.9.9</jackson.datatype.version>
         <jodatime.version>2.9.7</jodatime.version>
         <lombok.version>1.18.42</lombok.version>
-        <testng.version>6.11</testng.version>
-        <logback.version>1.2.1</logback.version>
+        <testng.version>7.7.0</testng.version>
+        <logback.version>1.5.25</logback.version>
         <jsonassert.version>1.4.0</jsonassert.version>
-        <commons.version>3.5</commons.version>
+        <commons.version>3.18.0</commons.version>
         <jersey.version>2.26</jersey.version>
-        <guava.version>29.0-jre</guava.version>
+        <guava.version>32.0.1-android</guava.version>
     </properties>
 
     <dependencies>
@@ -214,7 +214,7 @@
                         <recipe>org.openrewrite.java.jackson.UseModernDateTimeSerialization</recipe>
                         <recipe>org.openrewrite.java.jackson.UpgradeJackson_2_3_PackageChanges</recipe>
                         <recipe>org.openrewrite.java.jackson.SimplifyJacksonExceptionCatch</recipe>
-
+                        <recipe>org.openrewrite.java.testing.testng.TestNgToAssertj</recipe>
 
                     </activeRecipes>
                 </configuration>
@@ -228,6 +228,11 @@
                         <groupId>org.openrewrite.recipe</groupId>
                         <artifactId>rewrite-jackson</artifactId>
                         <version>1.15.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.openrewrite.recipe</groupId>
+                        <artifactId>rewrite-testing-frameworks</artifactId>
+                        <version>3.26.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -252,7 +257,22 @@
                 </executions>
             </plugin>
 
-
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>12.2.0</version>
+                <configuration>
+                    <!-- <nvd.api.key>346bbacb-1cb0-45d5-81ee-0d5953d84b06</nvd.api.key>-->
+                    <!--                   <nvdApiKey>346bbacb-1cb0-45d5-81ee-0d5953d84b06</nvdApiKey>-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
 
             <plugin>

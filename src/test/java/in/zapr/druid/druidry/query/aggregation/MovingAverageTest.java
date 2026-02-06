@@ -30,6 +30,7 @@ import org.testng.annotations.Test;
 import org.testng.reporters.Files;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -250,7 +251,7 @@ public class MovingAverageTest {
     private String loadExpectedJson(String fileName) throws IOException, URISyntaxException {
         URI jsonUri = Resources.getResource("query/aggregation/moving_average/" + fileName).toURI();
         File jsonFile = new File(jsonUri);
-        return Files.readFile(jsonFile);
+        return Files.readFile(new FileInputStream(jsonFile));
     }
 
     private static DruidMovingAverageQuery simpleQuery(
