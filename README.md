@@ -31,7 +31,7 @@ Prerequisite
 -----------
 
 * Maven
-* Java 8
+* Java 21
 
 Usage
 -----
