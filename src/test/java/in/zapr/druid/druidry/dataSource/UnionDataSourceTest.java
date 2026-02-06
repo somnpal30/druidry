@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.dataSource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +25,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +40,7 @@ public class UnionDataSourceTest {
 
 
     @Test
-    public void testUnionDataSource() throws JsonProcessingException, JSONException {
+    public void testUnionDataSource() throws JacksonException, JSONException {
         List<String> dataSourcesList = Arrays.asList("datasource_1", "datasource_2");
 
         UnionDataSource unionDataSource = new UnionDataSource(dataSourcesList);

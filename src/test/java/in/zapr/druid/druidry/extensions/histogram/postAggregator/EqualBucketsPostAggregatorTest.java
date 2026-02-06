@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.extensions.histogram.postAggregator;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +24,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 public class EqualBucketsPostAggregatorTest {
     private static ObjectMapper objectMapper;
@@ -35,7 +35,7 @@ public class EqualBucketsPostAggregatorTest {
     }
 
     @Test
-    public void testAllFields() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JacksonException, JSONException {
         EqualBucketsPostAggregator equalBucketsPostAggregator
                 = new EqualBucketsPostAggregator("CarpeDiem", "Seize the Day",
                 14);

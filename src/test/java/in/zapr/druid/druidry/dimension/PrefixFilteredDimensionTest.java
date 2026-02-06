@@ -16,14 +16,14 @@
 
 package in.zapr.druid.druidry.dimension;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 public class PrefixFilteredDimensionTest {
 
@@ -36,7 +36,7 @@ public class PrefixFilteredDimensionTest {
 
 
     @Test
-    public void testPreFixFilteredDimension() throws JsonProcessingException, JSONException {
+    public void testPreFixFilteredDimension() throws JacksonException, JSONException {
         DimensionSpec dimensionSpec = DefaultDimension.builder()
                 .dimension("system_label_values")
                 .outputName("system_label_values")
@@ -47,20 +47,22 @@ public class PrefixFilteredDimensionTest {
                 .build();
 
         String jsonOutput = objectMapper.writeValueAsString(prefixFilteredDimension);
-        String expectedJSONString = "{\n" +
-                "      \"type\": \"prefixFiltered\",\n" +
-                "      \"delegate\": {\n" +
-                "        \"type\": \"default\",\n" +
-                "        \"dimension\": \"system_label_values\",\n" +
-                "        \"outputName\": \"system_label_values\"\n" +
-                "      },\n" +
-                "      \"prefix\": \"compute.googleapis.com/cores\"\n" +
-                "    }";
+        String expectedJSONString = """
+                {
+                      "type": "prefixFiltered",
+                      "delegate": {
+                        "type": "default",
+                        "dimension": "system_label_values",
+                        "outputName": "system_label_values"
+                      },
+                      "prefix": "compute.googleapis.com/cores"
+                    }\
+                """;
         JSONAssert.assertEquals(expectedJSONString, jsonOutput, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testPreFixFilteredDimensionWithNullDimensionSpec() throws JsonProcessingException {
+    public void testPreFixFilteredDimensionWithNullDimensionSpec() throws JacksonException {
         PrefixFilteredDimension prefixFilteredDimension = PrefixFilteredDimension.builder()
                 .prefix("compute.googleapis.com/cores")
                 .build();
@@ -68,7 +70,7 @@ public class PrefixFilteredDimensionTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testPreFixFilteredDimensionWithNullPrefix() throws JsonProcessingException {
+    public void testPreFixFilteredDimensionWithNullPrefix() throws JacksonException {
         DimensionSpec dimensionSpec = DefaultDimension.builder()
                 .dimension("system_label_values")
                 .outputName("system_label_values")

@@ -40,6 +40,7 @@ public class Interval {
 
     @JsonValue
     private String getIntervalAsString() {
+        //return DRUID_INTERVAL_FORMAT.formatted(startTime.toDateTimeISO(), endTime.toDateTimeISO());
         return String.format(DRUID_INTERVAL_FORMAT, startTime.toDateTimeISO(), endTime.toDateTimeISO());
     }
 }

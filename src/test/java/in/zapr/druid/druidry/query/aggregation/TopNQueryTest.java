@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.query.aggregation;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -29,6 +28,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -65,7 +65,7 @@ public class TopNQueryTest {
     }
 
     @Test
-    public void testSampleQuery() throws JsonProcessingException, JSONException {
+    public void testSampleQuery() throws JacksonException, JSONException {
 
         SelectorFilter selectorFilter1 = new SelectorFilter("dim1", "some_value");
         SelectorFilter selectorFilter2 = new SelectorFilter("dim2", "some_other_val");
@@ -108,73 +108,75 @@ public class TopNQueryTest {
                 .intervals(Collections.singletonList(interval))
                 .build();
 
-        String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"topN\",\n" +
-                "  \"dataSource\": {\n" +
-                "    \"type\": \"table\",\n" +
-                "    \"name\": \"sample_data\"\n" +
-                "  },\n" +
-                "  \"dimension\": \"sample_dim\",\n" +
-                "  \"threshold\": 5,\n" +
-                "  \"metric\": \"count\",\n" +
-                "  \"granularity\": \"all\",\n" +
-                "  \"filter\": {\n" +
-                "    \"type\": \"and\",\n" +
-                "    \"fields\": [\n" +
-                "      {\n" +
-                "        \"type\": \"selector\",\n" +
-                "        \"dimension\": \"dim1\",\n" +
-                "        \"value\": \"some_value\"\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"type\": \"selector\",\n" +
-                "        \"dimension\": \"dim2\",\n" +
-                "        \"value\": \"some_other_val\"\n" +
-                "      }\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  \"aggregations\": [\n" +
-                "    {\n" +
-                "      \"type\": \"longSum\",\n" +
-                "      \"name\": \"count\",\n" +
-                "      \"fieldName\": \"count\"\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"type\": \"doubleSum\",\n" +
-                "      \"name\": \"some_metric\",\n" +
-                "      \"fieldName\": \"some_metric\"\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"postAggregations\": [\n" +
-                "    {\n" +
-                "      \"type\": \"arithmetic\",\n" +
-                "      \"name\": \"sample_divide\",\n" +
-                "      \"fn\": \"/\",\n" +
-                "      \"fields\": [\n" +
-                "        {\n" +
-                "          \"type\": \"fieldAccess\",\n" +
-                "          \"name\": \"some_metric\",\n" +
-                "          \"fieldName\": \"some_metric\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "          \"type\": \"fieldAccess\",\n" +
-                "          \"name\": \"count\",\n" +
-                "          \"fieldName\": \"count\"\n" +
-                "        }\n" +
-                "      ]\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"intervals\": [\n" +
-                "    \"2013-08-31T00:00:00.000Z/2013-09-03T00:00:00.000Z\"\n" +
-                "  ]\n" +
-                "}";
+        String expectedJsonAsString = """
+                {
+                  "queryType": "topN",
+                  "dataSource": {
+                    "type": "table",
+                    "name": "sample_data"
+                  },
+                  "dimension": "sample_dim",
+                  "threshold": 5,
+                  "metric": "count",
+                  "granularity": "all",
+                  "filter": {
+                    "type": "and",
+                    "fields": [
+                      {
+                        "type": "selector",
+                        "dimension": "dim1",
+                        "value": "some_value"
+                      },
+                      {
+                        "type": "selector",
+                        "dimension": "dim2",
+                        "value": "some_other_val"
+                      }
+                    ]
+                  },
+                  "aggregations": [
+                    {
+                      "type": "longSum",
+                      "name": "count",
+                      "fieldName": "count"
+                    },
+                    {
+                      "type": "doubleSum",
+                      "name": "some_metric",
+                      "fieldName": "some_metric"
+                    }
+                  ],
+                  "postAggregations": [
+                    {
+                      "type": "arithmetic",
+                      "name": "sample_divide",
+                      "fn": "/",
+                      "fields": [
+                        {
+                          "type": "fieldAccess",
+                          "name": "some_metric",
+                          "fieldName": "some_metric"
+                        },
+                        {
+                          "type": "fieldAccess",
+                          "name": "count",
+                          "fieldName": "count"
+                        }
+                      ]
+                    }
+                  ],
+                  "intervals": [
+                    "2013-08-31T00:00:00.000Z/2013-09-03T00:00:00.000Z"
+                  ]
+                }\
+                """;
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(expectedJsonAsString, actualJson, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test
-    public void testRequiredFields() throws JsonProcessingException, JSONException {
+    public void testRequiredFields() throws JacksonException, JSONException {
 
         DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
         DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
@@ -215,7 +217,7 @@ public class TopNQueryTest {
     }
 
     @Test
-    public void testAllFields() throws JSONException, JsonProcessingException {
+    public void testAllFields() throws JSONException, JacksonException {
         DateTime startTime = new DateTime(2013, 8, 31, 0, 0, 0, DateTimeZone.UTC);
         DateTime endTime = new DateTime(2013, 9, 3, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);

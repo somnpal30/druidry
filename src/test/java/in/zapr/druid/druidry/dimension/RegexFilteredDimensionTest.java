@@ -16,14 +16,14 @@
 
 package in.zapr.druid.druidry.dimension;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 public class RegexFilteredDimensionTest {
     private static ObjectMapper objectMapper;
@@ -34,7 +34,7 @@ public class RegexFilteredDimensionTest {
     }
 
     @Test
-    public void testSampleRegexFilteredDimension() throws JsonProcessingException, JSONException {
+    public void testSampleRegexFilteredDimension() throws JacksonException, JSONException {
         DimensionSpec dimensionSpec = DefaultDimension.builder()
                 .dimension("system_label_values")
                 .outputName("system_label_values")
@@ -46,27 +46,29 @@ public class RegexFilteredDimensionTest {
                 .build();
 
         String jsonOutput = objectMapper.writeValueAsString(regexFilteredDimension);
-        String expectedJSONString = "{\n" +
-                "      \"type\": \"regexFiltered\",\n" +
-                "      \"delegate\": {\n" +
-                "        \"type\": \"default\",\n" +
-                "        \"dimension\": \"system_label_values\",\n" +
-                "        \"outputName\": \"system_label_values\"\n" +
-                "      },\n" +
-                "      \"pattern\": \"compute.googleapis.com/cores`.*\"\n" +
-                "    }";
+        String expectedJSONString = """
+                {
+                      "type": "regexFiltered",
+                      "delegate": {
+                        "type": "default",
+                        "dimension": "system_label_values",
+                        "outputName": "system_label_values"
+                      },
+                      "pattern": "compute.googleapis.com/cores`.*"
+                    }\
+                """;
         JSONAssert.assertEquals(expectedJSONString, jsonOutput, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testSampleRegexFilteredDimensionWithNullDimensionSpec() throws JsonProcessingException {
+    public void testSampleRegexFilteredDimensionWithNullDimensionSpec() throws JacksonException {
         RegexFilteredDimension regexFilteredDimension = RegexFilteredDimension.builder()
                 .pattern("compute.googleapis.com/cores`.*")
                 .build();
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testSampleRegexFilteredDimensionWithNullRegex() throws JsonProcessingException {
+    public void testSampleRegexFilteredDimensionWithNullRegex() throws JacksonException {
         DimensionSpec dimensionSpec = DefaultDimension.builder()
                 .dimension("system_label_values")
                 .outputName("system_label_values")

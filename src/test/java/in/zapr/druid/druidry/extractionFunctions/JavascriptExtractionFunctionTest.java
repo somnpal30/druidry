@@ -16,14 +16,14 @@
 
 package in.zapr.druid.druidry.extractionFunctions;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 public class JavascriptExtractionFunctionTest {
     private static ObjectMapper objectMapper;
@@ -34,7 +34,7 @@ public class JavascriptExtractionFunctionTest {
     }
 
     @Test
-    public void testAllFields() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JacksonException, JSONException {
         JavascriptExtractionFunction javascriptExtractionFunction = JavascriptExtractionFunction.builder()
                 .function("function(str) { return str + '!!!'; }")
                 .injective(true)
@@ -42,22 +42,33 @@ public class JavascriptExtractionFunctionTest {
 
         String actualJSON = objectMapper.writeValueAsString(javascriptExtractionFunction);
 
-        String expectedJSONString = "{\n  \"type\" : \"javascript\",\n  \"function\" : \"function" +
-                "(str) { return str + '!!!'; }\",\n  \"injective\" : true\n}";
+        String expectedJSONString = """
+                {
+                  "type" : "javascript",
+                  "function" : "function\
+                (str) { return str + '!!!'; }",
+                  "injective" : true
+                }\
+                """;
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test
-    public void testRequiredFields() throws JSONException, JsonProcessingException {
+    public void testRequiredFields() throws JSONException, JacksonException {
         JavascriptExtractionFunction javascriptExtractionFunction = JavascriptExtractionFunction.builder()
                 .function("function(str) { return str + '!!!'; }")
                 .build();
 
         String actualJSON = objectMapper.writeValueAsString(javascriptExtractionFunction);
 
-        String expectedJSONString = "{\n  \"type\" : \"javascript\",\n  \"function\" : \"function" +
-                "(str) { return str + '!!!'; }\"\n}";
+        String expectedJSONString = """
+                {
+                  "type" : "javascript",
+                  "function" : "function\
+                (str) { return str + '!!!'; }"
+                }\
+                """;
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
 

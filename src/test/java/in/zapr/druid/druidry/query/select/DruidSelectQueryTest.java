@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.query.select;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -26,6 +25,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ public class DruidSelectQueryTest {
 
 
     @Test
-    public void testSampleQuery() throws JsonProcessingException, JSONException {
+    public void testSampleQuery() throws JacksonException, JSONException {
         DateTime startTime = new DateTime(2013, 1, 1, 0,
                 0, 0, DateTimeZone.UTC);
         DateTime endTime = new DateTime(2013, 1, 2, 0,
@@ -68,35 +68,37 @@ public class DruidSelectQueryTest {
                 .pagingSpec(pagingSpec)
                 .build();
 
-        String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"select\",\n" +
-                "  \"dataSource\": {\n" +
-                "    \"type\": \"table\",\n" +
-                "    \"name\": \"wikipedia\"\n" +
-                "  },\n" +
-                "  \"intervals\": [" +
-                "    \"2013-01-01T00:00:00.000Z/2013-01-02T00:00:00.000Z\"" +
-                "  ]," +
-                "  \"descending\": false,\n" +
-                "  \"granularity\": \"all\",\n" +
-                "  \"virtualColumns\": [{\n" +
-                "    \"type\": \"expression\",\n" +
-                "    \"name\": \"dim3\",\n" +
-                "    \"outputType\": \"FLOAT\",\n" +
-                "    \"expression\": \"dim1 + dim2\"\n" +
-                "  }],\n" +
-                "  \"pagingSpec\": {\n" +
-                "    \"threshold\": 5,\n" +
-                "    \"pagingIdentifiers\": {}\n" +
-                "  }\n" +
-                "}";
+        String expectedJsonAsString = """
+                {
+                  "queryType": "select",
+                  "dataSource": {
+                    "type": "table",
+                    "name": "wikipedia"
+                  },
+                  "intervals": [\
+                    "2013-01-01T00:00:00.000Z/2013-01-02T00:00:00.000Z"\
+                  ],\
+                  "descending": false,
+                  "granularity": "all",
+                  "virtualColumns": [{
+                    "type": "expression",
+                    "name": "dim3",
+                    "outputType": "FLOAT",
+                    "expression": "dim1 + dim2"
+                  }],
+                  "pagingSpec": {
+                    "threshold": 5,
+                    "pagingIdentifiers": {}
+                  }
+                }\
+                """;
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test
-    public void testPagingQuery() throws JsonProcessingException, JSONException {
+    public void testPagingQuery() throws JacksonException, JSONException {
         DateTime startTime = new DateTime(2013, 1, 1, 0,
                 0, 0, DateTimeZone.UTC);
         DateTime endTime = new DateTime(2013, 1, 2, 0,
@@ -117,25 +119,27 @@ public class DruidSelectQueryTest {
                 .pagingSpec(pagingSpec)
                 .build();
 
-        String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"select\",\n" +
-                "  \"dataSource\": {\n" +
-                "    \"type\": \"table\",\n" +
-                "    \"name\": \"wikipedia\"\n" +
-                "  },\n" +
-                "  \"intervals\": [" +
-                "    \"2013-01-01T00:00:00.000Z/2013-01-02T00:00:00.000Z\"" +
-                "  ]," +
-                "  \"descending\": false,\n" +
-                "  \"granularity\": \"all\",\n" +
-                "  \"pagingSpec\": {\n" +
-                "    \"threshold\": 5,\n" +
-                "    \"fromNext\": false,\n" +
-                "    \"pagingIdentifiers\": {" +
-                "      \"pagingIdentifier\": 5" +
-                "    }\n" +
-                "  }\n" +
-                "}";
+        String expectedJsonAsString = """
+                {
+                  "queryType": "select",
+                  "dataSource": {
+                    "type": "table",
+                    "name": "wikipedia"
+                  },
+                  "intervals": [\
+                    "2013-01-01T00:00:00.000Z/2013-01-02T00:00:00.000Z"\
+                  ],\
+                  "descending": false,
+                  "granularity": "all",
+                  "pagingSpec": {
+                    "threshold": 5,
+                    "fromNext": false,
+                    "pagingIdentifiers": {\
+                      "pagingIdentifier": 5\
+                    }
+                  }
+                }\
+                """;
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);

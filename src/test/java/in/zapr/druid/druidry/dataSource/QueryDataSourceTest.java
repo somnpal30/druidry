@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.dataSource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -28,6 +27,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -49,7 +49,7 @@ public class QueryDataSourceTest {
     }
 
     @Test
-    public void testQueryDataSource() throws JsonProcessingException, JSONException {
+    public void testQueryDataSource() throws JacksonException, JSONException {
         DruidDimension druidDimension1 = new SimpleDimension("dim1");
         DruidDimension druidDimension2 = new SimpleDimension("dim2");
 

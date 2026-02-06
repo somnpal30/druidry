@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
+import tools.jackson.core.JacksonException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -40,7 +39,7 @@ public class DoubleMaxAggregatorTest {
     }
 
     @Test
-    public void testAllFields() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JacksonException, JSONException {
 
         DoubleMaxAggregator doubleMaxAggregator = new DoubleMaxAggregator("CarpeDiem",
                 "Hey");
@@ -56,7 +55,7 @@ public class DoubleMaxAggregatorTest {
     }
 
     @Test
-    public void testAllButFieldName() throws JSONException, JsonProcessingException {
+    public void testAllButFieldName() throws JSONException, JacksonException {
 
         DoubleMaxAggregator doubleMaxAggregator =
             DoubleMaxAggregator.builder()
@@ -75,7 +74,7 @@ public class DoubleMaxAggregatorTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullName() throws JsonProcessingException, JSONException {
+    public void testNullName() throws JacksonException, JSONException {
 
         DoubleMaxAggregator doubleMaxAggregator =
             DoubleMaxAggregator.builder()

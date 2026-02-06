@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +24,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 public class StringFirstAggregatorTest {
 
@@ -36,7 +36,7 @@ public class StringFirstAggregatorTest {
     }
 
     @Test
-    public void testRequiredFields() throws JsonProcessingException, JSONException {
+    public void testRequiredFields() throws JacksonException, JSONException {
         String name = "stringFirstNameRequired";
         String fieldName = "stringFirstFieldNameRequired";
 
@@ -56,7 +56,7 @@ public class StringFirstAggregatorTest {
     }
 
     @Test
-    public void testAllFields() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JacksonException, JSONException {
         String name = "stringFirstNameAll";
         String fieldName = "stringFirstFieldNameAll";
         int maxStringBytes = 300;

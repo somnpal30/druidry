@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.aggregator;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
+import tools.jackson.core.JacksonException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -40,7 +39,7 @@ public class FloatLastAggregatorTest {
     }
 
     @Test
-    public void testAllFields() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JacksonException, JSONException {
 
         FloatLastAggregator floatLastAggregator = new FloatLastAggregator("CarpeDiem",
                 "Hey");
@@ -56,13 +55,13 @@ public class FloatLastAggregatorTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testNullName() throws JsonProcessingException, JSONException {
+    public void testNullName() throws JacksonException, JSONException {
 
         FloatLastAggregator floatLastAggregator = new FloatLastAggregator(null, "Hey");
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testFieldName() throws JsonProcessingException, JSONException {
+    public void testFieldName() throws JacksonException, JSONException {
 
         FloatLastAggregator floatLastAggregator = new FloatLastAggregator("CarpeDiem", null);
     }

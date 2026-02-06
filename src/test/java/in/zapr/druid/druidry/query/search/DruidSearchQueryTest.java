@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.query.search;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -26,6 +25,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -55,7 +55,7 @@ public class DruidSearchQueryTest {
     }
 
     @Test
-    public void testSampleQuery() throws JsonProcessingException, JSONException {
+    public void testSampleQuery() throws JacksonException, JSONException {
 
         List<DruidDimension> searchDimensions
                 = Arrays.asList(new SimpleDimension("dim1"), new SimpleDimension("dim2"));
@@ -78,41 +78,43 @@ public class DruidSearchQueryTest {
                 .intervals(Collections.singletonList(interval))
                 .build();
 
-        String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"search\",\n" +
-                "  \"dataSource\": {\n" +
-                "    \"type\": \"table\",\n" +
-                "    \"name\": \"sample_datasource\"\n" +
-                "  },\n" +
-                "  \"granularity\": \"day\",\n" +
-                "  \"virtualColumns\": [{\n" +
-                "    \"type\": \"expression\",\n" +
-                "    \"name\": \"dim3\",\n" +
-                "    \"outputType\": \"FLOAT\",\n" +
-                "    \"expression\": \"dim1 + dim2\"\n" +
-                "  }],\n" +
-                "  \"searchDimensions\": [\n" +
-                "    \"dim1\",\n" +
-                "    \"dim2\"\n" +
-                "  ],\n" +
-                "  \"query\": {\n" +
-                "    \"type\": \"insensitive_contains\",\n" +
-                "    \"value\": \"Ke\"\n" +
-                "  },\n" +
-                "  \"sort\" : {\n" +
-                "    \"type\": \"lexicographic\"\n" +
-                "  }," +
-                "  \"intervals\": [" +
-                "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
-                "  ]" +
-                "}";
+        String expectedJsonAsString = """
+                {
+                  "queryType": "search",
+                  "dataSource": {
+                    "type": "table",
+                    "name": "sample_datasource"
+                  },
+                  "granularity": "day",
+                  "virtualColumns": [{
+                    "type": "expression",
+                    "name": "dim3",
+                    "outputType": "FLOAT",
+                    "expression": "dim1 + dim2"
+                  }],
+                  "searchDimensions": [
+                    "dim1",
+                    "dim2"
+                  ],
+                  "query": {
+                    "type": "insensitive_contains",
+                    "value": "Ke"
+                  },
+                  "sort" : {
+                    "type": "lexicographic"
+                  },\
+                  "intervals": [\
+                    "2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z"\
+                  ]\
+                }\
+                """;
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test
-    public void testRequiredFields() throws JsonProcessingException, JSONException {
+    public void testRequiredFields() throws JacksonException, JSONException {
 
         SearchQuerySpec searchQuerySpec = new InsensitiveContainsSearchQuerySpec("Ke");
 
@@ -129,28 +131,30 @@ public class DruidSearchQueryTest {
                 .intervals(Collections.singletonList(interval))
                 .build();
 
-        String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"search\",\n" +
-                "  \"dataSource\": {\n" +
-                "    \"type\": \"table\",\n" +
-                "    \"name\": \"sample_datasource\"\n" +
-                "  },\n" +
-                "  \"granularity\": \"day\",\n" +
-                "  \"query\": {\n" +
-                "    \"type\": \"insensitive_contains\",\n" +
-                "    \"value\": \"Ke\"\n" +
-                "  },\n" +
-                "  \"intervals\": [" +
-                "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
-                "  ]" +
-                "}";
+        String expectedJsonAsString = """
+                {
+                  "queryType": "search",
+                  "dataSource": {
+                    "type": "table",
+                    "name": "sample_datasource"
+                  },
+                  "granularity": "day",
+                  "query": {
+                    "type": "insensitive_contains",
+                    "value": "Ke"
+                  },
+                  "intervals": [\
+                    "2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z"\
+                  ]\
+                }\
+                """;
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test
-    public void testAllFields() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JacksonException, JSONException {
 
         List<DruidDimension> searchDimensions
                 = Arrays.asList(new SimpleDimension("dim1"), new SimpleDimension("dim2"));
@@ -182,43 +186,45 @@ public class DruidSearchQueryTest {
                 .context(context)
                 .build();
 
-        String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"search\",\n" +
-                "  \"dataSource\": {\n" +
-                "    \"type\": \"table\",\n" +
-                "    \"name\": \"sample_datasource\"\n" +
-                "  },\n" +
-                "  \"granularity\": \"day\",\n" +
-                "  \"virtualColumns\": [{\n" +
-                "    \"type\": \"expression\",\n" +
-                "    \"name\": \"dim3\",\n" +
-                "    \"outputType\": \"FLOAT\",\n" +
-                "    \"expression\": \"dim1 + dim2\"\n" +
-                "  }],\n" +
-                "  \"filter\": {\n" +
-                "        \"type\": \"selector\",\n" +
-                "        \"dimension\": \"Dim\",\n" +
-                "        \"value\": \"You\"\n" +
-                "    },\n" +
-                "    \"limit\": 16," +
-                "  \"searchDimensions\": [\n" +
-                "    \"dim1\",\n" +
-                "    \"dim2\"\n" +
-                "  ],\n" +
-                "  \"query\": {\n" +
-                "    \"type\": \"insensitive_contains\",\n" +
-                "    \"value\": \"Ke\"\n" +
-                "  },\n" +
-                "  \"sort\" : {\n" +
-                "    \"type\": \"lexicographic\"\n" +
-                "  }," +
-                "  \"intervals\": [" +
-                "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
-                "  ]," +
-                "  \"context\": {\n" +
-                "    \"useCache\" : true\n" +
-                "    }" +
-                "}";
+        String expectedJsonAsString = """
+                {
+                  "queryType": "search",
+                  "dataSource": {
+                    "type": "table",
+                    "name": "sample_datasource"
+                  },
+                  "granularity": "day",
+                  "virtualColumns": [{
+                    "type": "expression",
+                    "name": "dim3",
+                    "outputType": "FLOAT",
+                    "expression": "dim1 + dim2"
+                  }],
+                  "filter": {
+                        "type": "selector",
+                        "dimension": "Dim",
+                        "value": "You"
+                    },
+                    "limit": 16,\
+                  "searchDimensions": [
+                    "dim1",
+                    "dim2"
+                  ],
+                  "query": {
+                    "type": "insensitive_contains",
+                    "value": "Ke"
+                  },
+                  "sort" : {
+                    "type": "lexicographic"
+                  },\
+                  "intervals": [\
+                    "2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z"\
+                  ],\
+                  "context": {
+                    "useCache" : true
+                    }\
+                }\
+                """;
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);

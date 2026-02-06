@@ -16,13 +16,13 @@
 
 package in.zapr.druid.druidry.dimension;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 import in.zapr.druid.druidry.dimension.enums.OutputType;
 
@@ -36,7 +36,7 @@ public class SimpleDimensionTest {
     }
 
     @Test
-    public void testAllFields() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JacksonException, JSONException {
         SimpleDimension simpleDimension = new SimpleDimension("name");
 
         String actualString = objectMapper.writeValueAsString(simpleDimension);

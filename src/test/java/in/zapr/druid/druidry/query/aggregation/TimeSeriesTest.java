@@ -16,9 +16,8 @@
 
 package in.zapr.druid.druidry.query.aggregation;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import tools.jackson.databind.ObjectMapper;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -29,6 +28,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -52,20 +52,28 @@ import in.zapr.druid.druidry.postAggregator.ArithmeticPostAggregator;
 import in.zapr.druid.druidry.postAggregator.ConstantPostAggregator;
 import in.zapr.druid.druidry.postAggregator.DruidPostAggregator;
 import in.zapr.druid.druidry.postAggregator.FieldAccessPostAggregator;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.datatype.joda.JodaModule;
+
 
 public class TimeSeriesTest {
     private static ObjectMapper objectMapper;
 
     @BeforeClass
     public void init() {
-        objectMapper = new ObjectMapper();
+       /* objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JodaModule());
-        objectMapper.configure(com.fasterxml.jackson.databind.SerializationFeature.
-                WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.configure(tools.jackson.databind.SerializationFeature.
+                WRITE_DATES_AS_TIMESTAMPS, false);*/
+
+        objectMapper = JsonMapper.builder()
+                .addModule(new JodaModule())
+                /*.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)*/
+                .build();
     }
 
     @Test
-    public void testSampleQuery() throws JsonProcessingException, JSONException {
+    public void testSampleQuery() throws JacksonException, JSONException {
 
         SelectorFilter selectorFilter2 = new SelectorFilter("sample_dimension2",
                 "sample_value2");
@@ -115,49 +123,51 @@ public class TimeSeriesTest {
                 .intervals(Collections.singletonList(interval))
                 .build();
 
-        String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"timeseries\",\n" +
-                "  \"dataSource\": {\n" +
-                "    \"type\": \"table\",\n" +
-                "    \"name\": \"sample_datasource\"\n" +
-                "  },\n" +
-                "  \"granularity\": \"day\",\n" +
-                "  \"descending\": true,\n" +
-                "  \"filter\": {\n" +
-                "    \"type\": \"and\",\n" +
-                "    \"fields\": [\n" +
-                "      { \"type\": \"selector\", \"dimension\": \"sample_dimension1\", \"value\": \"sample_value1\" },\n" +
-                "      { \"type\": \"or\",\n" +
-                "        \"fields\": [\n" +
-                "          { \"type\": \"selector\", \"dimension\": \"sample_dimension2\", \"value\": \"sample_value2\" },\n" +
-                "          { \"type\": \"selector\", \"dimension\": \"sample_dimension3\", \"value\": \"sample_value3\" }\n" +
-                "        ]\n" +
-                "      }\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  \"aggregations\": [\n" +
-                "    { \"type\": \"longSum\", \"name\": \"sample_name1\", \"fieldName\": \"sample_fieldName1\" },\n" +
-                "    { \"type\": \"doubleSum\", \"name\": \"sample_name2\", \"fieldName\": \"sample_fieldName2\" }\n" +
-                "  ],\n" +
-                "  \"postAggregations\": [\n" +
-                "    { \"type\": \"arithmetic\",\n" +
-                "      \"name\": \"sample_divide\",\n" +
-                "      \"fn\": \"/\",\n" +
-                "      \"fields\": [\n" +
-                "        { \"type\": \"fieldAccess\", \"name\": \"postAgg__sample_name1\", \"fieldName\": \"sample_name1\" },\n" +
-                "        { \"type\": \"fieldAccess\", \"name\": \"postAgg__sample_name2\", \"fieldName\": \"sample_name2\" }\n" +
-                "      ]\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"intervals\": [ \"2012-01-01T00:00:00.000Z/2012-01-03T00:00:00.000Z\" ]\n" +
-                "}";
+        String expectedJsonAsString = """
+                {
+                  "queryType": "timeseries",
+                  "dataSource": {
+                    "type": "table",
+                    "name": "sample_datasource"
+                  },
+                  "granularity": "day",
+                  "descending": true,
+                  "filter": {
+                    "type": "and",
+                    "fields": [
+                      { "type": "selector", "dimension": "sample_dimension1", "value": "sample_value1" },
+                      { "type": "or",
+                        "fields": [
+                          { "type": "selector", "dimension": "sample_dimension2", "value": "sample_value2" },
+                          { "type": "selector", "dimension": "sample_dimension3", "value": "sample_value3" }
+                        ]
+                      }
+                    ]
+                  },
+                  "aggregations": [
+                    { "type": "longSum", "name": "sample_name1", "fieldName": "sample_fieldName1" },
+                    { "type": "doubleSum", "name": "sample_name2", "fieldName": "sample_fieldName2" }
+                  ],
+                  "postAggregations": [
+                    { "type": "arithmetic",
+                      "name": "sample_divide",
+                      "fn": "/",
+                      "fields": [
+                        { "type": "fieldAccess", "name": "postAgg__sample_name1", "fieldName": "sample_name1" },
+                        { "type": "fieldAccess", "name": "postAgg__sample_name2", "fieldName": "sample_name2" }
+                      ]
+                    }
+                  ],
+                  "intervals": [ "2012-01-01T00:00:00.000Z/2012-01-03T00:00:00.000Z" ]
+                }\
+                """;
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test
-    public void testRequiredFields() throws JsonProcessingException, JSONException {
+    public void testRequiredFields() throws JacksonException, JSONException {
         DateTime startTime = new DateTime(2013, 7, 14, 0, 0, 0, DateTimeZone.UTC);
         DateTime endTime = new DateTime(2013, 11, 16, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);
@@ -186,7 +196,7 @@ public class TimeSeriesTest {
     }
 
     @Test
-    public void testAllFields() throws JSONException, JsonProcessingException {
+    public void testAllFields() throws JSONException, JacksonException {
         DateTime startTime = new DateTime(2013, 7, 14, 0, 0, 0, DateTimeZone.UTC);
         DateTime endTime = new DateTime(2013, 11, 16, 0, 0, 0, DateTimeZone.UTC);
         Interval interval = new Interval(startTime, endTime);

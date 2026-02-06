@@ -6,7 +6,7 @@
 
     <groupId>in.zapr.druid</groupId>
     <artifactId>druidry</artifactId>
-    <version>3.2-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
 
     <name>Druidry - Druid Java Client</name>
     <description>Druidry is an open-source Java based utility library which supports creating
@@ -19,33 +19,33 @@
         <jackson.databind.version>2.9.10.4</jackson.databind.version>
         <jackson.datatype.version>2.9.9</jackson.datatype.version>
         <jodatime.version>2.9.7</jodatime.version>
-        <lombok.version>1.18.10</lombok.version>
+        <lombok.version>1.18.42</lombok.version>
         <testng.version>6.11</testng.version>
         <logback.version>1.2.1</logback.version>
         <jsonassert.version>1.4.0</jsonassert.version>
         <commons.version>3.5</commons.version>
         <jersey.version>2.26</jersey.version>
-        <guava.version>23.0</guava.version>
+        <guava.version>29.0-jre</guava.version>
     </properties>
 
     <dependencies>
 
-        <dependency>
+      <!--  <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>${jodatime.version}</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
+            <groupId>tools.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.databind.version}</version>
+            <version>3.0.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <groupId>tools.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>
-            <version>${jackson.datatype.version}</version>
+            <version>3.0.4</version>
         </dependency>
 
         <dependency>
@@ -132,7 +132,7 @@
             <build>
                 <plugins>
                     <!-- To release to Maven central -->
-                    <plugin>
+              <!--      <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
                         <version>1.6.8</version>
@@ -142,9 +142,9 @@
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
-                    </plugin>
+                    </plugin>-->
                     <!-- To generate javadoc -->
-                    <plugin>
+                   <!-- <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
                         <version>3.0.1</version>
@@ -156,8 +156,8 @@
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
-                    <plugin>
+                    </plugin>-->
+                   <!-- <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>3.1.1</version>
@@ -172,10 +172,10 @@
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
+                    </plugin>-->
 
                     <!-- To sign the artifacts -->
-                    <plugin>
+                   <!-- <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>1.6</version>
@@ -188,7 +188,7 @@
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
+                    </plugin>-->
                 </plugins>
 
             </build>
@@ -198,12 +198,69 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.openrewrite.maven</groupId>
+                <artifactId>rewrite-maven-plugin</artifactId>
+                <version>6.28.1</version>
+                <configuration>
+                    <activeRecipes>
+                        <recipe>org.openrewrite.java.migrate.UpgradeToJava21</recipe>
+                       <recipe>org.openrewrite.java.jackson.UpgradeJackson_2_3_TypeChanges</recipe>
+                        <recipe>org.openrewrite.java.jackson.UpgradeJackson_2_3_Dependencies</recipe>
+                        <recipe>org.openrewrite.java.jackson.UseFormatAlignedObjectMappers</recipe>
+                        <recipe>org.openrewrite.java.jackson.UpgradeJackson_2_3_MethodRenames</recipe>
+                        <recipe>org.openrewrite.java.jackson.UpgradeJackson_2_3_JsonGeneratorMethodRenames</recipe>
+                        <recipe>org.openrewrite.java.jackson.UpgradeJackson_2_3_RemoveRedundantFeatureFlags</recipe>
+                        <recipe>org.openrewrite.java.jackson.RemoveBuiltInModuleRegistrations</recipe>
+                        <recipe>org.openrewrite.java.jackson.UseModernDateTimeSerialization</recipe>
+                        <recipe>org.openrewrite.java.jackson.UpgradeJackson_2_3_PackageChanges</recipe>
+                        <recipe>org.openrewrite.java.jackson.SimplifyJacksonExceptionCatch</recipe>
+
+
+                    </activeRecipes>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.openrewrite.recipe</groupId>
+                        <artifactId>rewrite-migrate-java</artifactId>
+                        <version>3.26.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.openrewrite.recipe</groupId>
+                        <artifactId>rewrite-jackson</artifactId>
+                        <version>1.15.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.14</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+
+
+            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.15.0</version>
                 <configuration>
                     <compilerArgument>-Xlint</compilerArgument>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <release>21</release>
                 </configuration>
             </plugin>
 

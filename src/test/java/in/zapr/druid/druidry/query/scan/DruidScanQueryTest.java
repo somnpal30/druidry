@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.query.scan;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -26,6 +25,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -48,7 +48,7 @@ public class DruidScanQueryTest {
 
 
     @Test
-    public void testSampleQuery() throws JsonProcessingException, JSONException {
+    public void testSampleQuery() throws JacksonException, JSONException {
 
 
         List<String> searchDimensions
@@ -74,35 +74,37 @@ public class DruidScanQueryTest {
                 .legacy(true)
                 .build();
 
-        String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"scan\",\n" +
-                "  \"dataSource\": {\n" +
-                "    \"type\": \"table\",\n" +
-                "    \"name\": \"sample_datasource\"\n" +
-                "  },\n" +
-                "  \"columns\": [\n" +
-                "    \"dim1\",\n" +
-                "    \"dim2\"\n" +
-                "  ],\n" +
-                "  \"virtualColumns\": [{\n" +
-                "    \"type\": \"expression\",\n" +
-                "    \"name\": \"dim3\",\n" +
-                "    \"outputType\": \"FLOAT\",\n" +
-                "    \"expression\": \"dim1 + dim2\"\n" +
-                "  }],\n" +
-                "  \"filter\": {\n" +
-                "    \"type\": \"selector\",\n" +
-                "    \"dimension\": \"dim1\",\n" +
-                "    \"value\": \"value1\"\n" +
-                "  },\n" +
-                "  \"resultFormat\": \"list\",\n" +
-                "  \"batchSize\": 10000,\n" +
-                "  \"limit\": 1000,\n" +
-                "  \"legacy\": true,\n" +
-                "  \"intervals\": [" +
-                "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
-                "  ]" +
-                "}";
+        String expectedJsonAsString = """
+                {
+                  "queryType": "scan",
+                  "dataSource": {
+                    "type": "table",
+                    "name": "sample_datasource"
+                  },
+                  "columns": [
+                    "dim1",
+                    "dim2"
+                  ],
+                  "virtualColumns": [{
+                    "type": "expression",
+                    "name": "dim3",
+                    "outputType": "FLOAT",
+                    "expression": "dim1 + dim2"
+                  }],
+                  "filter": {
+                    "type": "selector",
+                    "dimension": "dim1",
+                    "value": "value1"
+                  },
+                  "resultFormat": "list",
+                  "batchSize": 10000,
+                  "limit": 1000,
+                  "legacy": true,
+                  "intervals": [\
+                    "2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z"\
+                  ]\
+                }\
+                """;
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(expectedJsonAsString, actualJson, JSONCompareMode.NON_EXTENSIBLE);
@@ -110,7 +112,7 @@ public class DruidScanQueryTest {
     }
 
     @Test
-    public void testRequiredFields() throws JsonProcessingException, JSONException {
+    public void testRequiredFields() throws JacksonException, JSONException {
 
 
         DateTime startTime = new DateTime(2013, 1, 1, 0,
@@ -124,16 +126,18 @@ public class DruidScanQueryTest {
                 .intervals(Collections.singletonList(interval))
                 .build();
 
-        String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"scan\",\n" +
-                "  \"dataSource\": {\n" +
-                "    \"type\": \"table\",\n" +
-                "    \"name\": \"sample_datasource\"\n" +
-                "  },\n" +
-                "  \"intervals\": [" +
-                "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
-                "  ]" +
-                "}";
+        String expectedJsonAsString = """
+                {
+                  "queryType": "scan",
+                  "dataSource": {
+                    "type": "table",
+                    "name": "sample_datasource"
+                  },
+                  "intervals": [\
+                    "2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z"\
+                  ]\
+                }\
+                """;
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);
@@ -174,7 +178,7 @@ public class DruidScanQueryTest {
     }
 
     @Test
-    public void testSampleQueryWithEmptyLines() throws JsonProcessingException, JSONException {
+    public void testSampleQueryWithEmptyLines() throws JacksonException, JSONException {
 
 
         List<String> searchDimensions
@@ -199,27 +203,29 @@ public class DruidScanQueryTest {
                 .legacy(true)
                 .build();
 
-        String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"scan\",\n" +
-                "  \"dataSource\": {\n" +
-                "    \"type\": \"table\",\n" +
-                "    \"name\": \"sample_datasource\"\n" +
-                "  },\n" +
-                "  \"columns\": [\n" +
-                "],\n" +
-                "  \"filter\": {\n" +
-                "    \"type\": \"selector\",\n" +
-                "    \"dimension\": \"dim1\",\n" +
-                "    \"value\": \"value1\"\n" +
-                "  },\n" +
-                "  \"resultFormat\": \"list\",\n" +
-                "  \"batchSize\": 10000,\n" +
-                "  \"limit\": 1000,\n" +
-                "  \"legacy\": true,\n" +
-                "  \"intervals\": [" +
-                "    \"2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z\"" +
-                "  ]" +
-                "}";
+        String expectedJsonAsString = """
+                {
+                  "queryType": "scan",
+                  "dataSource": {
+                    "type": "table",
+                    "name": "sample_datasource"
+                  },
+                  "columns": [
+                ],
+                  "filter": {
+                    "type": "selector",
+                    "dimension": "dim1",
+                    "value": "value1"
+                  },
+                  "resultFormat": "list",
+                  "batchSize": 10000,
+                  "limit": 1000,
+                  "legacy": true,
+                  "intervals": [\
+                    "2013-01-01T00:00:00.000Z/2013-01-03T00:00:00.000Z"\
+                  ]\
+                }\
+                """;
 
         String actualJson = objectMapper.writeValueAsString(query);
         JSONAssert.assertEquals(actualJson, expectedJsonAsString, JSONCompareMode.NON_EXTENSIBLE);

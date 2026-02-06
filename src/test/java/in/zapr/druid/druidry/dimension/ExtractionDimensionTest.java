@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.dimension;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -25,6 +24,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 import in.zapr.druid.druidry.dimension.enums.OutputType;
 import in.zapr.druid.druidry.extractionFunctions.ExtractionFunction;
@@ -39,7 +39,7 @@ public class ExtractionDimensionTest {
     }
 
     @Test
-    public void testSampleExtractionFunction() throws JSONException, JsonProcessingException {
+    public void testSampleExtractionFunction() throws JSONException, JacksonException {
 
         ExtractionFunction partialExtractionFunction = PartialExtractionFunction.builder()
                 .expr("abcd")
@@ -54,16 +54,26 @@ public class ExtractionDimensionTest {
 
         String actualJSON = objectMapper.writeValueAsString(extractionDimension);
 
-        String expectedJSONString = "\n{\n  \"type\" : \"extraction\",\n  " +
-                "\"dimension\" : \"name\",\n  \"outputName\" :  \"nombre\",\n " +
-                " \"outputType\": \"FLOAT\",\n  " +
-                "\"extractionFn\" : { \"type\" : \"partial\", \"expr\" : \"abcd\" }\n}\n\n";
+        String expectedJSONString = """
+                
+                {
+                  "type" : "extraction",
+                  \
+                "dimension" : "name",
+                  "outputName" :  "nombre",
+                 \
+                 "outputType": "FLOAT",
+                  \
+                "extractionFn" : { "type" : "partial", "expr" : "abcd" }
+                }
+                
+                """;
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     @Test
-    public void testRequiredFields() throws JsonProcessingException, JSONException {
+    public void testRequiredFields() throws JacksonException, JSONException {
         ExtractionFunction partialExtractionFunction = PartialExtractionFunction.builder().expr("abcd").build();
 
         ExtractionDimension extractionDimension = ExtractionDimension.builder()
@@ -74,9 +84,18 @@ public class ExtractionDimensionTest {
 
         String actualJSON = objectMapper.writeValueAsString(extractionDimension);
 
-        String expectedJSONString = "\n{\n  \"type\" : \"extraction\",\n  " +
-                "\"dimension\" : \"name\",\n  \"outputName\" :  \"nombre\",\n  " +
-                "\"extractionFn\" : { \"type\" : \"partial\", \"expr\" : \"abcd\" }\n}\n\n";
+        String expectedJSONString = """
+                
+                {
+                  "type" : "extraction",
+                  \
+                "dimension" : "name",
+                  "outputName" :  "nombre",
+                  \
+                "extractionFn" : { "type" : "partial", "expr" : "abcd" }
+                }
+                
+                """;
 
         JSONAssert.assertEquals(expectedJSONString, actualJSON, JSONCompareMode.NON_EXTENSIBLE);
     }

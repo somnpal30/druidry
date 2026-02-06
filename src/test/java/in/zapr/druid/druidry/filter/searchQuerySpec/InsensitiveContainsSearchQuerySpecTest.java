@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.filter.searchQuerySpec;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +24,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 public class InsensitiveContainsSearchQuerySpecTest {
 
@@ -36,7 +36,7 @@ public class InsensitiveContainsSearchQuerySpecTest {
     }
 
     @Test
-    public void testAllFields() throws JSONException, JsonProcessingException {
+    public void testAllFields() throws JSONException, JacksonException {
         InsensitiveContainsSearchQuerySpec spec = new InsensitiveContainsSearchQuerySpec("Hello");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "insensitive_contains");
@@ -48,7 +48,7 @@ public class InsensitiveContainsSearchQuerySpecTest {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testMissingValueField() throws JSONException, JsonProcessingException {
+    public void testMissingValueField() throws JSONException, JacksonException {
         InsensitiveContainsSearchQuerySpec spec = new InsensitiveContainsSearchQuerySpec(null);
     }
 }

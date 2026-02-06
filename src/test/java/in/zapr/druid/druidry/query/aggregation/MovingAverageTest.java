@@ -18,7 +18,7 @@ package in.zapr.druid.druidry.query.aggregation;
 
 import com.google.common.io.Resources;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -242,7 +242,7 @@ public class MovingAverageTest {
 
     private String loadExpectedJsonForType(String type) throws IOException, URISyntaxException {
         String json = loadExpectedJson("averager_type/" + type + ".json");
-        assertTrue(json.contains(String.format("\"type\": \"%s\"", type)));
+        assertTrue(json.contains("\"type\": \"%s\"".formatted(type)));
         return json;
     }
 

@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.granularity;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -28,6 +27,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 public class PeriodGranularityTest {
     private final static String PERIOD = "PT1H";
@@ -40,7 +40,7 @@ public class PeriodGranularityTest {
     }
 
     @Test
-    public void testAllFields() throws JSONException, JsonProcessingException {
+    public void testAllFields() throws JSONException, JacksonException {
 
         DateTime originDate = new DateTime(DateTimeZone.forID(TIMEZONE));
         PeriodGranularity periodGranularity = PeriodGranularity.builder()

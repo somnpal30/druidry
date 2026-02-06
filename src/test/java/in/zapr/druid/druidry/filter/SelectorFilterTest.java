@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.filter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +24,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 import java.util.Optional;
 
@@ -38,7 +38,7 @@ public class SelectorFilterTest {
     }
 
     @Test
-    public void testStringField() throws JSONException, JsonProcessingException {
+    public void testStringField() throws JSONException, JacksonException {
         SelectorFilter filter = new SelectorFilter("Hello", "World");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "selector");
@@ -51,7 +51,7 @@ public class SelectorFilterTest {
     }
 
     @Test
-    public void testIntegerField() throws JSONException, JsonProcessingException {
+    public void testIntegerField() throws JSONException, JacksonException {
         SelectorFilter filter = new SelectorFilter("Hello", 5);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "selector");
@@ -64,7 +64,7 @@ public class SelectorFilterTest {
     }
 
     @Test
-    public void testLongField() throws JSONException, JsonProcessingException {
+    public void testLongField() throws JSONException, JacksonException {
         SelectorFilter filter = new SelectorFilter("Hello", 1488498926000L);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "selector");
@@ -77,7 +77,7 @@ public class SelectorFilterTest {
     }
 
     @Test
-    public void testOptionalWithStringField() throws JSONException, JsonProcessingException {
+    public void testOptionalWithStringField() throws JSONException, JacksonException {
         SelectorFilter filter = new SelectorFilter("Hello", Optional.ofNullable("World"));
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "selector");
@@ -90,7 +90,7 @@ public class SelectorFilterTest {
     }
 
     @Test
-    public void testOptionalWithIntegerField() throws JSONException, JsonProcessingException {
+    public void testOptionalWithIntegerField() throws JSONException, JacksonException {
         SelectorFilter filter = new SelectorFilter("Hello", Optional.ofNullable(5));
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "selector");
@@ -103,7 +103,7 @@ public class SelectorFilterTest {
     }
 
     @Test
-    public void testOptionalWithLongField() throws JSONException, JsonProcessingException {
+    public void testOptionalWithLongField() throws JSONException, JacksonException {
         SelectorFilter filter = new SelectorFilter("Hello", Optional.ofNullable(1488498926000L));
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "selector");
@@ -116,7 +116,7 @@ public class SelectorFilterTest {
     }
 
     @Test
-    public void testOptionalWithNullField() throws JSONException, JsonProcessingException {
+    public void testOptionalWithNullField() throws JSONException, JacksonException {
         SelectorFilter filter = new SelectorFilter("Hello", Optional.ofNullable(null));
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "selector");

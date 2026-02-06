@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.query.config;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +25,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 public class ContextTest {
 
@@ -37,7 +37,7 @@ public class ContextTest {
     }
 
     @Test
-    public void testNoFields() throws JsonProcessingException, JSONException {
+    public void testNoFields() throws JacksonException, JSONException {
         Context context = Context.builder().build();
 
         JSONObject jsonObject = new JSONObject();
@@ -48,7 +48,7 @@ public class ContextTest {
     }
 
     @Test
-    public void testAllFields() throws JsonProcessingException, JSONException {
+    public void testAllFields() throws JacksonException, JSONException {
         Context context = Context.builder()
                 .timeoutInMilliSeconds(1000L)
                 .priority(0)

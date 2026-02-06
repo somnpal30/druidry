@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.query.aggregation;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import in.zapr.druid.druidry.filter.havingSpec.HavingSpec;
 import in.zapr.druid.druidry.filter.havingSpec.GreaterThanHaving;
@@ -30,6 +29,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -69,49 +69,51 @@ public class GroupByTest {
     }
 
     @Test
-    public void testSampleQuery() throws JsonProcessingException, JSONException {
-        String expectedJsonAsString = "{\n" +
-                "  \"queryType\": \"groupBy\",\n" +
-                "  \"dataSource\": {\n" +
-                "    \"type\": \"table\",\n" +
-                "    \"name\": \"sample_datasource\"\n" +
-                "  },\n" +
-                "  \"granularity\": \"day\",\n" +
-                "  \"dimensions\": [\"country\", \"device\"],\n" +
-                "  \"limitSpec\": { \"type\": \"default\", \"limit\": 5000, \"columns\": [\"country\", \"data_transfer\"] },\n" +
-                "  \"filter\": {\n" +
-                "    \"type\": \"and\",\n" +
-                "    \"fields\": [\n" +
-                "      { \"type\": \"selector\", \"dimension\": \"carrier\", \"value\": \"AT&T\" },\n" +
-                "      { \"type\": \"or\", \n" +
-                "        \"fields\": [\n" +
-                "          { \"type\": \"selector\", \"dimension\": \"make\", \"value\": \"Apple\" },\n" +
-                "          { \"type\": \"selector\", \"dimension\": \"make\", \"value\": \"Samsung\" }\n" +
-                "        ]\n" +
-                "      }\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  \"aggregations\": [\n" +
-                "    { \"type\": \"longSum\", \"name\": \"total_usage\", \"fieldName\": \"user_count\" },\n" +
-                "    { \"type\": \"doubleSum\", \"name\": \"data_transfer\", \"fieldName\": \"data_transfer\" }\n" +
-                "  ],\n" +
-                "\"having\": {\n" +
-                "    \"type\": \"greaterThan\",\n" +
-                "    \"aggregation\": \"total_usage\",\n" +
-                "    \"value\": 2\n" +
-                "  }," +
-                "  \"postAggregations\": [\n" +
-                "    { \"type\": \"arithmetic\",\n" +
-                "      \"name\": \"avg_usage\",\n" +
-                "      \"fn\": \"/\",\n" +
-                "      \"fields\": [\n" +
-                "        { \"type\": \"fieldAccess\", \"fieldName\": \"data_transfer\" },\n" +
-                "        { \"type\": \"fieldAccess\", \"fieldName\": \"total_usage\" }\n" +
-                "      ]\n" +
-                "    }\n" +
-                "  ],\n" +
-                "  \"intervals\": [ \"2012-01-01T00:00:00.000Z/2012-01-03T00:00:00.000Z\" ]\n" +
-                "}\n";
+    public void testSampleQuery() throws JacksonException, JSONException {
+        String expectedJsonAsString = """
+                {
+                  "queryType": "groupBy",
+                  "dataSource": {
+                    "type": "table",
+                    "name": "sample_datasource"
+                  },
+                  "granularity": "day",
+                  "dimensions": ["country", "device"],
+                  "limitSpec": { "type": "default", "limit": 5000, "columns": ["country", "data_transfer"] },
+                  "filter": {
+                    "type": "and",
+                    "fields": [
+                      { "type": "selector", "dimension": "carrier", "value": "AT&T" },
+                      { "type": "or",\s
+                        "fields": [
+                          { "type": "selector", "dimension": "make", "value": "Apple" },
+                          { "type": "selector", "dimension": "make", "value": "Samsung" }
+                        ]
+                      }
+                    ]
+                  },
+                  "aggregations": [
+                    { "type": "longSum", "name": "total_usage", "fieldName": "user_count" },
+                    { "type": "doubleSum", "name": "data_transfer", "fieldName": "data_transfer" }
+                  ],
+                "having": {
+                    "type": "greaterThan",
+                    "aggregation": "total_usage",
+                    "value": 2
+                  },\
+                  "postAggregations": [
+                    { "type": "arithmetic",
+                      "name": "avg_usage",
+                      "fn": "/",
+                      "fields": [
+                        { "type": "fieldAccess", "fieldName": "data_transfer" },
+                        { "type": "fieldAccess", "fieldName": "total_usage" }
+                      ]
+                    }
+                  ],
+                  "intervals": [ "2012-01-01T00:00:00.000Z/2012-01-03T00:00:00.000Z" ]
+                }
+                """;
 
         // Druid dimensions
         DruidDimension druidDimension1 = new SimpleDimension("country");
@@ -170,7 +172,7 @@ public class GroupByTest {
     }
 
     @Test
-    public void testRequiredFields() throws JSONException, JsonProcessingException {
+    public void testRequiredFields() throws JSONException, JacksonException {
         DruidDimension druidDimension1 = new SimpleDimension("dim1");
         DruidDimension druidDimension2 = new SimpleDimension("dim2");
 
@@ -207,7 +209,7 @@ public class GroupByTest {
     }
 
     @Test
-    public void testAllFields() throws JSONException, JsonProcessingException {
+    public void testAllFields() throws JSONException, JacksonException {
         DruidDimension druidDimension1 = new SimpleDimension("dim1");
         DruidDimension druidDimension2 = new SimpleDimension("dim2");
 

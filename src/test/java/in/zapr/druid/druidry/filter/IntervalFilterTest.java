@@ -16,8 +16,7 @@
 
 package in.zapr.druid.druidry.filter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -28,6 +27,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import tools.jackson.core.JacksonException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,7 +56,7 @@ public class IntervalFilterTest {
     }
 
     @Test
-    public void testFields() throws JsonProcessingException, JSONException {
+    public void testFields() throws JacksonException, JSONException {
 
         JSONArray intervalJsonArray
                 = new JSONArray(Arrays.asList("2013-08-31T00:00:00.000Z/2013-09-03T00:00:00.000Z",
